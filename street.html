@@ -624,6 +624,29 @@ footer .logo svg{height:34px}
   box-shadow:4px 4px 0 rgba(20,23,26,.07);
 }
 .step:hover,.card:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:6px 6px 0 rgba(20,23,26,.12)}
+
+/* cada ficha viene firmada con aerosol: apenas se insinúa y al pasar por
+   encima se marca, como si acabaran de pintarla */
+.step{position:relative}
+.step::after{
+  content:"";position:absolute;top:16px;right:16px;
+  width:64px;height:38px;
+  opacity:.14;transform:rotate(-9deg);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+  background-repeat:no-repeat;background-position:center;background-size:contain;
+}
+.step:hover::after{opacity:.9;transform:rotate(-3deg) scale(1.18)}
+.step:hover{border-color:var(--spray);box-shadow:6px 6px 0 rgba(255,77,23,.2)}
+.steps .step:nth-child(1)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cpath d='M10 52 C22 18 50 10 58 32 C64 50 44 60 36 47 C29 36 45 25 62 30 C84 36 96 52 112 40' stroke='%23ff4d17' stroke-width='9' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.steps .step:nth-child(2)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg stroke='%23ff4d17' stroke-width='8' stroke-linecap='round'%3E%3Cpath d='M14 46 C44 20 74 18 104 32'/%3E%3Cpath d='M84 14 L108 32 L84 48' fill='none' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E");
+}
+.steps .step:nth-child(3)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg stroke='%23ff4d17' stroke-width='9' stroke-linecap='round' fill='none'%3E%3Cpath d='M12 40 L44 60 L108 12'/%3E%3Cpath d='M50 66 C70 70 92 66 108 58' stroke-width='5' opacity='.8'/%3E%3C/g%3E%3C/svg%3E");
+}
 .step .step-ico{background:var(--muro);border-radius:4px;color:var(--ink)}
 .card.featured{border:2.5px solid var(--ink);box-shadow:6px 6px 0 var(--spray)}
 .card .pop{background:var(--spray);color:#fff;border-radius:3px;letter-spacing:.1em;transform:rotate(-1.5deg)}
@@ -714,8 +737,16 @@ footer .logo svg{height:34px}
 .cta-final .cupos{border-color:rgba(255,255,255,.3);border-radius:3px}
 .garantias span::before{background:var(--spray)}
 
-/* ---------- pie ---------- */
-footer{border-top:none}
+/* ---------- pie: la pared del fondo, con una pieza pintada ---------- */
+footer{border-top:none;position:relative;overflow:hidden}
+footer .mural{
+  position:absolute;left:50%;bottom:-8%;
+  width:min(1080px,112%);height:auto;
+  transform:translateX(-50%) rotate(-2deg);
+  opacity:.16;pointer-events:none;user-select:none;
+}
+footer .rail{position:relative;z-index:1}
+@media (max-width:900px){footer .mural{width:150%;opacity:.13;bottom:-4%}}
 .foot-col b{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--ink)}
 .socials a{border:1.5px solid var(--ink);border-radius:4px;color:var(--ink)}
 .socials a:hover{background:var(--ink);color:var(--papel)}
@@ -857,7 +888,7 @@ footer{border-top:none}
     <div class="wrap hero-grid">
       <div>
         <span class="lbl fade">Lavado de zapatillas a domicilio</span>
-        <h1 class="fade d1">Tus zapas, como <span class="spray">recién sacadas</span> de la caja.</h1>
+        <h1 class="fade d1">Tus zapas, como recién sacadas de la caja.</h1>
         <p class="lead fade d2">
           Las buscamos por tu casa, las lavamos con máquinas hechas para calzado
           y te las devolvemos impecables en <strong>48 a 72 horas</strong>. Retiro
@@ -1187,6 +1218,21 @@ footer{border-top:none}
 </main>
 
 <footer>
+  <!-- pieza pintada en la pared del fondo, decorativa -->
+  <svg class="mural" viewBox="0 0 1000 430" aria-hidden="true">
+    <g fill="none" stroke="#ff4d17" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" text-anchor="middle">
+      <text x="500" y="180" font-family="Anton, Impact, sans-serif" font-size="205">ZAPAS</text>
+      <text x="500" y="390" font-family="Anton, Impact, sans-serif" font-size="205">LAB</text>
+    </g>
+    <g fill="#ff4d17">
+      <path d="M292 186 c8 0 11 30 7 43 c-2 8 -10 8 -12 0 c-5 -14 -3 -43 5 -43 z"/>
+      <path d="M628 186 c7 0 10 20 6 30 c-2 6 -9 6 -11 0 c-4 -11 -2 -30 5 -30 z"/>
+      <path d="M408 396 c9 0 12 34 8 48 c-3 9 -11 9 -13 0 c-5 -16 -4 -48 5 -48 z"/>
+      <path d="M596 396 c7 0 10 18 6 27 c-2 6 -9 6 -11 0 c-4 -10 -2 -27 5 -27 z"/>
+      <circle cx="806" cy="120" r="7"/><circle cx="836" cy="96" r="4.5"/>
+      <circle cx="196" cy="330" r="6"/><circle cx="160" cy="356" r="4"/>
+    </g>
+  </svg>
   <div class="rail"><div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
