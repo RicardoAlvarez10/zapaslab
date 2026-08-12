@@ -527,14 +527,18 @@ body{
   background-color:var(--muro);
   background-image:
     /* manchas de humedad y desgaste, en escala grande */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23b)' opacity='0.55'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23b)' opacity='0.55'/%3E%3C/svg%3E"),
     /* poros del cemento */
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.75'/%3E%3C/svg%3E"),
     radial-gradient(760px 420px at 10% 6%,rgba(255,255,255,.22),transparent 62%),
     radial-gradient(560px 320px at 92% 30%,rgba(0,0,0,.14),transparent 62%),
     radial-gradient(460px 280px at 66% 92%,rgba(0,0,0,.12),transparent 62%);
+  /* la capa de manchas no se repite: se estira una sola vez sobre la pantalla.
+     Si se repitiera se verían las costuras del mosaico */
+  background-repeat:no-repeat,repeat,no-repeat,no-repeat,no-repeat;
+  background-size:cover,240px 240px,auto,auto,auto;
   background-blend-mode:overlay,multiply,normal,normal,normal;
-  background-attachment:scroll,scroll,fixed,fixed,fixed;
+  background-attachment:fixed,scroll,fixed,fixed,fixed;
 }
 
 /* ---------- los afiches ---------- */
@@ -753,9 +757,19 @@ footer .rail{position:relative;z-index:1}
 .foot-bottom{border-top:1px solid rgba(0,0,0,.18)}
 .social-handle b{color:var(--spray)}
 
-/* ---------- flotante ---------- */
-.fab{border-radius:8px;box-shadow:4px 4px 0 rgba(20,23,26,.75)}
-.fab:hover{transform:translateY(-2px) scale(1.03)}
+/* ---------- flotante: la calcomanía pegada sobre la página ---------- */
+.fab{
+  background:none;box-shadow:none;border-radius:0;
+  width:auto;height:auto;
+  filter:drop-shadow(4px 5px 0 rgba(20,23,26,.28));
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.fab svg{width:74px;height:auto}
+.fab:hover{transform:translateY(-4px) rotate(-4deg) scale(1.06)}
+@media (max-width:640px){
+  .fab{right:14px;bottom:14px}
+  .fab svg{width:62px}
+}
 </style>
 </head>
 <body>
@@ -1289,7 +1303,32 @@ footer .rail{position:relative;z-index:1}
 </footer>
 
 <a class="fab" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+  <!-- burbuja de WhatsApp pintada, con la pintura chorreando -->
+  <svg viewBox="-14 -14 144 166" aria-hidden="true">
+    <!-- capas de color desbordadas, como pintura que se salió del contorno -->
+    <g stroke="#15171a" stroke-width="5" stroke-linejoin="round">
+      <path d="M12 18 C0 30 -8 52 -4 72 C0 88 10 96 18 92 C8 78 6 58 12 40 Z" fill="#37d7c4"/>
+      <path d="M100 16 C114 28 124 50 120 70 C116 86 106 96 98 92 C110 76 112 54 104 36 Z" fill="#ff7ab8"/>
+      <path d="M28 4 C46 -8 74 -10 94 0 C102 4 104 12 98 16 C78 6 50 6 32 16 Z" fill="#ffb020"/>
+      <path d="M18 96 C30 110 54 118 76 112 C88 108 92 100 86 96 C68 104 40 102 26 92 Z" fill="#7a6bff"/>
+    </g>
+    <!-- chorreados, detrás de la burbuja -->
+    <g fill="#25d366" stroke="#15171a" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M41 84 c8 0 11 24 7 36 c-3 8 -11 8 -14 0 c-4 -12 -1 -36 7 -36 z"/>
+      <path d="M72 84 c7 0 9 16 6 25 c-2 6 -9 6 -11 0 c-3 -9 -2 -25 5 -25 z"/>
+      <path d="M56 88 c6 0 8 32 5 43 c-2 7 -9 7 -11 0 c-3 -11 0 -43 6 -43 z"/>
+    </g>
+    <!-- burbuja -->
+    <path d="M58 8 C85 8 108 29 108 55 C108 81 85 102 58 102 C49 102 40 100 33 95 L10 102 L17 80 C11 73 8 64 8 55 C8 29 31 8 58 8 Z"
+          fill="#25d366" stroke="#15171a" stroke-width="7" stroke-linejoin="round"/>
+    <!-- brillo -->
+    <path d="M28 34 C34 22 46 16 58 16" fill="none" stroke="#8bf0b4" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+    <!-- auricular -->
+    <g transform="translate(11.5,10) scale(3.85)">
+      <path d="M16.5 14.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"
+            fill="#ffffff" stroke="#15171a" stroke-width=".9" stroke-linejoin="round"/>
+    </g>
+  </svg>
 </a>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
