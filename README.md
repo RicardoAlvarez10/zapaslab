@@ -69,15 +69,50 @@ Buscar y reemplazar en `index.html`:
 | "Primeros 50 pares al 50%" | Promo elegida |
 | Nombre "Zapas Lab" | Si el dueño elige otro nombre (está en `<title>`, meta tags, logo, footer) |
 
-## Deploy
+## Publicar la web gratis, sin dominio propio
 
-Cualquiera de estas opciones, todas gratis:
+Las tres opciones dan una dirección pública y no cuestan nada. Todas requieren
+iniciar sesión una vez.
 
-- **Vercel:** `npx vercel --prod` en esta carpeta, o arrastrar la carpeta en vercel.com/new
-- **Netlify:** arrastrar la carpeta en app.netlify.com/drop
-- **Railway:** servicio estático apuntando al repo
+### 1. Netlify Drop (lo más rápido, sin comandos)
 
-Después conectar el dominio `.com.ar` (registrar en nic.ar) desde el panel del hosting.
+Entrar a app.netlify.com/drop y arrastrar **la carpeta** `zapaslab` a la página.
+En menos de un minuto devuelve una dirección tipo `nombre-al-azar.netlify.app`,
+que se puede cambiar por `zapaslab.netlify.app` desde *Site settings > Change site name*.
+
+Para actualizar hay que volver a arrastrar la carpeta, salvo que se conecte el
+repositorio de GitHub desde el panel.
+
+### 2. GitHub Pages (la mejor si el repo ya está en GitHub)
+
+Queda en `https://ricardoalvarez10.github.io/zapaslab/` y se actualiza sola con
+cada `git push`. **Necesita que el repositorio sea público.**
+
+```bash
+gh repo create zapaslab --public --description "Landing de Zapas Lab"
+git -C "C:/Users/Ricardo/.vscode/zapaslab" push -u origin main
+gh api -X POST repos/RicardoAlvarez10/zapaslab/pages -f "source[branch]=main" -f "source[path]=/"
+```
+
+Sin la CLI: *Settings > Pages > Source: Deploy from a branch > main / (root)*.
+La primera publicación tarda un par de minutos.
+
+El archivo `.nojekyll` de este repo evita que GitHub procese la página con
+Jekyll, que no hace falta acá.
+
+### 3. Vercel
+
+```bash
+npx vercel --cwd "C:/Users/Ricardo/.vscode/zapaslab"
+```
+
+Pide iniciar sesión la primera vez y deja la web en `zapaslab.vercel.app`.
+Si se conecta el repositorio, redespliega solo con cada push.
+
+### Después, el dominio propio
+
+Registrar el `.com.ar` en nic.ar (unos $8.000 por año) y apuntarlo desde el
+panel del hosting elegido. Ninguna de las tres opciones obliga a migrar nada.
 
 ## Pendientes (cuando haya material real)
 
