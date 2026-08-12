@@ -566,7 +566,7 @@ h1,h2{
   font-family:var(--font-poster);
   font-weight:400;
   letter-spacing:.002em;
-  line-height:1.02;
+  line-height:1.12;
 }
 .hero h1{font-size:clamp(2.5rem,5.4vw,4.2rem)}
 .section-head h2,.proto h2,.social-band h2,.cta-final h2,#zona h2{
@@ -584,11 +584,11 @@ h1,h2{
 /* la palabra marcada con spray en el título */
 .spray{position:relative;white-space:nowrap}
 .spray::before{
-  content:"";position:absolute;left:-2%;right:-2%;bottom:.03em;height:.36em;
+  content:"";position:absolute;left:-2%;right:-2%;bottom:-.24em;height:.6em;
   background:var(--spray);
-  opacity:.9;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 40' preserveAspectRatio='none'%3E%3Cpath d='M4 26 C60 14 120 30 178 18 C222 9 262 22 296 12 L296 34 C250 42 210 30 166 36 C118 42 62 32 6 38 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/100% 100%;
-          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 40' preserveAspectRatio='none'%3E%3Cpath d='M4 26 C60 14 120 30 178 18 C222 9 262 22 296 12 L296 34 C250 42 210 30 166 36 C118 42 62 32 6 38 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  opacity:.92;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 64' preserveAspectRatio='none'%3E%3Cg fill='%23000'%3E%3Cpath d='M4 22 C60 10 120 26 178 14 C222 5 262 18 296 8 L296 30 C250 38 210 26 166 32 C118 38 62 28 6 34 Z'/%3E%3Cpath d='M44 27 c8 0 11 17 7 27 c-2 7 -10 7 -12 0 c-4 -11 -3 -27 5 -27 z'/%3E%3Cpath d='M148 25 c9 0 13 26 8 36 c-3 7 -11 7 -13 0 c-5 -12 -4 -36 5 -36 z'/%3E%3Cpath d='M242 24 c7 0 10 14 7 22 c-2 5 -9 5 -10 0 c-4 -8 -3 -22 3 -22 z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/100% 100%;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 64' preserveAspectRatio='none'%3E%3Cg fill='%23000'%3E%3Cpath d='M4 22 C60 10 120 26 178 14 C222 5 262 18 296 8 L296 30 C250 38 210 26 166 32 C118 38 62 28 6 34 Z'/%3E%3Cpath d='M44 27 c8 0 11 17 7 27 c-2 7 -10 7 -12 0 c-4 -11 -3 -27 5 -27 z'/%3E%3Cpath d='M148 25 c9 0 13 26 8 36 c-3 7 -11 7 -13 0 c-5 -12 -4 -36 5 -36 z'/%3E%3Cpath d='M242 24 c7 0 10 14 7 22 c-2 5 -9 5 -10 0 c-4 -8 -3 -22 3 -22 z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/100% 100%;
 }
 
 /* ---------- logo grafiteado ---------- */
@@ -668,7 +668,34 @@ footer .logo svg{height:34px}
 }
 .map-frame{border:1.5px solid var(--ink);border-radius:4px;box-shadow:5px 5px 0 rgba(20,23,26,.12)}
 .map-cap .swatch{background:rgba(255,77,23,.2);border-color:var(--spray);border-radius:2px}
-.zl-tip{background:var(--ink);border-radius:3px}
+
+/* el plano, como una fotocopia pegada en la pared */
+#mapa .leaflet-tile-pane{
+  filter:grayscale(1) contrast(1.22) brightness(1.08) sepia(.14);
+}
+#mapa::after{
+  content:"";position:absolute;inset:0;z-index:450;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;opacity:.28;
+}
+#mapa{position:relative}
+/* el límite y los puntos, pintados: el halo imita la neblina del aerosol */
+.leaflet-overlay-pane .zona-spray{
+  filter:drop-shadow(0 0 5px rgba(255,77,23,.6)) drop-shadow(0 0 12px rgba(255,77,23,.35));
+  stroke-linejoin:round;stroke-linecap:round;
+}
+.leaflet-overlay-pane .punto-spray{filter:drop-shadow(0 0 4px rgba(255,77,23,.55))}
+.zl-tip{
+  background:var(--ink);border-radius:2px;
+  font-family:var(--font-poster);font-weight:400;
+  letter-spacing:.06em;text-transform:uppercase;
+  font-size:10.5px;padding:3px 7px;
+  box-shadow:2px 2px 0 rgba(255,77,23,.9);
+}
+.leaflet-control-zoom a{
+  border-radius:2px!important;color:var(--ink)!important;
+  font-weight:700;border-color:var(--ink)!important;
+}
 
 /* ---------- faq ---------- */
 .faq summary::after{color:var(--spray);font-weight:700}
@@ -704,6 +731,20 @@ footer{border-top:none}
 
 <!-- geometría de la zapatilla: se dibuja una sola vez, cada capa la pinta con su paleta -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- deforma los bordes para que el trazo del mapa parezca hecho con aerosol -->
+    <filter id="borde-aerosol" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="4" result="ruido"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- neblina de pintura alrededor del trazo -->
+    <filter id="halo-aerosol" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="9" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="r" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="2.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="d"/></feMerge>
+    </filter>
+  </defs>
   <symbol id="shoe" viewBox="0 0 640 400">
     <rect width="640" height="400" fill="var(--sh-bg)"/>
     <!-- sombra -->
@@ -722,7 +763,7 @@ footer{border-top:none}
              C560 130 584 152 593 190
              C601 228 599 262 589 288
              C470 296 220 302 56 298 Z"
-          fill="var(--sh-up)" stroke="var(--sh-line)" stroke-width="2.5"/>
+          fill="var(--sh-up)" stroke="var(--sh-line)" stroke-width="5.5" stroke-linejoin="round"/>
     <!-- lengüeta -->
     <path d="M296 156 C300 132 314 120 334 118 C354 116 368 126 372 140 C356 150 332 156 314 158 Z" fill="var(--sh-tongue)" stroke="var(--sh-line)" stroke-width="2"/>
     <!-- boca / interior del tobillo -->
@@ -737,7 +778,15 @@ footer{border-top:none}
     <!-- panel del empeine -->
     <path d="M236 196 C258 180 284 164 314 156 L352 150 C344 170 338 190 336 210 L296 218 C274 214 252 206 236 196 Z" fill="var(--sh-eyestay)"/>
     <!-- rayo Z (marca) -->
-    <path d="M382 242 L452 206 L417 250 L490 213" fill="none" stroke="var(--sh-flash)" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- tag pintado en el lateral, en lugar de una marca comercial -->
+    <g fill="none" stroke="var(--sh-flash)" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M368 250 C378 214 404 206 414 228 C422 246 402 258 392 246 C384 236 396 222 414 224 C438 227 452 244 470 236 C488 228 492 210 482 206 C474 203 470 214 478 228 C486 242 502 250 514 240" stroke-width="11"/>
+      <path d="M382 264 C412 270 448 268 476 260" stroke-width="6" opacity=".8"/>
+    </g>
+    <g fill="var(--sh-flash)" opacity=".9">
+      <circle cx="522" cy="234" r="4"/><circle cx="530" cy="244" r="2.6"/>
+      <circle cx="362" cy="262" r="3"/>
+    </g>
     <!-- cordones -->
     <g fill="var(--sh-lace)" stroke="var(--sh-lace-line)" stroke-width="2">
       <rect x="244" y="190" width="84" height="12" rx="6" transform="rotate(-20 286 196)"/>
@@ -833,13 +882,13 @@ footer{border-top:none}
         <div class="ba-stage" id="baStage" style="--pos:50%">
           <!-- capa después (fondo) -->
           <svg viewBox="0 0 640 400" role="img" aria-label="Zapatilla limpia, después del lavado"
-               style="--sh-bg:transparent;--sh-shadow:#d3d5cf;--sh-mid:#ffffff;--sh-out:#c9a37c;--sh-up:#fbfbfa;--sh-line:#d3d4cd;--sh-collar:#e8e9e3;--sh-open:#b3b6ac;--sh-eyestay:#f0f1ec;--sh-tongue:#eff0eb;--sh-heel:#2c3644;--sh-cap:#e9eae4;--sh-lace:#ffffff;--sh-lace-line:#bcbeb5;--sh-flash:#2c3644;--sh-stain:transparent;--sh-scuff:transparent">
+               style="--sh-bg:transparent;--sh-shadow:#c9c4b8;--sh-mid:#ffffff;--sh-out:#15171a;--sh-up:#fbfbfa;--sh-line:#15171a;--sh-collar:#e4e2da;--sh-open:#9a978c;--sh-eyestay:#efeee7;--sh-tongue:#edece5;--sh-heel:#15171a;--sh-cap:#e8e6de;--sh-lace:#ffffff;--sh-lace-line:#15171a;--sh-flash:#ff4d17;--sh-stain:transparent;--sh-scuff:transparent">
             <use href="#shoe"/>
           </svg>
           <!-- capa antes (recortada por el slider) -->
           <div class="layer-before" aria-hidden="true">
             <svg viewBox="0 0 640 400"
-                 style="--sh-bg:#e9e3d7;--sh-shadow:#b1a58f;--sh-mid:#d4c9b1;--sh-out:#84653f;--sh-up:#d2c7b4;--sh-line:#a3947a;--sh-collar:#beb197;--sh-open:#78705b;--sh-eyestay:#c7bba2;--sh-tongue:#c6b99e;--sh-heel:#8a8274;--sh-cap:#bbad93;--sh-lace:#c5bca9;--sh-lace-line:#988a6f;--sh-flash:#77838e;--sh-stain:#6a4f33;--sh-scuff:#867051">
+                 style="--sh-bg:#ded6c6;--sh-shadow:#a89b83;--sh-mid:#cbbfa5;--sh-out:#2e2a24;--sh-up:#cabfa9;--sh-line:#2e2a24;--sh-collar:#b5a88e;--sh-open:#6e6654;--sh-eyestay:#bfb39a;--sh-tongue:#bdb096;--sh-heel:#2e2a24;--sh-cap:#b3a68c;--sh-lace:#bbb19d;--sh-lace-line:#2e2a24;--sh-flash:#8a7f6d;--sh-stain:#5d442a;--sh-scuff:#7a6449">
               <use href="#shoe"/>
             </svg>
           </div>
@@ -1361,9 +1410,31 @@ var PROMO={
     [-26.752,-65.302],
     [-26.722,-65.278]
   ];
-  var poly=L.polygon(zona,{
-    color:'#1da851',weight:2,
-    fillColor:'#1da851',fillOpacity:.12
+  // el límite no se dibuja recto: se subdivide y se le mete un temblor
+  // siempre igual, para que el trazo parezca pintado a pulso
+  function pintarAPulso(pts,pasos,amplitud){
+    var out=[];
+    for(var i=0;i<pts.length;i++){
+      var a=pts[i],b=pts[(i+1)%pts.length];
+      for(var s=0;s<pasos;s++){
+        var t=s/pasos;
+        var lat=a[0]+(b[0]-a[0])*t;
+        var lng=a[1]+(b[1]-a[1])*t;
+        var n=i*pasos+s;
+        out.push([
+          lat+Math.sin(n*2.7)*amplitud+Math.sin(n*0.9)*amplitud*0.5,
+          lng+Math.cos(n*3.1)*amplitud+Math.cos(n*1.3)*amplitud*0.5
+        ]);
+      }
+    }
+    return out;
+  }
+  var zonaPintada=pintarAPulso(zona,7,0.0022);
+
+  var poly=L.polygon(zonaPintada,{
+    color:'#ff4d17',weight:7,lineJoin:'round',lineCap:'round',
+    fillColor:'#ff4d17',fillOpacity:.07,
+    className:'zona-spray'
   }).addTo(map);
 
   var puntos=[
@@ -1377,8 +1448,9 @@ var PROMO={
   ];
   var marcadores=puntos.map(function(p){
     return L.circleMarker(p.c,{
-      radius:5,color:'#14171c',weight:2,
-      fillColor:'#ffffff',fillOpacity:1
+      radius:6,color:'#15171a',weight:3,
+      fillColor:'#ff4d17',fillOpacity:1,
+      className:'punto-spray'
     }).addTo(map).bindTooltip(p.n,{
       permanent:true,direction:p.d,className:'zl-tip'
     });
@@ -1405,23 +1477,30 @@ var PROMO={
     document.querySelectorAll('#mapa .zl-tip').forEach(function(t,i){
       t.style.transitionDelay=(1.6+i*.15)+'s';
     });
-    var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting)return;
-        io.disconnect();
-        cont.classList.add('map-in');
-        if(pel){
-          pel.style.transition='stroke-dashoffset 2.2s ease, fill-opacity 1.2s ease 1.6s';
-          pel.style.strokeDashoffset=0;
-          pel.style.fillOpacity=.12;
-        }
-        marcadores.forEach(function(m,i){
-          var el=m.getElement();
-          if(el)setTimeout(function(){el.style.opacity=1;},1300+i*160);
-        });
+    // se dispara cuando el mapa ya entró en pantalla, con respaldo por si
+    // el observador no responde (pasa en algunos navegadores embebidos)
+    var pintado=false,pollMapa=null;
+    function pintarZona(){
+      if(pintado)return;
+      var r=cont.getBoundingClientRect();
+      if(r.top>window.innerHeight*0.8||r.bottom<0)return;
+      pintado=true;
+      cont.classList.add('map-in');
+      if(pel){
+        pel.style.transition='stroke-dashoffset 2.2s ease, fill-opacity 1.2s ease 1.6s';
+        pel.style.strokeDashoffset=0;
+        pel.style.fillOpacity=.07;
+      }
+      marcadores.forEach(function(m,i){
+        var el=m.getElement();
+        if(el)setTimeout(function(){el.style.opacity=1;},1300+i*160);
       });
-    },{threshold:.35});
-    io.observe(cont);
+      window.removeEventListener('scroll',pintarZona);
+      if(pollMapa)clearInterval(pollMapa);
+    }
+    window.addEventListener('scroll',pintarZona,{passive:true});
+    pollMapa=setInterval(pintarZona,500);
+    pintarZona();
   }
   }
   var mapaEl=document.getElementById('mapa');
