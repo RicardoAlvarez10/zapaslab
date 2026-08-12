@@ -1,5 +1,13 @@
 # Zapas Lab — Página web
 
+**En vivo:** https://ricardoalvarez10.github.io/zapaslab/
+
+Se publica sola con cada `git push` a `main`. Tarda un par de minutos en
+reflejar los cambios.
+
+> Ojo: el número de WhatsApp y los precios que se ven son de ejemplo.
+> No difundir el enlace hasta reemplazarlos (ver más abajo).
+
 Landing informativa de una sola página para el servicio de lavado de zapatillas con retiro y entrega en el Gran San Miguel de Tucumán. Todo el funnel termina en WhatsApp.
 
 **Un solo archivo:** `index.html` (HTML + CSS + JS embebidos, sin build). Cargas externas: Google Fonts (Archivo) y Leaflet + tiles de OpenStreetMap/CARTO para el mapa de cobertura (gratis, sin API key).
