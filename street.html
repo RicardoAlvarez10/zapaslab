@@ -780,13 +780,14 @@ footer .rail{position:relative;z-index:1}
    color. Necesita tamaño para leerse, así que va más grande que un ícono
    corriente, y sobre el verde del botón lleva borde de calcomanía para
    despegarse del fondo. */
-.ico-wa{width:2.1em;height:2.42em;margin-bottom:-.52em;flex:none}
-.btn-wa .ico-wa{filter:url(#borde-sticker)}
-.btn-wa{padding-left:1em;gap:.45em}
-.topbar .btn-wa .ico-wa{width:2.2em;height:2.54em}
-.socials .s-wa .ico-wa{width:28px;height:32px;margin-bottom:-7px}
-.fab .wa-grande{width:74px;height:85px}
-@media (max-width:640px){.fab .wa-grande{width:62px;height:71px}}
+/* el contorno negro y la sombra corrida ya despegan al logo del verde del
+   botón: no hace falta borde de calcomanía */
+.ico-wa{width:1.85em;height:1.79em;flex:none}
+.btn-wa{padding-left:1.05em;gap:.5em}
+.topbar .btn-wa .ico-wa{width:1.95em;height:1.89em}
+.socials .s-wa .ico-wa{width:26px;height:25px}
+.fab .wa-grande{width:76px;height:74px}
+@media (max-width:640px){.fab .wa-grande{width:64px;height:62px}}
 
 /* trazo pintado bajo los enlaces de texto */
 .nav a::after,
@@ -864,7 +865,6 @@ footer .rail{position:relative;z-index:1}
 .fab{
   background:none;box-shadow:none;border-radius:0;
   width:auto;height:auto;
-  filter:drop-shadow(4px 5px 0 rgba(20,23,26,.28));
   transition:transform .22s cubic-bezier(.34,1.56,.64,1);
 }
 .fab svg{width:74px;height:85px}
@@ -893,34 +893,23 @@ footer .rail{position:relative;z-index:1}
       <feMerge><feMergeNode in="blur"/><feMergeNode in="d"/></feMerge>
     </filter>
   </defs>
-  <!-- borde de calcomanía: recorta la silueta y la engorda en blanco, para
-       que el logo no se pierda cuando está sobre el verde del botón -->
-  <filter id="borde-sticker" x="-20%" y="-20%" width="140%" height="140%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="gordo"/>
-    <feFlood flood-color="#ffffff" result="blanco"/>
-    <feComposite in="blanco" in2="gordo" operator="in" result="borde"/>
-    <feMerge><feMergeNode in="borde"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>
-
-  <!-- la burbuja de WhatsApp pintada. Una sola versión para toda la página -->
-  <symbol id="wa-pintado" viewBox="-14 -14 144 166">
-    <g stroke="#15171a" stroke-width="5" stroke-linejoin="round">
-      <path d="M12 18 C0 30 -8 52 -4 72 C0 88 10 96 18 92 C8 78 6 58 12 40 Z" fill="#37d7c4"/>
-      <path d="M100 16 C114 28 124 50 120 70 C116 86 106 96 98 92 C110 76 112 54 104 36 Z" fill="#ff7ab8"/>
-      <path d="M28 4 C46 -8 74 -10 94 0 C102 4 104 12 98 16 C78 6 50 6 32 16 Z" fill="#ffb020"/>
-      <path d="M18 96 C30 110 54 118 76 112 C88 108 92 100 86 96 C68 104 40 102 26 92 Z" fill="#7a6bff"/>
-    </g>
-    <g fill="#25d366" stroke="#15171a" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M41 84 c8 0 11 24 7 36 c-3 8 -11 8 -14 0 c-4 -12 -1 -36 7 -36 z"/>
-      <path d="M72 84 c7 0 9 16 6 25 c-2 6 -9 6 -11 0 c-3 -9 -2 -25 5 -25 z"/>
-      <path d="M56 88 c6 0 8 32 5 43 c-2 7 -9 7 -11 0 c-3 -11 0 -43 6 -43 z"/>
-    </g>
-    <path d="M58 8 C85 8 108 29 108 55 C108 81 85 102 58 102 C49 102 40 100 33 95 L10 102 L17 80 C11 73 8 64 8 55 C8 29 31 8 58 8 Z"
-          fill="#25d366" stroke="#15171a" stroke-width="7" stroke-linejoin="round"/>
-    <path d="M28 34 C34 22 46 16 58 16" fill="none" stroke="#8bf0b4" stroke-width="7" stroke-linecap="round" opacity=".75"/>
-    <g transform="translate(11.5,10) scale(3.85)">
+  <!-- WhatsApp en clave de graffiti de bloque: relleno plano, contorno parejo
+       y sombra dura corrida. Es el mismo recurso que usan los botones y las
+       fichas de la página, así el logo pertenece al conjunto en lugar de
+       parecer una estampa pegada aparte. -->
+  <symbol id="wa-pintado" viewBox="0 0 122 118">
+    <!-- sombra corrida -->
+    <path d="M56 6 C83 6 106 27 106 53 C106 79 83 100 56 100 C47 100 38 98 31 93 L8 100 L15 78 C9 71 6 62 6 53 C6 27 29 6 56 6 Z"
+          transform="translate(9,9)" fill="#15171a"/>
+    <!-- cuerpo -->
+    <path d="M56 6 C83 6 106 27 106 53 C106 79 83 100 56 100 C47 100 38 98 31 93 L8 100 L15 78 C9 71 6 62 6 53 C6 27 29 6 56 6 Z"
+          fill="#25d366" stroke="#15171a" stroke-width="8" stroke-linejoin="round"/>
+    <!-- reflejo, el brillo que se les pinta a las letras de bloque -->
+    <path d="M24 40 C29 25 41 17 55 15" fill="none" stroke="#84f2b0" stroke-width="8" stroke-linecap="round"/>
+    <!-- auricular -->
+    <g transform="translate(11.6,9) scale(3.7)">
       <path d="M16.5 14.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"
-            fill="#ffffff" stroke="#15171a" stroke-width=".9" stroke-linejoin="round"/>
+            fill="#ffffff" stroke="#15171a" stroke-width="1.1" stroke-linejoin="round"/>
     </g>
   </symbol>
   <symbol id="shoe" viewBox="0 0 640 400">
