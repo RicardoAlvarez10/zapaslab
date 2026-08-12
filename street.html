@@ -757,6 +757,94 @@ footer .rail{position:relative;z-index:1}
 .foot-bottom{border-top:1px solid rgba(0,0,0,.18)}
 .social-handle b{color:var(--spray)}
 
+/* =====================================================================
+   UN SOLO LENGUAJE DE HOVER
+   Todo lo que responde al mouse lo hace con el mismo vocabulario:
+   un trazo de aerosol que se pinta, un halo de pintura fresca, y la
+   firma que se marca. Nada de subrayados rectos ni fondos planos.
+   ===================================================================== */
+:root{
+  --trazo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 22' preserveAspectRatio='none'%3E%3Cpath d='M3 12 C56 4 116 17 174 8 C218 1 258 13 297 5 L297 17 C252 24 212 13 168 19 C120 25 60 15 5 21 Z' fill='%23000'/%3E%3C/svg%3E");
+  --halo:drop-shadow(0 0 7px rgba(255,77,23,.5)) drop-shadow(0 0 16px rgba(255,77,23,.25));
+  --halo-verde:drop-shadow(0 0 7px rgba(37,211,102,.55)) drop-shadow(0 0 16px rgba(37,211,102,.3));
+}
+
+/* el ícono de WhatsApp chorrea en todos los tamaños */
+.ico-wa{width:1.15em;height:1.49em;margin-bottom:-.34em;flex:none}
+.socials .s-wa .ico-wa{width:18px;height:23px;margin-bottom:-5px}
+
+/* trazo pintado bajo los enlaces de texto */
+.nav a::after,
+.foot-col a::after,
+.foot-bottom a::after{
+  content:"";position:absolute;left:-3px;right:-3px;bottom:-4px;
+  width:auto;height:6px;
+  background:var(--spray);
+  -webkit-mask:var(--trazo) no-repeat center/100% 100%;
+          mask:var(--trazo) no-repeat center/100% 100%;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .28s cubic-bezier(.22,1,.36,1);
+}
+.nav a,.foot-col a,.foot-bottom a{position:relative;display:inline-block}
+.foot-col a{display:block;width:fit-content}
+.nav a:hover::after,.nav a.active::after,
+.foot-col a:hover::after,
+.foot-bottom a:hover::after{transform:scaleX(1)}
+.foot-col a:hover,.foot-bottom a:hover{color:var(--ink)}
+
+/* los botones se mojan de pintura */
+.btn-dark:hover,.btn-ghost:hover{filter:var(--halo)}
+.btn-wa:hover{filter:var(--halo-verde)}
+.btn:hover .ico-wa{transform:scale(1.12) rotate(-7deg)}
+
+/* las fichas de precio también quedan firmadas */
+.card{position:relative}
+.card::after{
+  content:"";position:absolute;top:18px;right:18px;
+  width:58px;height:34px;
+  opacity:.12;transform:rotate(-9deg);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+  background-repeat:no-repeat;background-position:center;background-size:contain;
+}
+.card:hover::after{opacity:.9;transform:rotate(-3deg) scale(1.16)}
+.card:hover{border-color:var(--spray);box-shadow:6px 6px 0 rgba(255,77,23,.2)}
+.card.featured:hover{box-shadow:6px 6px 0 var(--spray)}
+.cards .card:nth-child(1)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg stroke='%23ff4d17' stroke-width='9' fill='none' stroke-linecap='round'%3E%3Cpath d='M14 34 H104'/%3E%3Cpath d='M18 54 C46 60 78 58 100 50' stroke-width='5' opacity='.8'/%3E%3C/g%3E%3C/svg%3E");
+}
+.cards .card:nth-child(2)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg stroke='%23ff4d17' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60 8 L74 30 L100 34 L80 50 L86 62 L60 52 L34 62 L40 50 L20 34 L46 30 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.cards .card:nth-child(3)::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg stroke='%23ff4d17' stroke-width='9' fill='none' stroke-linecap='round'%3E%3Cpath d='M20 30 H100 M60 6 V58'/%3E%3Cpath d='M34 12 L88 52 M88 12 L34 52' stroke-width='6' opacity='.75'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* los barrios se pintan al pasar */
+.zona-chips span{transition:border-color .2s ease,color .2s ease,filter .2s ease,transform .2s ease}
+.zona-chips span:hover{
+  border-color:var(--spray);color:var(--spray);
+  filter:var(--halo);transform:translateY(-2px) rotate(-1.2deg);
+}
+
+/* las redes del pie: se pintan, no se rellenan de negro */
+.socials a:hover{
+  background:none;border-color:var(--spray);color:var(--spray);
+  filter:var(--halo);transform:translateY(-3px) rotate(-4deg);
+}
+.socials a.s-wa:hover{border-color:var(--wa);color:var(--wa);filter:var(--halo-verde)}
+.socials a{transition:border-color .2s ease,color .2s ease,filter .2s ease,transform .2s ease}
+
+/* las preguntas: la cruz se pinta */
+.faq summary{transition:color .2s ease}
+.faq summary:hover{color:var(--spray)}
+.faq summary::after{transition:transform .25s ease,color .2s ease,filter .2s ease}
+.faq summary:hover::after{filter:var(--halo);transform:scale(1.2)}
+.faq details[open] summary:hover::after{transform:rotate(45deg) scale(1.2)}
+
+/* los botones de redes de la sección Seguinos */
+.social-ctas .btn:hover{filter:var(--halo)}
+
 /* ---------- flotante: la calcomanía pegada sobre la página ---------- */
 .fab{
   background:none;box-shadow:none;border-radius:0;
@@ -790,6 +878,14 @@ footer .rail{position:relative;z-index:1}
       <feMerge><feMergeNode in="blur"/><feMergeNode in="d"/></feMerge>
     </filter>
   </defs>
+  <!-- WhatsApp para tamaños chicos: a 17 píxeles el contorno y las capas de
+       color se vuelven manchas, así que acá lo pintado lo dice el chorreado -->
+  <symbol id="wa-tag" viewBox="0 0 24 31">
+    <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/>
+    <path d="M9.4 19.6c1 0 1.4 4 .9 5.7-.3 1.1-1.5 1.1-1.8 0-.6-1.8-.1-5.7.9-5.7z"/>
+    <path d="M15.2 20.2c.8 0 1.1 2.7.7 4-.2.8-1.2.8-1.4 0-.5-1.4-.1-4 .7-4z"/>
+    <path d="M18.6 18.8c.6 0 .9 1.9.6 2.9-.2.6-1 .6-1.1 0-.4-1-.1-2.9.5-2.9z"/>
+  </symbol>
   <symbol id="shoe" viewBox="0 0 640 400">
     <rect width="640" height="400" fill="var(--sh-bg)"/>
     <!-- sombra -->
@@ -889,7 +985,7 @@ footer .rail{position:relative;z-index:1}
       <a href="#faq">Preguntas</a>
     </nav>
     <a class="btn btn-wa btn-sm" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
-      <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+      <svg class="ico-wa" fill="currentColor" aria-hidden="true"><use href="#wa-tag"/></svg>
       <span class="wa-txt">WhatsApp</span>
     </a>
   </div></div>
@@ -910,7 +1006,7 @@ footer .rail{position:relative;z-index:1}
         </p>
         <div class="hero-ctas fade d3">
           <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
-            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+            <svg class="ico-wa" fill="currentColor" aria-hidden="true"><use href="#wa-tag"/></svg>
             Pedir retiro
           </a>
           <a class="btn btn-ghost" href="#servicios">Ver precios</a>
@@ -1206,7 +1302,7 @@ footer .rail{position:relative;z-index:1}
           <span class="cupos" id="cupos" hidden><span class="dot"></span> <span id="cuposTxt"></span></span>
           <p>Reservá tu lugar por WhatsApp y aprovechá el precio de apertura. Sin pagos por adelantado: reservás, retiramos, y pagás cuando las tenés de vuelta.</p>
           <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20reservar%20la%20promo%20de%20apertura" target="_blank" rel="noopener">
-            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+            <svg class="ico-wa" fill="currentColor" aria-hidden="true"><use href="#wa-tag"/></svg>
             Reservar mi lugar
           </a>
         </div>
@@ -1216,7 +1312,7 @@ footer .rail{position:relative;z-index:1}
           <h2>Tus zapas listas en 48 horas</h2>
           <p>Escribinos por WhatsApp y coordinamos el retiro por tu casa. Sin pagos por adelantado: retiramos, lavamos y pagás cuando las tenés de vuelta.</p>
           <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
-            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+            <svg class="ico-wa" fill="currentColor" aria-hidden="true"><use href="#wa-tag"/></svg>
             Pedir retiro
           </a>
         </div>
@@ -1273,8 +1369,8 @@ footer .rail{position:relative;z-index:1}
           <a href="https://facebook.com/zapaslab.tuc" target="_blank" rel="noopener" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 22v-8.1h2.7l.4-3.3h-3.1V8.5c0-1 .3-1.6 1.7-1.6h1.5V3.9c-.3 0-1.2-.1-2.3-.1-2.4 0-4 1.4-4 4v2.8H7.6v3.3h2.7V22h3.1z"/></svg>
           </a>
-          <a href="https://wa.me/5493810000000" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+          <a class="s-wa" href="https://wa.me/5493810000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg class="ico-wa" fill="currentColor" aria-hidden="true"><use href="#wa-tag"/></svg>
           </a>
         </div>
       </div>
