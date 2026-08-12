@@ -1,6 +1,17 @@
 # Zapas Lab — Página web
 
-**En vivo:** https://ricardoalvarez10.github.io/zapaslab/
+**En vivo:**
+
+| Versión | Dirección | Estilo |
+|---|---|---|
+| Sobria | https://ricardoalvarez10.github.io/zapaslab/ | Papel claro, tipografía neutra. La que aprobó el dueño |
+| Muro | https://ricardoalvarez10.github.io/zapaslab/street.html | Cemento, afiches con cinta, spray y tipografía de póster. Pensada para acompañar un logo grafiteado |
+
+Las dos tienen el mismo contenido y la misma estructura: cambia solo la piel.
+Cuando el dueño elija, la elegida pasa a ser `index.html` y la otra se borra.
+`street.html` es una copia de `index.html` con un segundo bloque de estilos al
+final del `<head>` que pisa los colores, las tipografías y los bordes, más el
+logo en SVG y el tag pintado de la sección oscura.
 
 Se publica sola con cada `git push` a `main`. Tarda un par de minutos en
 reflejar los cambios.
@@ -76,6 +87,8 @@ Buscar y reemplazar en `index.html`:
 | `@zapaslab.tuc` (Instagram, TikTok y Facebook) | Usuario real, más la frase "En todas somos @zapaslab.tuc" de la sección de redes |
 | "Primeros 50 pares al 50%" | Promo elegida |
 | Nombre "Zapas Lab" | Si el dueño elige otro nombre (está en `<title>`, meta tags, logo, footer) |
+| Dirección del local | Todavía no la pasaron. Cuando exista, va en el pie y en el bloque de datos estructurados del `<head>` |
+| Logo | En `street.html` el logo es un SVG provisorio (texto con una mancha de spray). Reemplazarlo por el grafiteado real cuando esté |
 
 ## Publicar la web gratis, sin dominio propio
 

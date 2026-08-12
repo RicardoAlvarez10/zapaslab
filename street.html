@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314171c'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='38' font-weight='900' fill='white' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">
@@ -500,6 +500,205 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   .foot-brand{grid-column:auto}
 }
 </style>
+
+<!-- =====================================================================
+     TEMA MURO: se monta encima del diseño base y le cambia la piel.
+     La idea es un muro de cemento con afiches pegados y algo de spray,
+     para que la página converse con un logo grafiteado sin perder orden.
+     ===================================================================== -->
+<style>
+:root{
+  --muro:#b5b0a6;
+  --muro-oscuro:#9d988d;
+  --papel:#faf8f3;
+  --papel-borde:#e2ded3;
+  --ink:#15171a;
+  --soft:#585349;
+  --faint:#8b8579;
+  --spray:#ff4d17;
+  --hairline:#e4e0d5;
+  --hairline-2:#cfcabd;
+  --cinta:rgba(206,196,172,.85);
+  --font-poster:"Anton",Impact,sans-serif;
+}
+
+/* ---------- el muro ---------- */
+body{
+  background-color:var(--muro);
+  background-image:
+    /* manchas de humedad y desgaste, en escala grande */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23b)' opacity='0.55'/%3E%3C/svg%3E"),
+    /* poros del cemento */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.75'/%3E%3C/svg%3E"),
+    radial-gradient(760px 420px at 10% 6%,rgba(255,255,255,.22),transparent 62%),
+    radial-gradient(560px 320px at 92% 30%,rgba(0,0,0,.14),transparent 62%),
+    radial-gradient(460px 280px at 66% 92%,rgba(0,0,0,.12),transparent 62%);
+  background-blend-mode:overlay,multiply,normal,normal,normal;
+  background-attachment:scroll,scroll,fixed,fixed,fixed;
+}
+
+/* ---------- los afiches ---------- */
+.sheet{
+  position:relative;
+  background:var(--papel);
+  border:1px solid var(--papel-borde);
+  border-radius:3px;
+  box-shadow:0 22px 44px -22px rgba(20,18,14,.55), 0 2px 0 rgba(255,255,255,.5) inset;
+}
+/* cinta de papel en las esquinas de algunos afiches */
+.sheet:nth-of-type(2n)::before,
+.sheet:nth-of-type(2n)::after{
+  content:"";position:absolute;top:-13px;width:104px;height:27px;
+  background:var(--cinta);
+  box-shadow:0 1px 2px rgba(0,0,0,.18);
+  -webkit-mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px));
+          mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px));
+}
+.sheet:nth-of-type(2n)::before{left:34px;transform:rotate(-2.4deg)}
+.sheet:nth-of-type(2n)::after{right:34px;transform:rotate(1.8deg)}
+@media (max-width:640px){
+  .sheet:nth-of-type(2n)::before{left:18px;width:78px}
+  .sheet:nth-of-type(2n)::after{right:18px;width:78px}
+}
+
+/* ---------- tipografía de afiche ---------- */
+h1,h2{
+  font-family:var(--font-poster);
+  font-weight:400;
+  letter-spacing:.002em;
+  line-height:1.02;
+}
+.hero h1{font-size:clamp(2.5rem,5.4vw,4.2rem)}
+.section-head h2,.proto h2,.social-band h2,.cta-final h2,#zona h2{
+  font-size:clamp(1.95rem,3.7vw,2.9rem);
+}
+.step h3,.card h3{
+  font-family:var(--font-poster);font-weight:400;
+  text-transform:uppercase;letter-spacing:.02em;font-size:1.25rem;
+}
+.lbl{
+  font-weight:700;letter-spacing:.2em;color:var(--faint);
+}
+.price{font-family:var(--font-poster);font-weight:400;font-size:2rem;letter-spacing:.01em}
+
+/* la palabra marcada con spray en el título */
+.spray{position:relative;white-space:nowrap}
+.spray::before{
+  content:"";position:absolute;left:-2%;right:-2%;bottom:.03em;height:.36em;
+  background:var(--spray);
+  opacity:.9;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 40' preserveAspectRatio='none'%3E%3Cpath d='M4 26 C60 14 120 30 178 18 C222 9 262 22 296 12 L296 34 C250 42 210 30 166 36 C118 42 62 32 6 38 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 40' preserveAspectRatio='none'%3E%3Cpath d='M4 26 C60 14 120 30 178 18 C222 9 262 22 296 12 L296 34 C250 42 210 30 166 36 C118 42 62 32 6 38 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+}
+
+/* ---------- logo grafiteado ---------- */
+.logo{gap:.5em;align-items:center}
+.logo .dot{display:none}
+.logo svg{height:30px;width:auto;color:var(--ink)}
+footer .logo svg{height:34px}
+.topbar .logo{font-size:0}
+
+/* ---------- barra superior: cartel sobre el muro ---------- */
+.topbar{
+  background:rgba(181,176,166,.9);
+  border-bottom:1px solid rgba(0,0,0,.12);
+}
+.topbar.scrolled{border-bottom-color:rgba(0,0,0,.2);box-shadow:0 10px 30px -18px rgba(0,0,0,.6)}
+.nav a{color:var(--soft);font-weight:600}
+.nav a:hover,.nav a.active{color:var(--ink)}
+.nav a::after{background:var(--spray);height:3px}
+.menu-btn{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.35)}
+
+/* ---------- botones: sticker, no pastilla ---------- */
+.btn{border-radius:6px;font-weight:700}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--spray)}
+.btn-dark:hover{background:#000;box-shadow:4px 4px 0 var(--spray)}
+.btn-ghost{border-color:var(--ink);border-width:2px;color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--papel)}
+.btn-wa{box-shadow:3px 3px 0 rgba(20,23,26,.85)}
+.btn-wa:hover{box-shadow:4px 4px 0 rgba(20,23,26,.85)}
+
+/* ---------- tarjetas: fichas de taller ---------- */
+.step,.card,.ba{
+  background:#fff;border:1.5px solid var(--hairline-2);border-radius:4px;
+  box-shadow:4px 4px 0 rgba(20,23,26,.07);
+}
+.step:hover,.card:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:6px 6px 0 rgba(20,23,26,.12)}
+.step .step-ico{background:var(--muro);border-radius:4px;color:var(--ink)}
+.card.featured{border:2.5px solid var(--ink);box-shadow:6px 6px 0 var(--spray)}
+.card .pop{background:var(--spray);color:#fff;border-radius:3px;letter-spacing:.1em;transform:rotate(-1.5deg)}
+.card li::before{background:var(--spray)}
+.ba-stage{border-radius:3px}
+.ba-handle{border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--spray)}
+.chip-antes{background:#6f6455;border-radius:3px}
+.chip-despues{background:var(--ink);border-radius:3px}
+
+/* ---------- el proceso: pared pintada ---------- */
+.proto{
+  background-color:#191b1e;
+  background-image:
+    radial-gradient(600px 320px at 78% 12%,rgba(255,77,23,.16),transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23m)' opacity='0.4'/%3E%3C/svg%3E");
+  background-blend-mode:normal,overlay;
+  border:none;
+}
+.proto::before,.proto::after{display:none}
+.proto{position:relative;overflow:hidden}
+.proto .tag{
+  position:absolute;top:34px;right:38px;
+  width:250px;height:auto;opacity:.5;
+  transform:rotate(-6deg);
+  pointer-events:none;
+}
+@media (max-width:1100px){.proto .tag{width:180px;top:24px;right:20px;opacity:.35}}
+@media (max-width:760px){.proto .tag{display:none}}
+.proto .lbl{color:var(--spray)}
+.proto-cell{border-top:3px solid var(--spray)}
+.proto-cell b{
+  font-family:var(--font-poster);font-weight:400;
+  font-size:1.5rem;color:var(--spray);margin-bottom:6px;
+}
+.proto-cell h4{font-family:var(--font-poster);font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:1.05rem}
+.proto-cell p{color:#a9a49a}
+
+/* ---------- zona ---------- */
+.zona-chips span{
+  border:1.5px solid var(--ink);border-radius:3px;background:#fff;
+  font-weight:600;
+}
+.map-frame{border:1.5px solid var(--ink);border-radius:4px;box-shadow:5px 5px 0 rgba(20,23,26,.12)}
+.map-cap .swatch{background:rgba(255,77,23,.2);border-color:var(--spray);border-radius:2px}
+.zl-tip{background:var(--ink);border-radius:3px}
+
+/* ---------- faq ---------- */
+.faq summary::after{color:var(--spray);font-weight:700}
+.faq details{border-bottom:1px solid var(--hairline-2)}
+
+/* ---------- cierre ---------- */
+.cta-final{
+  background-color:#191b1e;border-radius:4px;
+  background-image:
+    radial-gradient(600px 300px at 50% 118%,rgba(255,77,23,.3),transparent 68%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' opacity='0.4'/%3E%3C/svg%3E");
+  background-blend-mode:normal,overlay;
+  box-shadow:0 24px 50px -24px rgba(0,0,0,.7);
+}
+.cta-final .lbl{color:var(--spray)}
+.cta-final .cupos{border-color:rgba(255,255,255,.3);border-radius:3px}
+.garantias span::before{background:var(--spray)}
+
+/* ---------- pie ---------- */
+footer{border-top:none}
+.foot-col b{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--ink)}
+.socials a{border:1.5px solid var(--ink);border-radius:4px;color:var(--ink)}
+.socials a:hover{background:var(--ink);color:var(--papel)}
+.foot-bottom{border-top:1px solid rgba(0,0,0,.18)}
+.social-handle b{color:var(--spray)}
+
+/* ---------- flotante ---------- */
+.fab{border-radius:8px;box-shadow:4px 4px 0 rgba(20,23,26,.75)}
+.fab:hover{transform:translateY(-2px) scale(1.03)}
+</style>
 </head>
 <body>
 
@@ -577,7 +776,15 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 
 <header class="topbar" id="topbar">
   <div class="rail"><div class="topbar-inner">
-    <a class="logo" href="#top"><span class="dot"></span>Zapas Lab</a>
+    <a class="logo" href="#top" aria-label="Zapas Lab, inicio">
+      <svg viewBox="0 0 196 46" role="img" aria-hidden="true">
+        <!-- mancha de spray detrás de LAB -->
+        <path d="M112 6 C130 1 158 2 176 5 C190 7 196 15 194 24 C192 34 184 41 170 43 C152 45 128 45 116 41 C106 38 103 30 104 22 C105 13 107 8 112 6 Z" fill="#ff4d17"/>
+        <path d="M186 8 l5 -4 M191 16 l6 -2 M108 40 l-6 4 M118 44 l-3 4" stroke="#ff4d17" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="0" y="34" font-family="Anton, Impact, sans-serif" font-size="34" fill="currentColor" textLength="98" lengthAdjust="spacingAndGlyphs">ZAPAS</text>
+        <text x="116" y="34" font-family="Anton, Impact, sans-serif" font-size="34" fill="#ffffff" textLength="66" lengthAdjust="spacingAndGlyphs">LAB</text>
+      </svg>
+    </a>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -601,7 +808,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
     <div class="wrap hero-grid">
       <div>
         <span class="lbl fade">Lavado de zapatillas a domicilio</span>
-        <h1 class="fade d1">Tus zapas, como recién sacadas de la caja.</h1>
+        <h1 class="fade d1">Tus zapas, como <span class="spray">recién sacadas</span> de la caja.</h1>
         <p class="lead fade d2">
           Las buscamos por tu casa, las lavamos con máquinas hechas para calzado
           y te las devolvemos impecables en <strong>48 a 72 horas</strong>. Retiro
@@ -692,6 +899,18 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 
   <!-- ============ PROCESO INTERNO ============ -->
   <section class="proto sheet">
+    <!-- tag pintado sobre la pared, decorativo -->
+    <svg class="tag" viewBox="0 0 320 120" aria-hidden="true">
+      <g fill="none" stroke="#ff4d17" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 78 C34 30 74 22 92 48 C106 68 84 88 66 78 C48 68 58 44 84 40 C112 36 128 58 150 52 C176 45 186 24 172 16 C160 9 150 26 162 46 C174 66 202 78 224 62 C244 48 246 26 236 20" stroke-width="9"/>
+        <path d="M236 20 C260 34 276 60 300 46" stroke-width="9"/>
+        <path d="M120 96 C160 104 210 100 252 88" stroke-width="5" opacity=".75"/>
+      </g>
+      <g fill="#ff4d17" opacity=".85">
+        <circle cx="306" cy="40" r="4"/><circle cx="298" cy="28" r="2.6"/>
+        <circle cx="24" cy="92" r="3"/><circle cx="14" cy="66" r="2.4"/>
+      </g>
+    </svg>
     <div class="wrap">
       <span class="lbl">Nuestro proceso</span>
       <h2>Cada par pasa por los mismos cinco pasos</h2>
@@ -922,7 +1141,15 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <div class="rail"><div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="logo" href="#top"><span class="dot"></span>Zapas Lab</a>
+        <a class="logo" href="#top" aria-label="Zapas Lab, inicio">
+      <svg viewBox="0 0 196 46" role="img" aria-hidden="true">
+        <!-- mancha de spray detrás de LAB -->
+        <path d="M112 6 C130 1 158 2 176 5 C190 7 196 15 194 24 C192 34 184 41 170 43 C152 45 128 45 116 41 C106 38 103 30 104 22 C105 13 107 8 112 6 Z" fill="#ff4d17"/>
+        <path d="M186 8 l5 -4 M191 16 l6 -2 M108 40 l-6 4 M118 44 l-3 4" stroke="#ff4d17" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="0" y="34" font-family="Anton, Impact, sans-serif" font-size="34" fill="currentColor" textLength="98" lengthAdjust="spacingAndGlyphs">ZAPAS</text>
+        <text x="116" y="34" font-family="Anton, Impact, sans-serif" font-size="34" fill="#ffffff" textLength="66" lengthAdjust="spacingAndGlyphs">LAB</text>
+      </svg>
+    </a>
         <p>
           Taller de limpieza de zapatillas. Retiro y entrega a domicilio
           en todo el Gran San Miguel de Tucumán.
