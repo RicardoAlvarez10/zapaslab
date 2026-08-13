@@ -1,4 +1,4 @@
-# Zapas Lab — Página web
+# Tillas Lab — Página web
 
 **En vivo:**
 
@@ -30,10 +30,10 @@ Landing informativa de una sola página para el servicio de lavado de zapatillas
 Todo se controla desde el bloque `APERTURA Y PROMO` al inicio del script de `index.html`. No hace falta tocar el HTML.
 
 ```js
-var APERTURA=new Date('2026-08-31T09:00:00-03:00');
+var APERTURA=new Date('2026-09-01T09:00:00-03:00');
 var PROMO={
   activa:true,
-  hasta:new Date('2026-09-14T23:59:00-03:00'),
+  hasta:new Date('2026-09-15T23:59:00-03:00'),
   lugares:null
 };
 ```
@@ -69,7 +69,7 @@ Están en el HTML, comentados, listos para reactivar sacando el comentario:
 
 La web enlaza **Instagram, TikTok y Facebook** en dos lugares: los botones de la sección "Seguinos" y los íconos del pie. WhatsApp aparece además como ícono en el pie y como botón flotante.
 
-El usuario es **el mismo en las tres redes** (`@zapaslab.tuc`), y la página lo comunica así: "En todas somos @zapaslab.tuc". Si el dueño elige usuarios distintos en cada red, hay que corregir esa frase, porque quedaría diciendo algo falso.
+El usuario es **el mismo en las tres redes** (`@tillaslab`), y la página lo comunica así: "En todas somos @tillaslab". Si el dueño elige usuarios distintos en cada red, hay que corregir esa frase, porque quedaría diciendo algo falso.
 
 **Antes de difundir la web**, las tres cuentas tienen que existir y tener al menos tres o cuatro publicaciones. Un perfil vacío enlazado desde la web resta credibilidad.
 
@@ -83,10 +83,8 @@ Buscar y reemplazar en `index.html`:
 | `+54 9 381 000-0000` (footer) | Número real formateado |
 | Precios `$12.000 / $18.000 / $25.000` | Precios reales |
 | Nombres de los planes (Básico / Completo / Premium) | Los que use el dueño. Aparecen en el título, el botón, el mensaje de WhatsApp, la ficha del hero y en "Todo lo del Completo" del plan Premium |
-| `31 · 08` / "Abrimos el 31" | Fecha real de apertura |
-| `@zapaslab.tuc` (Instagram, TikTok y Facebook) | Usuario real, más la frase "En todas somos @zapaslab.tuc" de la sección de redes |
+| `@tillaslab` (Instagram, TikTok y Facebook) | Confirmar que el usuario esté libre en las tres. Si el dueño usa uno distinto en cada red, corregir también la frase "En todas somos @tillaslab" |
 | "Primeros 50 pares al 50%" | Promo elegida |
-| Nombre "Zapas Lab" | Si el dueño elige otro nombre (está en `<title>`, meta tags, logo, footer) |
 | Dirección del local | Todavía no la pasaron. Cuando exista, va en el pie y en el bloque de datos estructurados del `<head>` |
 | Logo | En `street.html` el logo es un SVG provisorio (texto con una mancha de spray). Reemplazarlo por el grafiteado real cuando esté |
 
@@ -110,7 +108,7 @@ Queda en `https://ricardoalvarez10.github.io/zapaslab/` y se actualiza sola con
 cada `git push`. **Necesita que el repositorio sea público.**
 
 ```bash
-gh repo create zapaslab --public --description "Landing de Zapas Lab"
+gh repo create zapaslab --public --description "Landing de Tillas Lab"
 git -C "C:/Users/Ricardo/.vscode/zapaslab" push -u origin main
 gh api -X POST repos/RicardoAlvarez10/zapaslab/pages -f "source[branch]=main" -f "source[path]=/"
 ```
