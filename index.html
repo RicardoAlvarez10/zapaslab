@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es-AR" data-modo="street">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,20 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&family=Lobster&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tema.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script>
-/* El modo se fija antes de pintar para que no haya destello. Cuando el dueño
-   elija una propuesta, se reemplaza todo esto por data-modo fijo en el <html>
-   y se borra la barra selectora. */
-(function(){
-  var d=document.documentElement;
-  d.classList.add('js','con-selector');
-  var m=null;
-  try{ m=localStorage.getItem('tillaslab_modo'); }catch(e){}
-  var q=new URLSearchParams(location.search).get('modo');
-  if(q) m=q;
-  d.setAttribute('data-modo', ['comun','street','grafity'].indexOf(m)>-1 ? m : 'grafity');
-})();
-</script>
+<script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -57,7 +44,6 @@ section[id]{scroll-margin-top:84px}
   border-bottom:1px solid transparent;
   transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,border-color .3s ease;
 }
-html.con-selector .topbar{top:var(--modo-h,48px)}
 .topbar.scrolled{border-bottom-color:var(--hairline);box-shadow:var(--shadow-card)}
 .topbar.hid{transform:translateY(-100%)}
 .topbar-inner{
@@ -328,6 +314,12 @@ html.js #mapa.map-in .zl-tip{opacity:1}
   padding:.45em 1.1em;margin-top:18px;
 }
 .cta-final .cupos .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+/* cuando las dos promos se anuncian juntas, la segunda va separada por una
+   línea para que se lean como dos cosas distintas y no como un solo bloque */
+.cta-final .promo-seguida{
+  margin-top:40px;padding-top:36px;
+  border-top:1px solid var(--on-strong-linea,rgba(255,255,255,.18));
+}
 .garantias{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:34px;font-size:.82rem;color:var(--on-strong-soft)}
 .garantias span{display:inline-flex;align-items:center;gap:.5em}
 .garantias span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent)}
@@ -524,18 +516,6 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   </symbol>
 </svg>
 
-<!-- =========================================================================
-     Selector de propuesta. Es una herramienta para que el dueño compare, no
-     parte de la web. Cuando elija, se borra este bloque, se borra el script
-     del final y se deja data-modo fijo en el <html>.
-     ========================================================================= -->
-<div class="modo-bar" id="modoBar">
-  <span class="qs">Propuesta</span>
-  <button data-m="comun">Común</button>
-  <button data-m="street">Street</button>
-  <button data-m="grafity">Grafity</button>
-</div>
-
 <header class="topbar" id="topbar">
   <div class="rail"><div class="topbar-inner">
     <a class="lk lk-sm" href="#top" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
@@ -581,8 +561,8 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
       <!-- slider antes / después -->
       <div class="ba fade d2">
         <div class="ba-head">
-          <span class="lbl">Ficha 001 · Lavado completo</span>
-          <span class="lbl" style="color:var(--ink)">Listo en 48 hs</span>
+          <span class="lbl">Ficha 001 · Lavado regular</span>
+          <span class="lbl" style="color:var(--ink)">Listo en el día</span>
         </div>
         <div class="ba-stage" id="baStage" style="--pos:50%">
           <!-- capa después (fondo) -->
@@ -859,9 +839,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
           <h2>Los primeros 10 pares, gratis</h2>
           <span class="cupos" hidden><span class="dot"></span> <span class="cuposTxt"></span></span>
           <p>Sabemos que hay gente esperando nuestro servicio hace tiempo. El día
-          de apertura, los diez primeros clientes que traigan un par al local se
-          llevan el lavado sin ningún costo. Los vamos a atender de la mejor
-          manera, y les vamos a pedir una foto para nuestro recuerdo.</p>
+          de apertura, los diez primeros que se acerquen al local con un par se
+          llevan el lavado sin ningún costo. Es <strong>por orden de llegada y
+          solo en el local</strong>: esta promoción no corre por WhatsApp ni con
+          retiro a domicilio. Los vamos a atender de la mejor manera, y les vamos
+          a pedir una foto para el recuerdo.</p>
           <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20saber%20si%20quedan%20lugares%20de%20los%2010%20lavados%20gratis" target="_blank" rel="noopener">
             <svg class="ico-wa" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
             Preguntar si quedan lugares
@@ -953,35 +935,6 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-// ---- Selector de propuesta: cambia la piel al instante y recuerda la elección ----
-(function(){
-  var bar=document.getElementById('modoBar');
-  if(!bar)return;
-  var d=document.documentElement;
-  function marcar(){
-    var m=d.getAttribute('data-modo');
-    bar.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-pressed', String(b.dataset.m===m));
-    });
-  }
-  bar.addEventListener('click',function(e){
-    var b=e.target.closest('button');
-    if(!b)return;
-    d.setAttribute('data-modo', b.dataset.m);
-    try{ localStorage.setItem('tillaslab_modo', b.dataset.m); }catch(err){}
-    marcar();
-  });
-  marcar();
-
-  // la barra superior se apoya justo debajo del selector, sea cual sea su alto
-  function medir(){
-    document.documentElement.style.setProperty('--modo-h', bar.offsetHeight + 'px');
-  }
-  medir();
-  window.addEventListener('resize', medir, {passive:true});
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
-})();
-
 // ---- Slider antes/después: drag + teclado + invitación inicial ----
 (function(){
   var stage=document.getElementById('baStage');
@@ -1103,21 +1056,35 @@ var PROMOS=[
     document.getElementById('estado').innerHTML='<b>Abierto</b> · lunes a sábado de 9 a 20 hs';
   }
 
-  // se muestra la primera promo que siga vigente; si no queda ninguna, el
-  // mensaje permanente
-  var enCurso=null;
-  for(var i=0;i<PROMOS.length;i++){
-    var p=PROMOS[i];
-    if(p.activa && ahora<p.hasta && (p.lugares===null||p.lugares>0)){ enCurso=p; break; }
-  }
+  // Antes de abrir se anuncian juntas todas las promos vigentes, porque las dos
+  // son parte del mismo anuncio de lanzamiento y la gente tiene que enterarse
+  // de las dos. Ya abiertos pasa a mostrarse solo la que corresponde, que se va
+  // encadenando a medida que se agotan. Si no queda ninguna, el mensaje
+  // permanente.
+  var vigentes=PROMOS.filter(function(p){
+    return p.activa && ahora<p.hasta && (p.lugares===null||p.lugares>0);
+  });
+  var aMostrar = (ahora>=APERTURA) ? vigentes.slice(0,1) : vigentes;
 
-  if(enCurso){
-    var bloque=document.getElementById(enCurso.bloque);
-    bloque.hidden=false;
-    if(enCurso.lugares!==null){
-      bloque.querySelector('.cuposTxt').textContent=
-        enCurso.lugares===1?'Queda 1 lugar':('Quedan '+enCurso.lugares+' lugares');
-      bloque.querySelector('.cupos').hidden=false;
+  if(aMostrar.length){
+    aMostrar.forEach(function(p){
+      var bloque=document.getElementById(p.bloque);
+      bloque.hidden=false;
+      if(p.lugares!==null){
+        bloque.querySelector('.cuposTxt').textContent=
+          p.lugares===1?'Queda 1 lugar':('Quedan '+p.lugares+' lugares');
+        bloque.querySelector('.cupos').hidden=false;
+      }
+    });
+    // con las dos a la vista, la segunda no repite la volanta de apertura
+    if(aMostrar.length>1){
+      for(var j=1;j<aMostrar.length;j++){
+        var b=document.getElementById(aMostrar[j].bloque);
+        b.classList.add('promo-seguida');
+        var t=b.querySelector('.tagline'), l=b.querySelector('.lbl');
+        if(t) t.hidden=true;
+        if(l) l.hidden=true;
+      }
     }
   }else{
     document.getElementById('ctaSiempre').hidden=false;
