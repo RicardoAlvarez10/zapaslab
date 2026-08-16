@@ -450,35 +450,6 @@ table.fichas tr td:last-child{border-radius:0 var(--radius) var(--radius) 0;text
 .state.entregada{background:var(--band);color:var(--faint)}
 .empty{padding:40px;text-align:center;color:var(--faint);font-size:.88rem}
 
-/* =========================================================================
-   Selector de propuesta
-   -------------------------------------------------------------------------
-   Es una herramienta para que el dueño compare, no parte de la web. Cuando
-   elija una, se borra este bloque y se fija data-modo en el <html>.
-   ========================================================================= */
-.modo-bar{
-  position:sticky;top:0;z-index:80;
-  background:#0b0e11;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  gap:10px;padding:9px 16px;flex-wrap:wrap;
-  font-family:"Archivo",system-ui,sans-serif;
-}
-.modo-bar .qs{
-  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
-  color:#7b848f;font-weight:600;margin-right:4px;
-}
-.modo-bar button{
-  border:1px solid #39404a;border-radius:99px;
-  padding:6px 16px;font-size:.82rem;font-weight:600;color:#c9ced6;
-  background:transparent;transition:all .15s ease;
-}
-.modo-bar button:hover{border-color:#7b848f;color:#fff}
-.modo-bar button[aria-pressed="true"]{background:#fff;border-color:#fff;color:#0b0e11;font-weight:800}
-@media (max-width:600px){
-  .modo-bar .qs{width:100%;text-align:center;margin:0 0 2px}
-  .modo-bar button{padding:6px 13px;font-size:.78rem}
-}
-
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   :root{--pad-x:36px}
