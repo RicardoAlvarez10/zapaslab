@@ -16,3 +16,14 @@ desktop.ini
 npm-debug.log*
 .cache/
 tmp/
+.__wtest
+
+# Material comercial privado. Este repositorio es PUBLICO: acá adentro están
+# los presupuestos y los honorarios, y no tienen que quedar a la vista de
+# cualquiera. Se comparten con el cliente por otro medio.
+lanzamiento/
+
+# Borradores crudos de diseño, unos 6 MB que no hacen falta para que la web
+# funcione. Quedan en el disco de Ricardo, no en el repositorio.
+Design/
+Proyecto aparte/

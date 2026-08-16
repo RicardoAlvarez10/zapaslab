@@ -3,108 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tillas Lab · Lavado y desinfección de zapatillas en Tucumán</title>
-<meta name="description" content="Lavado y desinfección de zapatillas con retiro y entrega a domicilio en todo el Gran San Miguel de Tucumán. Vos usalas, nosotros las dejamos impecables, en el día.">
-<meta property="og:title" content="Tillas Lab · Vos usalas. Nosotros las dejamos impecables.">
-<meta property="og:description" content="Lavado y desinfección de zapatillas. Retiro y entrega a domicilio en el Gran San Miguel de Tucumán.">
+<title>Tillas Lab · Lavado de zapatillas con retiro y entrega en Tucumán</title>
+<meta name="description" content="Lavado premium de zapatillas con retiro y entrega a domicilio en todo el Gran San Miguel de Tucumán. Pedí por WhatsApp y te las devolvemos como nuevas en 48 a 72 hs.">
+<meta property="og:title" content="Tillas Lab · Tus zapas como nuevas, sin moverte de tu casa">
+<meta property="og:description" content="Lavado premium de zapatillas. Retiro y entrega a domicilio en el Gran San Miguel de Tucumán.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0f1216">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1216'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-style='italic' font-weight='700' fill='%23b6e534' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#fafaf8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314171c'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='38' font-weight='900' fill='white' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&family=Lobster&family=Kaushan+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tema.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script>
-/* El modo se fija antes de pintar para que no haya destello. Cuando el dueño
-   elija una propuesta, se reemplaza todo esto por data-modo fijo en el <html>
-   y se borra la barra selectora. */
-(function(){
-  var d=document.documentElement;
-  d.classList.add('js','con-selector');
-  var m=null;
-  try{ m=localStorage.getItem('tillaslab_modo'); }catch(e){}
-  var q=new URLSearchParams(location.search).get('modo');
-  if(q) m=q;
-  d.setAttribute('data-modo', ['comun','street','grafity'].indexOf(m)>-1 ? m : 'grafity');
-})();
-</script>
+<script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Tillas Lab",
-  "description": "Lavado y desinfección de zapatillas con retiro y entrega a domicilio en el Gran San Miguel de Tucumán.",
-  "areaServed": ["San Miguel de Tucumán","Yerba Buena","Tafí Viejo","Las Talitas","Banda del Río Salí","Alderetes","El Manantial","Lomas de Tafí"],
+  "description": "Lavado premium de zapatillas con retiro y entrega a domicilio en el Gran San Miguel de Tucumán.",
+  "areaServed": ["San Miguel de Tucumán","Yerba Buena","Tafí Viejo","Las Talitas","Banda del Río Salí","Alderetes","El Manantial"],
   "telephone": "+5493810000000",
   "priceRange": "$$",
   "openingHours": "Mo-Sa 09:00-20:00"
 }
 </script>
 <style>
-/* ---------- riel: define el ancho de las hojas y alinea barra y pie ---------- */
-.sheet,.rail{max-width:1272px;margin-left:auto;margin-right:auto}
-.sheet{margin-bottom:22px}
-@media (max-width:1300px){.sheet,.rail{margin-left:16px;margin-right:16px}}
-@media (max-width:600px){.sheet,.rail{margin-left:12px;margin-right:12px}.sheet{margin-bottom:14px}}
-section[id]{scroll-margin-top:84px}
+:root{
+  --paper:#fafaf8;
+  --card:#ffffff;
+  --band:#f2f2ee;
+  --ink:#14171c;
+  --soft:#5c6470;
+  --faint:#9096a0;
+  --hairline:#e7e7e2;
+  --hairline-2:#d8d8d2;
+  --wa:#1da851;
+  --radius:16px;
+  --pad-x:44px;
+  --font:"Archivo",system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+html,body{overflow-x:clip}
+body{
+  font-family:var(--font);
+  color:var(--ink);
+  background:#ededea;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
 
-/* ---------- barra superior ---------- */
+/* riel: define el ancho de las hojas y alinea el encabezado y el pie con ellas */
+.sheet,.rail{max-width:1272px;margin-left:auto;margin-right:auto}
+.sheet{
+  background:var(--paper);
+  border:1px solid var(--hairline);
+  border-radius:32px;
+  margin-bottom:22px;
+}
+@media (max-width:1300px){
+  .sheet,.rail{margin-left:16px;margin-right:16px}
+}
+@media (max-width:600px){
+  .sheet,.rail{margin-left:12px;margin-right:12px}
+  .sheet{border-radius:22px;margin-bottom:14px}
+}
+img,svg{display:block;max-width:100%}
+[hidden]{display:none!important}
+section[id]{scroll-margin-top:84px}
+a{color:inherit}
+::selection{background:var(--ink);color:#fff}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.08}
+.lbl{
+  font-size:.7rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad-x)}
+
+/* ---------- topbar ---------- */
 .topbar{
   position:sticky;top:0;z-index:50;
-  background:var(--topbar-bg);
+  background:rgba(237,237,234,.88);
   backdrop-filter:blur(10px);
   border-bottom:1px solid transparent;
   transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,border-color .3s ease;
 }
-html.con-selector .topbar{top:var(--modo-h,48px)}
-.topbar.scrolled{border-bottom-color:var(--hairline);box-shadow:var(--shadow-card)}
+.topbar.scrolled{border-bottom-color:var(--hairline)}
 .topbar.hid{transform:translateY(-100%)}
+.topbar.scrolled{box-shadow:0 8px 28px -16px rgba(20,23,28,.16)}
 .topbar-inner{
-  max-width:1080px;margin:0 auto;padding:14px var(--pad-x);
+  max-width:1080px;margin:0 auto;padding:16px var(--pad-x);
   display:flex;align-items:center;gap:28px;
 }
-.logo{flex:none}
+.logo{
+  font-weight:800;font-size:1.1rem;letter-spacing:-.02em;
+  text-decoration:none;display:flex;align-items:center;gap:.5em;
+}
+.logo .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);flex:none}
 .nav{display:flex;gap:26px;margin-left:auto}
-.nav a{font-size:.92rem;font-weight:500;color:var(--soft);position:relative}
+.nav a{text-decoration:none;font-size:.92rem;font-weight:500;color:var(--soft);position:relative}
 .nav a::after{
-  content:"";position:absolute;left:0;bottom:-5px;height:2px;width:100%;
-  background:var(--accent);transform:scaleX(0);transform-origin:left;
+  content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:100%;
+  background:var(--ink);transform:scaleX(0);transform-origin:left;
   transition:transform .25s ease;
 }
-.nav a:hover,.nav a.active{color:var(--ink)}
-.nav a:hover::after,.nav a.active::after{transform:scaleX(1)}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1)}
+.nav a.active{color:var(--ink)}
+.nav a.active::after{transform:scaleX(1)}
 .menu-btn{
   display:none;margin-left:auto;flex:none;
-  border:1px solid var(--hairline-2);border-radius:calc(var(--radius) * .6);
-  width:42px;height:38px;color:var(--ink);background:transparent;
+  background:none;border:1px solid var(--hairline-2);border-radius:10px;
+  width:42px;height:38px;cursor:pointer;color:var(--ink);
   align-items:center;justify-content:center;
 }
 .menu-btn svg{width:20px;height:20px}
-
-/* el logo de WhatsApp es el pintado: necesita más caja que un ícono corriente */
-.ico-wa{width:1.85em;height:1.79em;flex:none}
-.btn-wa{padding-left:1.05em;gap:.5em}
+.btn{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-family:var(--font);font-weight:600;font-size:.95rem;
+  text-decoration:none;border-radius:99px;padding:.8em 1.6em;
+  border:1px solid transparent;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;
+}
+.btn:active{transform:scale(.98)}
 .btn .ico-wa{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
-.btn:hover .ico-wa{transform:scale(1.12) rotate(-7deg)}
+.btn:hover .ico-wa{transform:scale(1.15) rotate(-8deg)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#000}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-wa:hover{background:#178f44}
+.btn-ghost{border-color:var(--hairline-2);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-sm{padding:.6em 1.2em;font-size:.88rem}
+.ico-wa{width:1.1em;height:1.1em;flex:none}
 
 /* ---------- hero ---------- */
 .hero{margin-top:14px}
 .hero-grid{
   display:grid;grid-template-columns:1.04fr 1fr;gap:56px;
-  align-items:center;padding:74px var(--pad-x) 84px;
+  align-items:center;padding:84px var(--pad-x) 92px;
 }
 .hero-grid > *{min-width:0}
-.hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);margin:16px 0 20px}
-.hero p.lead{font-size:1.08rem;color:var(--soft);max-width:32em;margin-bottom:30px}
+.hero h1{font-size:clamp(2.1rem,4.6vw,3.5rem);margin:18px 0 20px}
+.hero p.lead{font-size:1.1rem;color:var(--soft);max-width:32em;margin-bottom:32px}
 .hero p.lead strong{color:var(--ink);font-weight:600}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.hero .tagline{margin:20px 0 2px}
 .open-note{
   display:inline-flex;align-items:center;gap:.6em;
-  font-size:.85rem;font-weight:500;color:var(--soft);margin-top:28px;
+  font-size:.85rem;font-weight:500;color:var(--soft);
+  margin-top:30px;
 }
-.open-note .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.open-note .dot{width:7px;height:7px;border-radius:50%;background:var(--wa);flex:none}
 .open-note b{color:var(--ink);font-weight:600}
 
 /* entrada suave */
@@ -114,181 +170,195 @@ html.js .fade.d2{animation-delay:.32s}
 html.js .fade.d3{animation-delay:.5s}
 @keyframes fadeIn{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){html.js .fade{opacity:1;transform:none}}
-html.js .hero .ba{animation:fadeIn .95s cubic-bezier(.22,1,.36,1) .32s forwards,baFloat 7.5s ease-in-out 2.2s infinite}
-@keyframes baFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-/* ---------- ficha antes / después ----------
-   Es el único bloque de papel claro en los tres modos: ancla el contraste y
-   se lee como una ficha de taller real. La zapatilla está pintada para papel. */
-.ba{
-  background:#fafaf8;border:1px solid #e7e7e2;color:#14171c;
-  border-radius:calc(var(--radius) + 4px);
-  padding:20px 20px 16px;box-shadow:var(--shadow-deep);
+/* la ficha del hero entra y después flota apenas */
+html.js .hero .ba{
+  animation:fadeIn .95s cubic-bezier(.22,1,.36,1) .32s forwards,baFloat 7.5s ease-in-out 2.2s infinite;
 }
-.ba .lbl{font-family:var(--font);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#9096a0}
-.ba .ba-head > span:last-child{font-family:var(--font-script);font-size:1.05rem;color:#14171c;transform:rotate(-2deg);display:inline-block}
-.ba-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 14px;margin-bottom:12px;padding:0 4px}
+@keyframes baFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+/* ---------- slider antes / después ---------- */
+.ba{
+  background:var(--card);
+  border:1px solid var(--hairline);
+  border-radius:calc(var(--radius) + 4px);
+  padding:20px 20px 16px;
+  box-shadow:0 14px 40px -18px rgba(20,23,28,.12);
+}
+.ba-head{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;
+  gap:4px 14px;margin-bottom:12px;padding:0 4px;
+}
 .ba-stage{
-  position:relative;border-radius:calc(var(--radius) * .75);overflow:hidden;
-  --pos:50%;touch-action:none;cursor:ew-resize;
+  position:relative;border-radius:12px;overflow:hidden;
+  --pos:50%;
+  touch-action:none;
+  cursor:ew-resize;
   background:linear-gradient(180deg,#f6f6f3 0%,#ecece8 100%);
 }
 .ba-stage > svg{width:100%;height:auto}
-.layer-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
-.layer-before svg{width:100%;height:100%}
-.ba-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:#14171c;transform:translateX(-50%);pointer-events:none}
-.ba-handle{
-  position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);
-  width:42px;height:42px;border-radius:50%;
-  background:#14171c;color:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 16px rgba(20,23,28,.45);pointer-events:none;
+.layer-before{
+  position:absolute;inset:0;
+  clip-path:inset(0 calc(100% - var(--pos)) 0 0);
 }
-[data-modo="comun"] .ba-handle{color:#fff}
+.layer-before svg{width:100%;height:100%}
+.ba-divider{
+  position:absolute;top:0;bottom:0;left:var(--pos);
+  width:2px;background:var(--ink);transform:translateX(-50%);
+  pointer-events:none;
+}
+.ba-handle{
+  position:absolute;top:50%;left:var(--pos);
+  transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(20,23,28,.35);
+  pointer-events:none;
+}
 html.js .ba:not(.used) .ba-handle::after{
   content:"";position:absolute;inset:-5px;border-radius:50%;
-  border:2px solid rgba(20,23,28,.4);animation:ringPulse 2.2s ease-out infinite;
+  border:2px solid rgba(20,23,28,.4);
+  animation:ringPulse 2.2s ease-out infinite;
 }
-@keyframes ringPulse{0%{transform:scale(.75);opacity:0}30%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+@keyframes ringPulse{
+  0%{transform:scale(.75);opacity:0}
+  30%{opacity:1}
+  100%{transform:scale(1.25);opacity:0}
+}
 .ba-chip{
-  position:absolute;top:12px;font-size:.66rem;font-weight:600;
+  position:absolute;top:12px;
+  font-size:.66rem;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;
   padding:.45em .8em;border-radius:6px;pointer-events:none;
 }
 .chip-antes{left:12px;background:#8a8172;color:#fff}
-.chip-despues{right:12px;background:#14171c;color:var(--accent)}
-[data-modo="comun"] .chip-despues{color:#fff}
-.ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
-.ba-foot{font-size:.8rem;color:#9096a0;text-align:center;margin-top:12px}
+.chip-despues{right:12px;background:var(--ink);color:#fff}
+.ba-range{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:0;cursor:ew-resize;margin:0;
+}
+.ba-foot{
+  font-size:.8rem;color:var(--faint);
+  text-align:center;margin-top:12px;
+}
 
 /* ---------- secciones ---------- */
-.section{padding:92px 0}
-.section-head{max-width:600px;margin-bottom:52px}
+.section{padding:96px 0}
+.section-head{max-width:600px;margin-bottom:56px}
 .section-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);margin-top:14px}
 .section-head p{color:var(--soft);margin-top:14px}
 
+/* pasos */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .step{
   background:var(--card);border:1px solid var(--hairline);
   border-radius:var(--radius);padding:32px 28px;
-  transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;
+  transition:border-color .2s ease,transform .2s ease;
 }
-.step:hover{border-color:var(--accent);transform:translateY(-2px)}
+.step:hover{border-color:var(--hairline-2);transform:translateY(-2px)}
 .step .step-ico{
-  width:42px;height:42px;border-radius:calc(var(--radius) * .7);background:var(--band);
-  display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--accent);
+  width:42px;height:42px;border-radius:11px;background:var(--band);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  color:var(--ink);
 }
-[data-modo="comun"] .step .step-ico{color:var(--ink)}
 .step .step-ico svg{width:22px;height:22px}
 .step h3{font-size:1.08rem;margin:12px 0 10px}
 .step p{color:var(--soft);font-size:.94rem}
 .step-note{display:block;margin-top:16px;font-size:.8rem;color:var(--faint)}
 
-/* proceso: el bloque hondo, con su textura si el modo la tiene */
-.proto{
-  background:var(--strong);background-image:var(--tex);
-  border-color:var(--strong);color:var(--on-strong);padding:78px 0;
+/* proceso interno: hoja oscura */
+.proto{background:var(--ink);border-color:var(--ink);color:#fff;padding:80px 0}
+.proto .lbl{color:#8d95a2}
+.proto h2{font-size:clamp(1.5rem,2.8vw,2rem);margin-top:14px;max-width:520px}
+.proto-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+  margin-top:48px;
 }
-.proto .lbl{color:var(--accent)}
-[data-modo="comun"] .proto .lbl{color:var(--on-strong-soft)}
-.proto h2{font-size:clamp(1.5rem,2.8vw,2rem);margin-top:14px;max-width:520px;color:var(--on-strong)}
-.proto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 18px;margin-top:46px}
-.proto-cell{border-top:2px solid rgba(255,255,255,.24);padding-top:16px}
-.proto-cell:last-child{border-top-color:var(--accent)}
-.proto-cell b{
-  font-family:var(--font-logo);font-size:1.75rem;font-weight:400;color:var(--accent);
-  display:inline-block;margin-bottom:10px;
-  -webkit-text-stroke:3.5px #fff;paint-order:stroke;
-  text-shadow:1.5px 1.5px 0 #14171c,3px 3px 0 #14171c,4.5px 4.5px 0 #2ee6d6;
-  transform:rotate(-4deg);
-}
-[data-modo="comun"] .proto-cell b{
-  font-family:var(--font);font-size:.75rem;font-weight:600;color:var(--on-strong-soft);
-  -webkit-text-stroke:0;text-shadow:none;transform:none;display:block;margin-bottom:8px;
-}
-.proto-cell h4{font-size:.95rem;margin-bottom:6px;color:var(--on-strong)}
-.proto-cell p{font-size:.82rem;color:var(--on-strong-soft);line-height:1.55}
+.proto-cell{border-top:2px solid rgba(255,255,255,.28);padding-top:16px}
+.proto-cell b{font-size:.75rem;font-weight:600;color:#8d95a2;display:block;margin-bottom:8px}
+.proto-cell h4{font-size:.95rem;margin-bottom:6px}
+.proto-cell p{font-size:.82rem;color:#aab1bd;line-height:1.55}
 
 /* servicios */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
-.cards-2{grid-template-columns:repeat(2,1fr);max-width:760px}
-/* el plazo de entrega es parte del servicio: va dentro de la tarjeta */
-.plazo{
-  font-size:.82rem;color:var(--soft);line-height:1.5;
-  border-top:1px solid var(--hairline);padding-top:16px;margin:0 0 22px;
-}
 .card{
-  padding:32px 28px;display:flex;flex-direction:column;position:relative;
-  transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;
+  background:var(--card);border:1px solid var(--hairline);
+  border-radius:var(--radius);padding:32px 28px;
+  display:flex;flex-direction:column;position:relative;
+  transition:border-color .2s ease,transform .2s ease;
 }
 .card:hover{border-color:var(--hairline-2);transform:translateY(-2px)}
-.card.featured{border:2px solid var(--accent);box-shadow:var(--btn-sh)}
+.card.featured{border:1.5px solid var(--ink)}
 .card .pop{
-  position:absolute;top:-14px;left:26px;
-  font-family:var(--font-script);font-size:.95rem;font-weight:400;
-  background:var(--accent);color:var(--on-accent);
-  border-radius:6px;padding:.35em .85em;transform:rotate(-2deg);
-  border:2px solid transparent;
-}
-[data-modo="grafity"] .card .pop,[data-modo="street"] .card .pop{border-color:var(--ink)}
-[data-modo="comun"] .card .pop{
-  font-family:var(--font);font-size:.64rem;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;transform:none;top:-11px;
+  position:absolute;top:-11px;left:26px;
+  font-size:.64rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:#fff;border-radius:5px;padding:.4em .8em;
 }
 .card h3{font-size:1.15rem}
 .card .desc{color:var(--soft);font-size:.92rem;margin:10px 0 20px}
-.price{font-size:1.65rem;font-weight:800;letter-spacing:-.02em;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.price{font-size:1.65rem;font-weight:700;letter-spacing:-.02em;margin-bottom:2px}
 .price small{font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:.06em}
-.card.featured .price{color:var(--accent)}
-[data-modo="comun"] .card.featured .price{color:var(--ink)}
 .card ul{list-style:none;margin:20px 0 28px;display:grid;gap:10px}
 .card li{font-size:.9rem;color:var(--soft);display:flex;gap:.6em;align-items:flex-start}
 .card li::before{
-  content:"";flex:none;width:15px;height:15px;margin-top:.2em;background:var(--accent);
+  content:"";flex:none;width:15px;height:15px;margin-top:.2em;
+  background:var(--ink);
   mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="black" d="M6.5 12.2 2.3 8l1.4-1.4 2.8 2.8 5.8-5.8L13.7 5z"/></svg>') center/contain no-repeat;
 }
 .card .btn{margin-top:auto;justify-content:center}
-.extras{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.extras{
+  margin-top:24px;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+}
 .extras b{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-right:8px}
-.extras span{font-size:.85rem;color:var(--soft);border:1px solid var(--hairline-2);border-radius:var(--pill);padding:.42em 1em}
+.extras span{
+  font-size:.85rem;color:var(--soft);
+  border:1px solid var(--hairline-2);border-radius:99px;padding:.42em 1em;
+}
 
 /* zona */
 .zona-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center}
 .zona-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
 .zona-chips span{
   font-size:.88rem;font-weight:500;color:var(--ink);
-  border:1px solid var(--hairline-2);border-radius:var(--pill);
-  padding:.45em 1em;background:var(--card);
+  border:1px solid var(--hairline-2);border-radius:99px;padding:.45em 1em;
+  background:var(--card);
 }
-.zona-chips span:hover{border-color:var(--accent);color:var(--accent)}
 .zona-note{margin-top:24px;color:var(--soft);font-size:.92rem;max-width:34em}
 .map-frame{
   border:1px solid var(--hairline);border-radius:calc(var(--radius) + 4px);
   overflow:hidden;background:var(--card);
+  /* Leaflet apila sus capas hasta z-index 1000: sin aislar, el mapa se monta
+     sobre la barra superior al scrollear */
   position:relative;z-index:0;isolation:isolate;
-  box-shadow:var(--shadow-card);
+  box-shadow:0 14px 40px -18px rgba(20,23,28,.12);
 }
-#mapa{height:440px;width:100%;background:var(--band)}
+#mapa{height:440px;width:100%;background:#eef0ee}
 .map-cap{
   display:flex;justify-content:space-between;align-items:center;gap:12px;
   padding:12px 16px;border-top:1px solid var(--hairline);
   font-size:.78rem;color:var(--faint);
 }
 .map-cap .sw{display:inline-flex;align-items:center;gap:.5em}
-.map-cap .swatch{width:12px;height:12px;border-radius:3px;background:var(--accent-soft);border:1.5px solid var(--accent);flex:none}
+.map-cap .swatch{width:12px;height:12px;border-radius:3px;background:rgba(29,168,81,.25);border:1.5px solid var(--wa);flex:none}
 .leaflet-container{font-family:var(--font)}
 .zl-tip{
-  background:var(--strong);color:var(--accent);border:none;border-radius:6px;
+  background:var(--ink);color:#fff;border:none;border-radius:6px;
   font-size:11px;font-weight:600;padding:3px 8px;box-shadow:none;
 }
-[data-modo="comun"] .zl-tip{color:#fff}
 .zl-tip::before{display:none}
 html.js #mapa .zl-tip{opacity:0;transition:opacity .5s ease}
 html.js #mapa.map-in .zl-tip{opacity:1}
 @media (prefers-reduced-motion:reduce){html.js #mapa .zl-tip{opacity:1}}
+.faq .faq-body{will-change:height}
 
 /* social */
-.social-band{padding:70px 0;text-align:center}
+.social-band{padding:72px 0;text-align:center}
 .social-band h2{font-size:clamp(1.5rem,2.8vw,2.1rem);margin:14px auto 14px;max-width:18em}
 .social-band p{color:var(--soft);max-width:34em;margin:0 auto 30px}
 .social-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
@@ -306,79 +376,81 @@ html.js #mapa.map-in .zl-tip{opacity:1}
   padding:22px 4px;font-weight:600;font-size:1rem;
 }
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:1.25rem;font-weight:400;color:var(--accent);flex:none;transition:transform .2s ease}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq .faq-body{padding:0 4px 22px;color:var(--soft);font-size:.94rem;max-width:54em;will-change:height}
-
-/* cierre */
-.cta-final{
-  background:var(--strong);background-image:var(--tex);
-  color:var(--on-strong);border-radius:calc(var(--radius) + 6px);
-  padding:68px 48px;text-align:center;
+.faq summary::after{
+  content:"+";font-size:1.25rem;font-weight:400;
+  color:var(--faint);flex:none;transition:transform .2s ease;
 }
-.cta-final .lbl{color:var(--accent)}
-[data-modo="comun"] .cta-final .lbl{color:var(--on-strong-soft)}
-.cta-final .tagline{color:var(--on-strong);margin:0 0 6px}
-.cta-final h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-top:14px;color:var(--on-strong)}
-.cta-final p{color:var(--on-strong-soft);margin:18px auto 32px;max-width:34em}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .faq-body{padding:0 4px 22px;color:var(--soft);font-size:.94rem;max-width:54em}
+
+/* cta final */
+.cta-final{
+  background:var(--ink);color:#fff;border-radius:calc(var(--radius) + 6px);
+  padding:72px 48px;text-align:center;
+}
+.cta-final .lbl{color:#9aa2ad}
+.cta-final h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-top:14px}
+.cta-final p{color:#b6bcc6;margin:18px auto 34px;max-width:34em}
 .cta-final .cupos{
   display:inline-flex;align-items:center;gap:.55em;
-  font-size:.8rem;font-weight:600;color:var(--on-strong);
-  border:1px solid rgba(255,255,255,.28);border-radius:var(--pill);
+  font-size:.8rem;font-weight:600;color:#fff;
+  border:1px solid rgba(255,255,255,.28);border-radius:99px;
   padding:.45em 1.1em;margin-top:18px;
 }
-.cta-final .cupos .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
-.garantias{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:34px;font-size:.82rem;color:var(--on-strong-soft)}
+.cta-final .cupos .dot{width:6px;height:6px;border-radius:50%;background:var(--wa);flex:none}
+.garantias{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:36px;
+  font-size:.82rem;color:#9aa2ad;
+}
 .garantias span{display:inline-flex;align-items:center;gap:.5em}
-.garantias span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.garantias span::before{content:"";width:4px;height:4px;border-radius:50%;background:#4d5561}
 
-/* pie */
-footer{border-top:1px solid var(--hairline);padding:60px 0 90px;margin-top:92px;background:var(--strong);color:var(--on-strong)}
+/* footer */
+footer{border-top:1px solid var(--hairline);padding:64px 0 96px;margin-top:96px}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;align-items:flex-start}
-.foot-brand p{color:var(--on-strong-soft);font-size:.9rem;margin-top:14px;max-width:24em}
-.bajada{font-family:var(--font-script);font-size:1.16rem;font-weight:400;color:var(--accent);margin-top:14px;display:inline-block}
-[data-modo="comun"] .bajada{
-  font-family:var(--font);font-size:.76rem;font-weight:600;
-  letter-spacing:.17em;text-transform:uppercase;color:var(--on-strong-soft);
+.foot-brand p{color:var(--soft);font-size:.9rem;margin-top:14px;max-width:24em}
+.bajada{
+  font-size:.76rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--faint);margin-top:12px;
 }
 .foot-brand .bajada + p{margin-top:10px}
 .socials{display:flex;gap:10px;margin-top:22px}
 .socials a{
-  width:40px;height:40px;border-radius:calc(var(--radius) * .6);
-  border:1px solid rgba(255,255,255,.22);
+  width:40px;height:40px;border-radius:10px;
+  border:1px solid var(--hairline-2);
   display:flex;align-items:center;justify-content:center;
-  color:var(--on-strong-soft);
-  transition:border-color .15s ease,color .15s ease;
+  color:var(--soft);text-decoration:none;
+  transition:border-color .15s ease,color .15s ease,background .15s ease;
 }
-.socials a:hover{border-color:var(--accent);color:var(--accent)}
+.socials a:hover{border-color:var(--ink);color:var(--ink)}
 .socials svg{width:18px;height:18px}
-.socials .s-wa{border-color:transparent}
-.socials .s-wa:hover{border-color:transparent}
-.socials .s-wa .ico-wa{width:26px;height:25px}
-.foot-col{font-size:.9rem;color:var(--on-strong-soft)}
-.foot-col b{display:block;margin-bottom:14px;color:var(--on-strong)}
-.foot-col a{display:block;margin-bottom:10px}
-.foot-col a:hover{color:var(--accent)}
-.foot-note{font-size:.85rem;line-height:1.8;color:var(--on-strong-soft)}
+.foot-col{font-size:.9rem;color:var(--soft)}
+.foot-col b{display:block;margin-bottom:14px}
+.foot-col a{text-decoration:none;display:block;margin-bottom:10px}
+.foot-col a:hover{color:var(--ink)}
+.foot-note{font-size:.85rem;line-height:1.8;color:var(--soft)}
 .foot-bottom{
-  margin-top:52px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+  margin-top:56px;padding-top:22px;
+  border-top:1px solid var(--hairline);
   display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;
-  font-size:.8rem;color:var(--on-strong-soft);
+  font-size:.8rem;color:var(--faint);
 }
-.foot-bottom a:hover{color:var(--accent)}
+.foot-bottom a{text-decoration:none}
+.foot-bottom a:hover{color:var(--ink)}
 
-/* whatsapp flotante: el logo pintado ya trae contorno y sombra */
+/* whatsapp flotante */
 .fab{
-  position:fixed;right:18px;bottom:18px;z-index:60;
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--wa);color:#fff;
   display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 26px rgba(20,23,28,.25);
   transition:transform .15s ease;
-  filter:drop-shadow(0 10px 22px rgba(0,0,0,.5));
 }
-.fab:hover{transform:scale(1.06) rotate(-4deg)}
-.fab .wa-grande{width:72px;height:70px}
-@media (max-width:640px){.fab .wa-grande{width:60px;height:58px}}
+.fab:hover{transform:scale(1.06)}
+.fab svg{width:27px;height:27px}
 
-/* aparición: subida y desenfoque, escalonada por --d */
+/* reveal suave: subida + desenfoque, con retraso escalonado via --d */
 html.js .reveal{
   opacity:0;transform:translateY(24px);filter:blur(8px);
   transition:opacity 1.05s ease,transform 1.05s cubic-bezier(.22,1,.36,1),filter 1.05s ease;
@@ -387,20 +459,22 @@ html.js .reveal{
 html.js .reveal.in{opacity:1;transform:none;filter:none}
 @media (prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;filter:none}}
 
-/* ---------- responsive ---------- */
+/* ---------- responsive: tablet ---------- */
 @media (max-width:900px){
-  .hero-grid{grid-template-columns:1fr;gap:44px;padding:52px var(--pad-x) 60px}
+  :root{--pad-x:36px}
+  .hero-grid{grid-template-columns:1fr;gap:48px;padding:56px var(--pad-x) 64px}
   .hero .ba{max-width:620px;width:100%;margin:0 auto}
   .steps,.cards{grid-template-columns:1fr 1fr}
   .steps .step:last-child{grid-column:1/-1}
-  .proto-grid{grid-template-columns:1fr 1fr}
+  .cards .card.featured{grid-column:1/-1;order:-1}
   .zona-grid{grid-template-columns:1fr;gap:40px}
   .proto-grid{grid-template-columns:1fr 1fr;gap:28px 18px}
-  .section{padding:70px 0}
-  .cta-final{padding:50px 28px}
+  .section{padding:72px 0}
+  .cta-final{padding:52px 28px}
   #mapa{height:380px}
   .nav{
-    display:none;position:absolute;top:100%;left:0;right:0;
+    display:none;
+    position:absolute;top:100%;left:0;right:0;
     background:var(--paper);border-bottom:1px solid var(--hairline-2);
     flex-direction:column;gap:0;padding:8px var(--pad-x) 16px;
   }
@@ -409,19 +483,25 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   .topbar.nav-open .nav{display:flex}
   .menu-btn{display:flex}
   .topbar-inner{gap:12px}
-  .topbar .btn-wa{margin-left:0;padding:.5em;border-radius:50%}
+  .topbar .btn-wa{margin-left:0;padding:.6em;border-radius:50%}
+  .topbar .btn-wa .ico-wa{width:1.3em;height:1.3em}
   .topbar .wa-txt{display:none}
   .foot-grid{grid-template-columns:1fr 1fr;gap:36px}
   .foot-brand{grid-column:1/-1}
 }
+
+/* ---------- responsive: celulares ---------- */
 @media (max-width:640px){
-  .hero-grid{gap:36px;padding:44px var(--pad-x) 52px}
-  .steps,.cards,.cards-2{grid-template-columns:1fr}
+  :root{--pad-x:26px}
+  .hero-grid{gap:40px;padding:48px var(--pad-x) 56px}
+  .steps,.cards{grid-template-columns:1fr}
   .steps .step:last-child{grid-column:auto}
+  .cards .card.featured{grid-column:auto;order:0}
   .proto-grid{grid-template-columns:1fr}
-  .section{padding:58px 0}
+  .section{padding:60px 0}
+  /* las tarjetas internas aflojan su relleno para que el aire no se acumule */
   .step,.card{padding:28px 24px}
-  .cta-final{padding:46px 26px}
+  .cta-final{padding:48px 26px}
   .ba{padding:18px 18px 14px}
   #mapa{height:320px}
   .foot-grid{grid-template-columns:1fr;gap:32px}
@@ -430,27 +510,6 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 </style>
 </head>
 <body>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <!-- WhatsApp en clave de graffiti de bloque: relleno plano, contorno parejo
-       y sombra dura corrida. Es el mismo recurso que usan los botones, así el
-       logo pertenece al conjunto en lugar de parecer una estampa pegada aparte. -->
-  <symbol id="wa-pintado" viewBox="0 0 122 118">
-    <!-- sombra corrida -->
-    <path d="M56 6 C83 6 106 27 106 53 C106 79 83 100 56 100 C47 100 38 98 31 93 L8 100 L15 78 C9 71 6 62 6 53 C6 27 29 6 56 6 Z"
-          transform="translate(9,9)" fill="#0b0e11"/>
-    <!-- cuerpo -->
-    <path d="M56 6 C83 6 106 27 106 53 C106 79 83 100 56 100 C47 100 38 98 31 93 L8 100 L15 78 C9 71 6 62 6 53 C6 27 29 6 56 6 Z"
-          fill="#25d366" stroke="#0b0e11" stroke-width="8" stroke-linejoin="round"/>
-    <!-- reflejo, el brillo que se les pinta a las letras de bloque -->
-    <path d="M24 40 C29 25 41 17 55 15" fill="none" stroke="#84f2b0" stroke-width="8" stroke-linecap="round"/>
-    <!-- auricular -->
-    <g transform="translate(11.6,9) scale(3.7)">
-      <path d="M16.5 14.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"
-            fill="#ffffff" stroke="#0b0e11" stroke-width="1.1" stroke-linejoin="round"/>
-    </g>
-  </symbol>
-</svg>
 
 <!-- geometría de la zapatilla: se dibuja una sola vez, cada capa la pinta con su paleta -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -524,21 +583,9 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   </symbol>
 </svg>
 
-<!-- =========================================================================
-     Selector de propuesta. Es una herramienta para que el dueño compare, no
-     parte de la web. Cuando elija, se borra este bloque, se borra el script
-     del final y se deja data-modo fijo en el <html>.
-     ========================================================================= -->
-<div class="modo-bar" id="modoBar">
-  <span class="qs">Propuesta</span>
-  <button data-m="comun">Común</button>
-  <button data-m="street">Street</button>
-  <button data-m="grafity">Grafity</button>
-</div>
-
 <header class="topbar" id="topbar">
   <div class="rail"><div class="topbar-inner">
-    <a class="lk lk-sm" href="#top" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
+    <a class="logo" href="#top"><span class="dot"></span>TILLAS LAB</a>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -547,10 +594,9 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
       <a href="#servicios">Servicios</a>
       <a href="#zona">Zona</a>
       <a href="#faq">Preguntas</a>
-      <a href="pedido.html">Pedir retiro</a>
     </nav>
     <a class="btn btn-wa btn-sm" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
-      <svg class="ico-wa" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
+      <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
       <span class="wa-txt">WhatsApp</span>
     </a>
   </div></div>
@@ -562,17 +608,18 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <section class="hero sheet">
     <div class="wrap hero-grid">
       <div>
-        <div class="lk lk-xl fade" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></div>
-        <span class="lbl fade d1">Lavado y desinfección de zapatillas</span>
-        <h1 class="fade d1">Vos usalas. Nosotros las dejamos impecables.</h1>
+        <span class="lbl fade">Lavado de zapatillas a domicilio</span>
+        <h1 class="fade d1">Tus zapas, como recién sacadas de la caja.</h1>
         <p class="lead fade d2">
-          En Tillas Lab nos dedicamos a la limpieza y el cuidado profesional de
-          zapatillas. Pasamos a buscarlas por tu domicilio, realizamos una limpieza
-          profunda con productos y herramientas especialmente pensados para calzado,
-          y te las devolvemos impecables, listas para volver a usar.
+          Las buscamos por tu casa, las lavamos con máquinas hechas para calzado
+          y te las devolvemos impecables en <strong>48 a 72 horas</strong>. Retiro
+          y entrega incluidos en <strong>todo el Gran San Miguel de Tucumán</strong>.
         </p>
         <div class="hero-ctas fade d3">
-          <a class="btn btn-dark" href="pedido.html">Pedir retiro</a>
+          <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
+            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+            Pedir retiro
+          </a>
           <a class="btn btn-ghost" href="#servicios">Ver precios</a>
         </div>
         <span class="open-note fade d3"><span class="dot"></span> <span id="estado">Abrimos el <b>1 de septiembre</b> <span id="countdown"></span></span></span>
@@ -615,42 +662,37 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <section class="section sheet" id="como-funciona">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="lbl">cómo funciona</span>
-        <h2>Te contamos qué hacemos</h2>
-        <p>Con nuestro servicio te olvidás de la irritante tarea de lavar tus zapas
-        o las de la familia, y de que nunca salgan esas manchas rebeldes o no queden
-        como uno quisiera. En Tillas Lab somos especialistas en el lavado de
-        zapatillas de todo tipo: tenemos equipos, máquinas, productos y colaboradores
-        pensados para eso. Todo junto no solo da un resultado mágico, sino a tiempo
-        récord y sin moverte de donde estés.</p>
+        <span class="lbl">Cómo funciona</span>
+        <h2>No te movés de tu casa</h2>
+        <p>Todo el servicio es puerta a puerta. Vos solo elegís qué zapas querés recuperar.</p>
       </div>
       <div class="steps">
         <article class="step reveal">
           <div class="step-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.3 8.6 8.6 0 0 1-3.9-.9L3 20l1.1-5.4a8.2 8.2 0 0 1-.9-3.8A8.4 8.4 0 0 1 11.7 2.5h.5a8.4 8.4 0 0 1 8.8 8.5Z"/></svg>
           </div>
-          <span class="lbl" style="font-family:var(--font);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Paso 1</span>
-          <h3>Nos contactás</h3>
-          <p>Nos escribís por cualquiera de nuestros canales de atención: WhatsApp, teléfono, Instagram o Facebook. Un colaborador agenda tu pedido.</p>
-          <span class="step-note">También podés venir personalmente y dejarnos los pares</span>
+          <span class="lbl">Paso 1</span>
+          <h3>Pedís por WhatsApp</h3>
+          <p>Nos contás qué zapas tenés y coordinamos día y horario de retiro. Te confirmamos el precio antes de buscar nada.</p>
+          <span class="step-note">Respuesta en minutos</span>
         </article>
         <article class="step reveal">
           <div class="step-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="2.5"/><circle cx="17.5" cy="17" r="2.5"/><path d="M9.5 17h5.5M4.5 17H3v-4l2-5h8l2 5h4a2 2 0 0 1 2 2v2h-1.5M5 8h8"/></svg>
           </div>
-          <span class="lbl" style="font-family:var(--font);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Paso 2</span>
+          <span class="lbl">Paso 2</span>
           <h3>Retiramos por tu casa</h3>
-          <p>En el caso de que debamos retirar por tu casa, un colaborador pasa por donde estés, retira el o los pares y los trae al negocio para empezar con el proceso de lavado, desinfección y secado.</p>
+          <p>Pasamos a buscarlas por donde estés. Cada par entra al taller con su ficha de seguimiento y fotos del estado inicial.</p>
           <span class="step-note">Retiro incluido en el precio</span>
         </article>
         <article class="step reveal">
           <div class="step-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/><path d="M12 21a9 9 0 1 0-9-9"/></svg>
           </div>
-          <span class="lbl" style="font-family:var(--font);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Paso 3</span>
+          <span class="lbl">Paso 3</span>
           <h3>Te las devolvemos impecables</h3>
-          <p>Luego de aplicar el proceso de lavado, desinfección y secado, las zapas quedan listas para que las busques o para que un colaborador te las lleve al lugar que hayan pactado.</p>
-          <span class="step-note">Todo el proceso es en el día · Express en un par de horas</span>
+          <p>Lavado en máquina con el programa que pide cada material, secado controlado y control final. Te avisamos y te las llevamos de vuelta.</p>
+          <span class="step-note">Entrega en 48 a 72 hs</span>
         </article>
       </div>
     </div>
@@ -659,8 +701,8 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <!-- ============ PROCESO INTERNO ============ -->
   <section class="proto sheet">
     <div class="wrap">
-      <span class="lbl">nuestro proceso</span>
-      <h2>Cada par pasa por los mismos seis pasos</h2>
+      <span class="lbl">Nuestro proceso</span>
+      <h2>Cada par pasa por los mismos cinco pasos</h2>
       <div class="proto-grid">
         <div class="proto-cell reveal">
           <b>01</b>
@@ -679,16 +721,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
         </div>
         <div class="proto-cell reveal">
           <b>04</b>
-          <h4>Desinfección con luz UV</h4>
-          <p>Luz ultravioleta sobre el par ya lavado, por dentro y por fuera.</p>
-        </div>
-        <div class="proto-cell reveal">
-          <b>05</b>
           <h4>Secado controlado</h4>
           <p>Sin sol directo ni secarropas, para cuidar la forma y el color.</p>
         </div>
         <div class="proto-cell reveal">
-          <b>06</b>
+          <b>05</b>
           <h4>Control final</h4>
           <p>Revisión punto por punto, perfumado y embalaje antes de la entrega.</p>
         </div>
@@ -700,40 +737,46 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <section class="section sheet" id="servicios">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="lbl">servicios y precios</span>
-        <h2>No te la vamos a complicar acá</h2>
-        <p>Te ofrecemos dos tipos de servicio según tus tiempos y tu necesidad. Precios finales por par, con retiro y entrega incluidos.</p>
+        <span class="lbl">Servicios y precios</span>
+        <h2>Un lavado para cada par</h2>
+        <p>Precios finales por par, con retiro y entrega incluidos. Pagás al recibirlas: efectivo, transferencia o Mercado Pago.</p>
       </div>
-      <div class="cards cards-2">
+      <div class="cards">
         <article class="card reveal">
-          <h3>Lavado regular</h3>
-          <p class="desc">El lavado completo: por fuera, por dentro y la suela.</p>
-          <p class="price">$8.000 <small>por par</small></p>
+          <h3>Básico</h3>
+          <p class="desc">Para el uso de todos los días. Zapas de tela, malla o sintético.</p>
+          <p class="price">$12.000 <small>por par</small></p>
           <ul>
             <li>Limpieza exterior completa</li>
             <li>Lavado de cordones</li>
             <li>Desodorización</li>
+          </ul>
+          <a class="btn btn-ghost" href="https://wa.me/5493810000000?text=Hola,%20quiero%20un%20lavado%20B%C3%A1sico" target="_blank" rel="noopener">Pedir Básico</a>
+        </article>
+        <article class="card featured reveal">
+          <span class="pop">El más pedido</span>
+          <h3>Completo</h3>
+          <p class="desc">Por fuera, por dentro y la suela. El que deja las zapas como nuevas.</p>
+          <p class="price">$18.000 <small>por par</small></p>
+          <ul>
+            <li>Todo lo del Básico</li>
             <li>Limpieza interior y plantillas</li>
             <li>Blanqueado de suela y detalles</li>
             <li>Tratamiento antibacterial</li>
           </ul>
-          <p class="plazo">Se retiran en el día y se entregan en el día o al día siguiente, según la hora en que se solicite el servicio.</p>
-          <a class="btn btn-dark" href="pedido.html?plan=Regular">Pedir regular</a>
+          <a class="btn btn-dark" href="https://wa.me/5493810000000?text=Hola,%20quiero%20un%20lavado%20Completo" target="_blank" rel="noopener">Pedir Completo</a>
         </article>
         <article class="card reveal">
-          <h3>Lavado express</h3>
-          <p class="desc">Lo mismo que el regular, con prioridad en el taller.</p>
-          <p class="price">$10.000 <small>por par</small></p>
+          <h3>Premium</h3>
+          <p class="desc">Materiales delicados: gamuza, nobuk, cuero y pares de colección.</p>
+          <p class="price">$25.000 <small>por par</small></p>
           <ul>
-            <li>Limpieza exterior completa</li>
-            <li>Lavado de cordones</li>
-            <li>Desodorización</li>
-            <li>Limpieza interior y plantillas</li>
-            <li>Blanqueado de suela y detalles</li>
-            <li>Tratamiento antibacterial</li>
+            <li>Todo lo del Completo</li>
+            <li>Técnica específica por material</li>
+            <li>Hidratación y protección del material</li>
+            <li>Repelente de líquidos y manchas</li>
           </ul>
-          <p class="plazo">Se retiran en el día y se les da prioridad para que se entreguen a las dos horas.</p>
-          <a class="btn btn-ghost" href="pedido.html?plan=Express">Pedir express</a>
+          <a class="btn btn-ghost" href="https://wa.me/5493810000000?text=Hola,%20quiero%20un%20lavado%20Premium" target="_blank" rel="noopener">Pedir Premium</a>
         </article>
       </div>
       <!-- Extras: guardado para cuando el servicio esté definido.
@@ -754,7 +797,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <section class="section sheet" id="zona">
     <div class="wrap zona-grid">
       <div class="reveal">
-        <span class="lbl">zona de cobertura</span>
+        <span class="lbl">Zona de cobertura</span>
         <h2 style="font-size:clamp(1.7rem,3.2vw,2.4rem);margin-top:14px">Llegamos a todo el Gran San Miguel de Tucumán</h2>
         <div class="zona-chips">
           <span>San Miguel de Tucumán</span>
@@ -787,7 +830,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <section class="section sheet" id="faq">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="lbl">preguntas frecuentes</span>
+        <span class="lbl">Preguntas frecuentes</span>
         <h2>Antes de mandarnos tus zapas</h2>
       </div>
       <div class="faq reveal">
@@ -797,11 +840,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
         </details>
         <details>
           <summary>¿No se arruinan al lavarlas en máquina?</summary>
-          <p class="faq-body">No. Usamos máquinas hechas para calzado, con cepillos, productos, temperaturas y tiempos pensados para cada par. Eso da un resultado parejo y una higiene que a mano no se consigue. El material más delicado, como la gamuza o el cuero, se trabaja de distinta manera, con otras técnicas y otros productos.</p>
+          <p class="faq-body">No, porque no son lavarropas comunes: usamos máquinas hechas para calzado, con tambor, temperatura y tiempos pensados para zapatillas. Eso da un resultado parejo y una higiene que a mano no se consigue. El material que no lo tolera, como la gamuza o el cuero, se trabaja aparte con su técnica.</p>
         </details>
         <details>
           <summary>¿Cuánto tarda el servicio?</summary>
-          <p class="faq-body">Siempre tratamos de que los pares salgan listos dentro del mismo día en que el cliente hace el pedido. Hay que tener en cuenta que algunos pares necesitan más tiempo de trabajo, aunque son un porcentaje menor, y que también influye el horario del día en que se haga el pedido. Nuestros colaboradores van a poder asesorarte sobre los tiempos exactos en el momento de tu consulta, antes del retiro.</p>
+          <p class="faq-body">Entre 48 y 72 horas desde que retiramos el par. Los materiales delicados, como gamuza o cuero, pueden llevar un día más por el secado controlado. Siempre te confirmamos el plazo al coordinar el retiro.</p>
         </details>
         <details>
           <summary>¿El retiro y la entrega tienen costo?</summary>
@@ -809,11 +852,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
         </details>
         <details>
           <summary>¿Y si una mancha no sale?</summary>
-          <p class="faq-body">Si en el proceso de lavado hay alguna mancha fuerte, como pintura, químicos o amarilleo profundo, que se atenúa pero no llega a desaparecer, un colaborador se comunica con vos para explicarte el proceso realizado, el detalle que se identificó y no se pudo sacar, y los químicos recomendados. Así quedás informado y sabés al detalle el estado de tu par.</p>
+          <p class="faq-body">Al recibir el par te decimos honestamente qué resultado podés esperar: hay manchas, como pintura vieja o amarilleo profundo, que se atenúan pero no desaparecen. Nunca te vamos a prometer algo que el material no permite. Si el resultado no corresponde a lo acordado, lo relavamos sin cargo.</p>
         </details>
         <details>
           <summary>¿Cómo pago?</summary>
-          <p class="faq-body">Vamos a habilitar diferentes plataformas de pago para tu comodidad: billeteras virtuales, tarjetas de crédito y Apple Pay. Vas a poder pagar fácilmente en el momento de realizar el pedido.</p>
+          <p class="faq-body">Al recibir tus zapas: efectivo, transferencia o Mercado Pago. Sin señas ni pagos por adelantado.</p>
         </details>
         <details>
           <summary>¿Cómo sé que mis zapas están seguras?</summary>
@@ -826,7 +869,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <!-- ============ REDES ============ -->
   <section class="section sheet social-band">
     <div class="wrap reveal">
-      <span class="lbl">seguinos</span>
+      <span class="lbl">Seguinos</span>
       <h2>Los antes y después, todos los días en redes</h2>
       <p>Cada par que pasa por el taller queda documentado. Seguinos para ver las transformaciones y enterarte de las promos antes que nadie.</p>
       <div class="social-ctas">
@@ -852,45 +895,30 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
     <div class="wrap">
       <div class="cta-final reveal">
         <!-- promo de apertura: se muestra u oculta según la configuración del script -->
-        <!-- promo 1: los diez primeros del día de apertura, gratis -->
-        <div class="promo" id="promo-gratis" hidden>
-          <span class="tagline">Limpias. Frescas. Impecables.</span>
-          <span class="lbl">apertura 1 de septiembre</span>
-          <h2>Los primeros 10 pares, gratis</h2>
-          <span class="cupos" hidden><span class="dot"></span> <span class="cuposTxt"></span></span>
-          <p>Sabemos que hay gente esperando nuestro servicio hace tiempo. El día
-          de apertura, los diez primeros clientes que traigan un par al local se
-          llevan el lavado sin ningún costo. Los vamos a atender de la mejor
-          manera, y les vamos a pedir una foto para nuestro recuerdo.</p>
-          <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20saber%20si%20quedan%20lugares%20de%20los%2010%20lavados%20gratis" target="_blank" rel="noopener">
-            <svg class="ico-wa" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
-            Preguntar si quedan lugares
-          </a>
-        </div>
-        <!-- promo 2: los cincuenta siguientes, a mitad de precio -->
-        <div class="promo" id="promo-mitad" hidden>
-          <span class="tagline">Limpias. Frescas. Impecables.</span>
-          <span class="lbl">apertura 1 de septiembre</span>
-          <h2>Los siguientes 50, al 50%</h2>
-          <span class="cupos" hidden><span class="dot"></span> <span class="cuposTxt"></span></span>
-          <p>Descuento especial por inauguración: los 50 clientes siguientes
-          pagan la mitad en sus lavados.</p>
-          <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20reservar%20la%20promo%20de%20inauguraci%C3%B3n" target="_blank" rel="noopener">
-            <svg class="ico-wa" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
+        <div id="ctaPromo">
+          <span class="lbl">Apertura 1 de septiembre</span>
+          <h2>Primeros 50 pares al 50%</h2>
+          <span class="cupos" id="cupos" hidden><span class="dot"></span> <span id="cuposTxt"></span></span>
+          <p>Reservá tu lugar por WhatsApp y aprovechá el precio de apertura. Sin pagos por adelantado: reservás, retiramos, y pagás cuando las tenés de vuelta.</p>
+          <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20reservar%20la%20promo%20de%20apertura" target="_blank" rel="noopener">
+            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
             Reservar mi lugar
           </a>
         </div>
-        <!-- reemplazo permanente cuando se agotan las dos promos -->
-        <div class="promo" id="ctaSiempre" hidden>
-          <span class="lbl">pedí tu turno</span>
-          <h2>Tus zapas listas en el día</h2>
-          <p>Escribinos por WhatsApp y coordinamos el retiro por tu casa. También podés acercarte y dejarnos los pares que necesites lavar.</p>
-          <a class="btn btn-dark" href="pedido.html">Pedir retiro</a>
+        <!-- reemplazo permanente cuando la promo termina -->
+        <div id="ctaSiempre" hidden>
+          <span class="lbl">Pedí tu turno</span>
+          <h2>Tus zapas listas en 48 horas</h2>
+          <p>Escribinos por WhatsApp y coordinamos el retiro por tu casa. Sin pagos por adelantado: retiramos, lavamos y pagás cuando las tenés de vuelta.</p>
+          <a class="btn btn-wa" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener">
+            <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
+            Pedir retiro
+          </a>
         </div>
         <div class="garantias">
+          <span>Relavado sin cargo</span>
           <span>Ficha numerada con fotos</span>
-          <span>Entrega en el día</span>
-          <span>Express en dos horas</span>
+          <span>Pagás al recibir</span>
         </div>
       </div>
     </div>
@@ -902,8 +930,8 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
   <div class="rail"><div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="lk lk-sm" href="#top" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
-        <p class="bajada">Limpias. Frescas. Impecables.</p>
+        <a class="logo" href="#top"><span class="dot"></span>TILLAS LAB</a>
+        <p class="bajada">Sneaker Cleaning &amp; Restoration</p>
         <p>
           Taller de limpieza de zapatillas. Retiro y entrega a domicilio
           en todo el Gran San Miguel de Tucumán.
@@ -918,8 +946,8 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
           <a href="https://facebook.com/tillaslab" target="_blank" rel="noopener" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 22v-8.1h2.7l.4-3.3h-3.1V8.5c0-1 .3-1.6 1.7-1.6h1.5V3.9c-.3 0-1.2-.1-2.3-.1-2.4 0-4 1.4-4 4v2.8H7.6v3.3h2.7V22h3.1z"/></svg>
           </a>
-          <a class="s-wa" href="https://wa.me/5493810000000" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <svg class="ico-wa" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
+          <a href="https://wa.me/5493810000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
           </a>
         </div>
       </div>
@@ -948,40 +976,11 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 </footer>
 
 <a class="fab" href="https://wa.me/5493810000000?text=Hola,%20quiero%20lavar%20mis%20zapas" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
-  <svg class="wa-grande" viewBox="0 0 122 118" aria-hidden="true"><use href="#wa-pintado"/></svg>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.5 7.5 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.3-.2Z"/></svg>
 </a>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-// ---- Selector de propuesta: cambia la piel al instante y recuerda la elección ----
-(function(){
-  var bar=document.getElementById('modoBar');
-  if(!bar)return;
-  var d=document.documentElement;
-  function marcar(){
-    var m=d.getAttribute('data-modo');
-    bar.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-pressed', String(b.dataset.m===m));
-    });
-  }
-  bar.addEventListener('click',function(e){
-    var b=e.target.closest('button');
-    if(!b)return;
-    d.setAttribute('data-modo', b.dataset.m);
-    try{ localStorage.setItem('tillaslab_modo', b.dataset.m); }catch(err){}
-    marcar();
-  });
-  marcar();
-
-  // la barra superior se apoya justo debajo del selector, sea cual sea su alto
-  function medir(){
-    document.documentElement.style.setProperty('--modo-h', bar.offsetHeight + 'px');
-  }
-  medir();
-  window.addEventListener('resize', medir, {passive:true});
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
-})();
-
 // ---- Slider antes/después: drag + teclado + invitación inicial ----
 (function(){
   var stage=document.getElementById('baStage');
@@ -1065,30 +1064,21 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
                    actualiza solo: cuenta los días y, pasada la fecha,
                    muestra el horario de atención.
 
-   PROMOS          las dos promos de apertura, en orden. Se muestra la primera
-                   que siga vigente; cuando se agota, aparece sola la siguiente.
+   PROMO.activa    poné false y la promo desaparece al instante.
+   PROMO.hasta     fecha en que la promo se saca sola, sin tocar nada más.
+   PROMO.lugares   cupos que quedan. Dejalo en null para no mostrar contador.
+                   Si ponés un número, se muestra "Quedan N lugares" y al
+                   llegar a 0 la promo se saca sola.
 
-   activa          poné false y esa promo desaparece al instante.
-   hasta           fecha en que se saca sola, sin tocar nada más.
-   lugares         cupos que quedan. Bajalo a mano a medida que se usan. Con
-                   null no se muestra contador; al llegar a 0 la promo se cae.
-
-   Cuando las dos se agotan, el bloque se reemplaza por el mensaje permanente.
-   La página nunca queda con una promo vencida ni vacía.
+   Cuando la promo termina, el bloque final se reemplaza por el mensaje
+   permanente "Tus zapas listas en 48 horas". La página nunca queda vacía.
    ========================================================================= */
 var APERTURA=new Date('2026-09-01T09:00:00-03:00');
-var PROMOS=[
-  // los diez primeros del día de apertura, gratis, llevando el par al local
-  { bloque:'promo-gratis',
-    activa:true,
-    hasta:new Date('2026-09-01T23:59:00-03:00'),
-    lugares:10 },
-  // los cincuenta siguientes, a mitad de precio
-  { bloque:'promo-mitad',
-    activa:true,
-    hasta:new Date('2026-09-15T23:59:00-03:00'),
-    lugares:50 }
-];
+var PROMO={
+  activa:true,
+  hasta:new Date('2026-09-15T23:59:00-03:00'),
+  lugares:null
+};
 
 (function(){
   var ahora=new Date();
@@ -1103,23 +1093,19 @@ var PROMOS=[
     document.getElementById('estado').innerHTML='<b>Abierto</b> · lunes a sábado de 9 a 20 hs';
   }
 
-  // se muestra la primera promo que siga vigente; si no queda ninguna, el
-  // mensaje permanente
-  var enCurso=null;
-  for(var i=0;i<PROMOS.length;i++){
-    var p=PROMOS[i];
-    if(p.activa && ahora<p.hasta && (p.lugares===null||p.lugares>0)){ enCurso=p; break; }
-  }
+  // promo: vigente solo si está activa, no venció y quedan lugares
+  var vigente=PROMO.activa &&
+              ahora<PROMO.hasta &&
+              (PROMO.lugares===null||PROMO.lugares>0);
 
-  if(enCurso){
-    var bloque=document.getElementById(enCurso.bloque);
-    bloque.hidden=false;
-    if(enCurso.lugares!==null){
-      bloque.querySelector('.cuposTxt').textContent=
-        enCurso.lugares===1?'Queda 1 lugar':('Quedan '+enCurso.lugares+' lugares');
-      bloque.querySelector('.cupos').hidden=false;
+  if(vigente){
+    if(PROMO.lugares!==null){
+      document.getElementById('cuposTxt').textContent=
+        PROMO.lugares===1?'Queda 1 lugar':('Quedan '+PROMO.lugares+' lugares');
+      document.getElementById('cupos').hidden=false;
     }
   }else{
+    document.getElementById('ctaPromo').hidden=true;
     document.getElementById('ctaSiempre').hidden=false;
   }
 })();
@@ -1137,7 +1123,7 @@ var PROMOS=[
     scrollWheelZoom:false,
     attributionControl:false
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
     maxZoom:16,minZoom:10,
     subdomains:'abcd'
   }).addTo(map);
@@ -1158,8 +1144,8 @@ var PROMOS=[
     [-26.722,-65.278]
   ];
   var poly=L.polygon(zona,{
-    color:'#b6e534',weight:2,
-    fillColor:'#b6e534',fillOpacity:.12
+    color:'#1da851',weight:2,
+    fillColor:'#1da851',fillOpacity:.12
   }).addTo(map);
 
   var puntos=[
@@ -1173,8 +1159,8 @@ var PROMOS=[
   ];
   var marcadores=puntos.map(function(p){
     return L.circleMarker(p.c,{
-      radius:5,color:'#0b0e11',weight:2,
-      fillColor:'#b6e534',fillOpacity:1
+      radius:5,color:'#14171c',weight:2,
+      fillColor:'#ffffff',fillOpacity:1
     }).addTo(map).bindTooltip(p.n,{
       permanent:true,direction:p.d,className:'zl-tip'
     });
@@ -1209,7 +1195,7 @@ var PROMOS=[
         if(pel){
           pel.style.transition='stroke-dashoffset 2.2s ease, fill-opacity 1.2s ease 1.6s';
           pel.style.strokeDashoffset=0;
-          pel.style.fillOpacity=.14;
+          pel.style.fillOpacity=.12;
         }
         marcadores.forEach(function(m,i){
           var el=m.getElement();

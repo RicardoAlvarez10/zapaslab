@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seguí tu ficha · Tillas Lab</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&family=Lobster&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tema.css">
+<script>
+(function(){
+  var d=document.documentElement;
+  d.classList.add('con-selector');
+  var m=null;
+  try{ m=localStorage.getItem('tillaslab_modo'); }catch(e){}
+  var q=new URLSearchParams(location.search).get('modo');
+  if(q) m=q;
+  d.setAttribute('data-modo', ['comun','street','grafity'].indexOf(m)>-1 ? m : 'grafity');
+})();
+</script>
+</head>
+<body class="pagina" style="min-height:100vh">
+
+<div class="modo-bar" id="modoBar">
+  <span class="qs">Propuesta</span>
+  <button data-m="comun">Común</button>
+  <button data-m="street">Street</button>
+  <button data-m="grafity">Grafity</button>
+</div>
+
+<header class="topbar-app">
+  <div class="inner">
+    <a href="index.html" class="lk lk-sm" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="pedido.html">Pedir retiro</a>
+      <a href="taller.html">Taller</a>
+    </nav>
+  </div>
+</header>
+
+<main class="narrow" style="padding:34px 20px 70px">
+  <div id="cont"></div>
+</main>
+
+<script>
+/* ---- selector de propuesta ---- */
+(function(){
+  var bar=document.getElementById('modoBar');
+  if(!bar)return;
+  var d=document.documentElement;
+  function marcar(){
+    var m=d.getAttribute('data-modo');
+    bar.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.m===m)); });
+  }
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('button');
+    if(!b)return;
+    d.setAttribute('data-modo', b.dataset.m);
+    try{ localStorage.setItem('tillaslab_modo', b.dataset.m); }catch(err){}
+    marcar();
+  });
+  marcar();
+})();
+
+const TEL_TALLER = "5493810000000"; // ← poné acá tu número de WhatsApp
+const KEY = "tillaslab_fichas";
+const PASOS = [
+  ["Ficha y fotos","Estado inicial registrado"],
+  ["Cepillado en seco","Tierra y barro superficial"],
+  ["Lavado en máquina","Programa según material"],
+  ["Desinfección con luz UV","Por dentro y por fuera"],
+  ["Secado controlado","Sin sol directo ni secarropas"],
+  ["Control final","Revisión, perfumado y embalaje"]
+];
+/* cada servicio tiene su plazo, tal como se anuncia en la home */
+const PLAZOS = {
+  "Regular":"En el día o al día siguiente, según la hora del pedido",
+  "Express":"A las dos horas del retiro"
+};
+const money = n => "$" + n.toLocaleString("es-AR");
+const id = new URLSearchParams(location.search).get("id");
+
+function fichas(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } }
+const f = fichas().find(x => String(x.n) === String(id));
+const cont = document.getElementById("cont");
+
+if(!f){
+  cont.innerHTML = `<div class="card-dark" style="padding:34px;text-align:center">
+    <h1 class="h" style="font-size:1.8rem;color:var(--on-strong)">Ficha no encontrada</h1>
+    <p style="font-size:.9rem;color:var(--on-strong-soft);line-height:1.6;margin:14px 0 22px">Este link busca la ficha en este mismo navegador. Si cargaste el pedido en otro dispositivo, pedinos el estado por WhatsApp.</p>
+    <a class="btn-wa" href="https://wa.me/${TEL_TALLER}">Escribinos por WhatsApp</a>
+  </div>`;
+} else {
+  const num = String(f.n).padStart(3,"0");
+  const estado = f.entregada ? "Entregada" : (f.paso >= PASOS.length ? "Lista para entregar" : PASOS[f.paso][0]);
+  const timeline = PASOS.map(([nombre, det], i) => {
+    const cls = i < f.paso ? "done" : (i === f.paso && !f.entregada ? "now" : "");
+    const last = i === PASOS.length - 1;
+    return `<div class="tstep ${cls}">
+      <div class="col" style="align-items:center;flex:none;width:22px"><span class="dot"></span>${last?"":'<span class="line"></span>'}</div>
+      <div class="txt"><b>${nombre}</b><em>${i < f.paso ? "Listo" : det}</em></div>
+    </div>`;
+  }).join("");
+
+  cont.innerHTML = `
+  <div style="border-radius:var(--radius-lg);overflow:hidden;background:var(--strong);border:1px solid var(--hairline-2);color:var(--on-strong)">
+    <div style="padding:26px 24px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:14px">
+      <div class="col" style="gap:8px">
+        <span class="label-dark">Ficha ${num} · ${f.nombre.split(" ")[0]}</span>
+        <span class="script" style="font-size:2.1rem;color:var(--accent);line-height:1.1">${estado}</span>
+      </div>
+      <span class="state ${f.entregada ? "entregada" : (f.paso>=PASOS.length ? "lista" : "taller")}">${f.entregada ? "Entregada" : "Paso " + Math.min(f.paso+1,PASOS.length) + " de " + PASOS.length}</span>
+    </div>
+
+    <div style="padding:26px 24px 0" class="timeline">${timeline}</div>
+
+    <div style="margin:14px 24px 0;padding:16px 18px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius)" class="col">
+      <span class="label-dark">Entrega estimada</span>
+      <span style="font-size:1.05rem;font-weight:800;color:var(--on-strong)">${PLAZOS[f.servicio] || "Te lo confirmamos al coordinar el retiro"}</span>
+    </div>
+
+    <div style="padding:22px 24px 0" class="col">
+      <span class="label-dark">Tus pares</span>
+      <div class="col" style="gap:8px;margin-top:10px">
+        ${f.pares.map((p,i) => `<div style="display:flex;justify-content:space-between;gap:12px;font-size:.82rem;color:var(--on-strong-soft);background:rgba(255,255,255,.06);border-radius:12px;padding:12px 14px">
+          <span style="color:var(--on-strong);font-weight:600">Par 0${i+1} · ${p.marca || "sin marca"}</span><span>${p.material}</span></div>`).join("")}
+      </div>
+    </div>
+
+    <div style="margin:20px 24px 0;padding:18px;background:rgba(0,0,0,.35);border-radius:var(--radius)" class="col">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="label-dark">Total del pedido</span>
+        <span class="num" style="font-size:1.5rem;font-weight:900;color:var(--accent)">${money(f.total)}</span>
+      </div>
+      <span style="font-size:.72rem;color:var(--on-strong-soft);margin-top:6px">Billeteras virtuales, tarjetas de crédito o Apple Pay.</span>
+    </div>
+
+    <div style="padding:22px 24px 26px" class="col">
+      <a class="btn-line-dark" href="https://wa.me/${TEL_TALLER}?text=Hola!%20Consulta%20por%20la%20ficha%20${num}">Escribinos por WhatsApp</a>
+    </div>
+  </div>
+  <p style="font-size:.75rem;color:var(--soft);text-align:center;margin-top:16px">Guardá este link: <b style="color:var(--ink)">ficha.html?id=${f.n}</b></p>`;
+}
+</script>
+</body>
+</html>

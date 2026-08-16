@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedir retiro · Tillas Lab</title>
+<meta name="description" content="Pedí el retiro de tus zapatillas en tres pasos. Retiro y entrega incluidos en todo el Gran San Miguel de Tucumán.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&family=Lobster&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tema.css">
+<script>
+/* El modo se fija antes de pintar para que no haya destello. Viaja entre
+   páginas por localStorage, así el dueño no pierde la propuesta que eligió. */
+(function(){
+  var d=document.documentElement;
+  d.classList.add('con-selector');
+  var m=null;
+  try{ m=localStorage.getItem('tillaslab_modo'); }catch(e){}
+  var q=new URLSearchParams(location.search).get('modo');
+  if(q) m=q;
+  d.setAttribute('data-modo', ['comun','street','grafity'].indexOf(m)>-1 ? m : 'grafity');
+})();
+</script>
+</head>
+<body class="pagina" style="min-height:100vh">
+
+<div class="modo-bar" id="modoBar">
+  <span class="qs">Propuesta</span>
+  <button data-m="comun">Común</button>
+  <button data-m="street">Street</button>
+  <button data-m="grafity">Grafity</button>
+</div>
+
+<header class="topbar-app">
+  <div class="inner">
+    <a href="index.html" class="lk lk-sm" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="pedido.html" class="on">Pedir retiro</a>
+      <a href="taller.html">Taller</a>
+    </nav>
+  </div>
+</header>
+
+<main class="narrow" style="padding:34px 20px 70px">
+
+  <div class="sheet" id="flujo" style="overflow:hidden;box-shadow:var(--shadow-deep)">
+    <div style="padding:18px 22px 0;display:flex;gap:5px">
+      <span class="bar on" id="b1"></span><span class="bar" id="b2"></span><span class="bar" id="b3"></span>
+    </div>
+    <div style="padding:14px 22px 0" class="label" id="pasoTxt">Paso 1 de 3 · Servicio</div>
+
+    <!-- PASO 1 -->
+    <section id="p1" style="padding:14px 22px 0">
+      <h1 class="h" style="font-size:2.4rem">Elegí el<br>lavado</h1>
+      <p style="font-size:.85rem;color:var(--soft);margin:12px 0 18px">Precio final por par. Retiro y entrega incluidos en todo el Gran San Miguel.</p>
+      <div class="col" style="gap:10px">
+        <button class="opt sel" data-serv="Regular" data-precio="8000">
+          <span class="top"><span class="name">Lavado regular</span><span class="p num">$8.000</span></span>
+          <span class="desc">Por fuera, por dentro y la suela, con desinfección. Se retiran en el día y se entregan en el día o al día siguiente, según la hora del pedido.</span>
+        </button>
+        <button class="opt" data-serv="Express" data-precio="10000">
+          <span class="top"><span class="name">Lavado express</span><span class="p num">$10.000</span></span>
+          <span class="desc">Lo mismo que el regular, con prioridad en el taller. Se retiran en el día y se entregan a las dos horas.</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- PASO 2 -->
+    <section id="p2" style="padding:14px 22px 0;display:none">
+      <h1 class="h" style="font-size:2.4rem">¿Qué pares<br>entran?</h1>
+      <p style="font-size:.85rem;color:var(--soft);margin:12px 0 18px">Contanos qué son y qué tienen. Las fotos las sacamos nosotros al pasar a buscarlas.</p>
+      <div class="col" id="pares" style="gap:12px"></div>
+      <button id="addPar" style="margin-top:12px;width:100%;border:2px dashed var(--hairline-2);border-radius:var(--radius);padding:15px;font-size:.85rem;font-weight:700;color:var(--soft)">+ Agregar otro par</button>
+      <div style="background:var(--band);border-radius:var(--radius);padding:14px 16px;display:flex;gap:10px;margin-top:14px">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:7px;flex:none;outline:2px solid var(--ink)"></span>
+        <span style="font-size:.76rem;line-height:1.55;color:var(--soft)">Si una mancha no sale, te lo decimos al recibir el par. Nunca prometemos algo que el material no permite.</span>
+      </div>
+    </section>
+
+    <!-- PASO 3 -->
+    <section id="p3" style="padding:14px 22px 0;display:none">
+      <h1 class="h" style="font-size:2.4rem">¿Dónde las<br>buscamos?</h1>
+      <div class="col" style="gap:14px;margin-top:18px">
+        <div class="field"><span class="label">Tu nombre *</span><input id="nombre" placeholder="Nombre y apellido"></div>
+        <div class="field"><span class="label">Tu WhatsApp *</span><input id="tel" inputmode="tel" placeholder="381 000-0000"></div>
+        <div class="field"><span class="label">Dirección de retiro *</span><input id="dir" placeholder="Calle, número, piso/dpto"><span style="font-size:.72rem;color:var(--soft)">Retiro sin cargo en todo el Gran San Miguel</span></div>
+        <div class="field">
+          <span class="label">Barrio</span>
+          <select id="barrio">
+            <option>San Miguel de Tucumán</option><option>Yerba Buena</option><option>Tafí Viejo</option>
+            <option>Las Talitas</option><option>Banda del Río Salí</option><option>Alderetes</option>
+            <option>El Manantial</option><option>Lomas de Tafí</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="label">Franja de retiro</span>
+          <div class="row" style="gap:8px" id="franjas">
+            <button class="pill sel" data-f="Hoy 16-20">Hoy 16-20</button>
+            <button class="pill" data-f="Mañana 9-13">Mañana 9-13</button>
+            <button class="pill" data-f="Mañana 16-20">Mañana 16-20</button>
+          </div>
+        </div>
+        <div style="background:var(--strong);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:11px">
+          <span class="label-dark">Resumen</span>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;color:var(--on-strong-soft)"><span id="resServ">Regular × 1 par</span><span class="num" id="resSub">$8.000</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;color:var(--on-strong-soft)"><span>Retiro y entrega</span><span style="color:var(--accent);font-weight:700">Incluido</span></div>
+          <div style="height:1px;background:rgba(255,255,255,.16)"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span class="label-dark" style="color:var(--on-strong)">Total</span>
+            <span class="num" style="font-size:1.6rem;font-weight:900;color:var(--accent)" id="resTotal">$8.000</span>
+          </div>
+          <span style="font-size:.72rem;color:var(--on-strong-soft)">Vas a poder pagar en el momento de realizar el pedido: billeteras virtuales, tarjetas de crédito o Apple Pay.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="footbar" style="margin-top:22px">
+      <button id="atras" class="btn-line" style="display:none">Atrás</button>
+      <div class="col" style="flex:1">
+        <span class="label" id="footLabel">1 par · Lavado regular</span>
+        <span class="num" style="font-size:1.25rem;font-weight:800" id="footTotal">$8.000</span>
+      </div>
+      <button id="seguir" class="btn-volt">Seguir</button>
+    </div>
+  </div>
+
+  <!-- CONFIRMACIÓN -->
+  <div id="listo" style="display:none;border-radius:var(--radius-lg);overflow:hidden;background:var(--strong);border:1px solid var(--hairline-2);color:var(--on-strong)">
+    <div style="padding:34px 24px 0;display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+      <span class="script" style="font-size:1.4rem;color:var(--on-strong);transform:rotate(-2deg);display:inline-block">pedido tomado</span>
+      <div class="lk lk-md"><span class="t">Ficha</span><span class="l num" id="fichaNum">042</span></div>
+      <p style="font-size:.9rem;line-height:1.6;color:var(--on-strong-soft)">Pasamos a buscarlas <b style="color:var(--on-strong)" id="cuando">mañana entre 9 y 13</b>. Cuando entren al taller vas a ver cada paso desde el link de tu ficha.</p>
+    </div>
+    <div style="margin:22px 24px 0;padding:18px;border:2px dashed rgba(255,255,255,.28);border-radius:var(--radius);display:flex;flex-direction:column;gap:11px" id="detalle"></div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:10px">
+      <a id="waBtn" class="btn-wa" href="#">Confirmar por WhatsApp</a>
+      <a id="verFicha" class="btn-line-dark" href="#">Ver mi ficha</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ---- selector de propuesta ---- */
+(function(){
+  var bar=document.getElementById('modoBar');
+  if(!bar)return;
+  var d=document.documentElement;
+  function marcar(){
+    var m=d.getAttribute('data-modo');
+    bar.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.m===m)); });
+  }
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('button');
+    if(!b)return;
+    d.setAttribute('data-modo', b.dataset.m);
+    try{ localStorage.setItem('tillaslab_modo', b.dataset.m); }catch(err){}
+    marcar();
+  });
+  marcar();
+})();
+
+const TEL_TALLER = "5493810000000"; // ← poné acá tu número de WhatsApp
+const PRECIOS = {"Regular":8000,"Express":10000};
+const KEY = "tillaslab_fichas";
+const money = n => "$" + n.toLocaleString("es-AR");
+
+let paso = 1;
+let pedido = {servicio:"Regular", franja:"Hoy 16-20", pares:[{marca:"",material:"Tela",nota:""}]};
+
+/* el plan puede venir elegido desde la home */
+(function(){
+  const plan = new URLSearchParams(location.search).get("plan");
+  if(plan && PRECIOS[plan]) pedido.servicio = plan;
+})();
+
+/* ---- pares ---- */
+function pintarPares(){
+  const cont = document.getElementById("pares");
+  cont.innerHTML = "";
+  pedido.pares.forEach((par, i) => {
+    const box = document.createElement("div");
+    box.className = "card";
+    box.style.cssText = "padding:16px;display:flex;flex-direction:column;gap:12px";
+    box.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="tag">par 0${i+1}</span>
+        ${pedido.pares.length > 1 ? `<button data-del="${i}" style="font-size:.72rem;font-weight:600;color:var(--faint)">Quitar</button>` : ""}
+      </div>
+      <div class="field"><input data-marca="${i}" value="${par.marca}" placeholder="Marca y modelo (ej. Nike Air Force 1)"></div>
+      <div class="row" style="gap:8px">
+        ${["Tela","Cuero","Gamuza","Malla"].map(m => `<button class="pill ${par.material===m?"sel":""}" data-mat="${i}" data-v="${m}">${m}</button>`).join("")}
+      </div>
+      <div class="field"><textarea data-nota="${i}" rows="2" placeholder="¿Qué tienen? Ej: amarilleo en la suela, mancha de pasto">${par.nota}</textarea></div>`;
+    cont.appendChild(box);
+  });
+  cont.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { pedido.pares.splice(+b.dataset.del,1); pintarPares(); totales(); });
+  cont.querySelectorAll("[data-marca]").forEach(i => i.oninput = () => pedido.pares[+i.dataset.marca].marca = i.value);
+  cont.querySelectorAll("[data-nota]").forEach(t => t.oninput = () => pedido.pares[+t.dataset.nota].nota = t.value);
+  cont.querySelectorAll("[data-mat]").forEach(b => b.onclick = () => { pedido.pares[+b.dataset.mat].material = b.dataset.v; pintarPares(); });
+}
+
+function totales(){
+  const n = pedido.pares.length;
+  const total = PRECIOS[pedido.servicio] * n;
+  document.getElementById("footLabel").textContent = n + (n===1?" par · ":" pares · ") + pedido.servicio;
+  document.getElementById("footTotal").textContent = money(total);
+  document.getElementById("resServ").textContent = pedido.servicio + " × " + n + (n===1?" par":" pares");
+  document.getElementById("resSub").textContent = money(total);
+  document.getElementById("resTotal").textContent = money(total);
+  return total;
+}
+
+/* ---- selección de servicio ---- */
+document.querySelectorAll(".opt").forEach(o => {
+  if(o.dataset.serv === pedido.servicio){
+    document.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    o.classList.add("sel");
+  }
+  o.onclick = () => {
+    document.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    o.classList.add("sel");
+    pedido.servicio = o.dataset.serv;
+    totales();
+  };
+});
+document.querySelectorAll("#franjas .pill").forEach(p => p.onclick = () => {
+  document.querySelectorAll("#franjas .pill").forEach(x => x.classList.remove("sel"));
+  p.classList.add("sel");
+  pedido.franja = p.dataset.f;
+});
+document.getElementById("addPar").onclick = () => { pedido.pares.push({marca:"",material:"Tela",nota:""}); pintarPares(); totales(); };
+
+/* ---- navegación ---- */
+function verPaso(n){
+  paso = n;
+  [1,2,3].forEach(i => {
+    document.getElementById("p"+i).style.display = i===n ? "block" : "none";
+    document.getElementById("b"+i).classList.toggle("on", i<=n);
+  });
+  document.getElementById("pasoTxt").textContent = "Paso " + n + " de 3 · " + ["Servicio","Los pares","Retiro"][n-1];
+  document.getElementById("atras").style.display = n===1 ? "none" : "inline-flex";
+  document.getElementById("seguir").textContent = n===3 ? "Confirmar pedido" : "Seguir";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+document.getElementById("atras").onclick = () => verPaso(paso-1);
+document.getElementById("seguir").onclick = () => {
+  if(paso < 3) return verPaso(paso+1);
+  confirmar();
+};
+
+/* ---- confirmar: guarda la ficha y arma el WhatsApp ---- */
+function fichas(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } }
+
+function confirmar(){
+  const nombre = document.getElementById("nombre").value.trim();
+  const tel = document.getElementById("tel").value.trim();
+  const dir = document.getElementById("dir").value.trim();
+  if(!nombre || !tel || !dir){
+    alert("Necesitamos tu nombre, tu WhatsApp y la dirección de retiro.");
+    return;
+  }
+  const total = totales();
+  const lista = fichas();
+  const n = lista.length ? Math.max(...lista.map(f => f.n)) + 1 : 42;
+  const ficha = {
+    n, nombre, tel, dir,
+    barrio: document.getElementById("barrio").value,
+    servicio: pedido.servicio,
+    franja: pedido.franja,
+    pares: pedido.pares,
+    total, paso: 0, entregada: false,
+    creada: new Date().toISOString()
+  };
+  lista.push(ficha);
+  localStorage.setItem(KEY, JSON.stringify(lista));
+
+  const id = String(n).padStart(3,"0");
+  document.getElementById("flujo").style.display = "none";
+  document.getElementById("listo").style.display = "block";
+  document.getElementById("fichaNum").textContent = id;
+  document.getElementById("cuando").textContent = ficha.franja.toLowerCase();
+  document.getElementById("detalle").innerHTML = [
+    ["Servicio", ficha.servicio + " × " + ficha.pares.length],
+    ["Retiro", ficha.dir],
+    ["Franja", ficha.franja],
+    ["Total a pagar", money(ficha.total)]
+  ].map(([k,v]) => `<div style="display:flex;justify-content:space-between;gap:14px;font-size:.78rem;color:var(--on-strong-soft)"><span>${k}</span><span style="color:var(--on-strong);font-weight:600;text-align:right">${v}</span></div>`).join("");
+
+  const texto =
+    "Hola Tillas Lab! Cargué la ficha " + id + "%0A" +
+    "Nombre: " + nombre + "%0A" +
+    "Dirección: " + dir + " (" + ficha.barrio + ")%0A" +
+    "Servicio: " + ficha.servicio + " x " + ficha.pares.length + "%0A" +
+    ficha.pares.map((p,i) => "Par 0" + (i+1) + ": " + (p.marca || "sin marca") + " · " + p.material + (p.nota ? " · " + p.nota : "")).join("%0A") + "%0A" +
+    "Retiro: " + ficha.franja + "%0A" +
+    "Total: " + money(ficha.total);
+  document.getElementById("waBtn").href = "https://wa.me/" + TEL_TALLER + "?text=" + texto.replace(/ /g,"%20");
+  document.getElementById("verFicha").href = "ficha.html?id=" + n;
+  window.scrollTo({top:0});
+}
+
+pintarPares();
+totales();
+</script>
+</body>
+</html>

@@ -1,17 +1,54 @@
 # Tillas Lab — Página web
 
-**En vivo:**
+**En vivo:** https://ricardoalvarez10.github.io/zapaslab/
 
-| Versión | Dirección | Estilo |
-|---|---|---|
-| Sobria | https://ricardoalvarez10.github.io/zapaslab/ | Papel claro, tipografía neutra. La que aprobó el dueño |
-| Muro | https://ricardoalvarez10.github.io/zapaslab/street.html | Cemento, afiches con cinta, spray y tipografía de póster. Pensada para acompañar un logo grafiteado |
+## Tres propuestas, un solo sitio
 
-Las dos tienen el mismo contenido y la misma estructura: cambia solo la piel.
-Cuando el dueño elija, la elegida pasa a ser `index.html` y la otra se borra.
-`street.html` es una copia de `index.html` con un segundo bloque de estilos al
-final del `<head>` que pisa los colores, las tipografías y los bordes, más el
-logo en SVG y el tag pintado de la sección oscura.
+Arriba de todo hay una barra con tres botones: **Común**, **Street** y
+**Grafity**. Cambian la piel al instante, sin recargar, y la elección se
+recuerda al navegar entre páginas. Es para que el dueño compare.
+
+| Modo | Cómo se ve |
+|---|---|
+| `comun` | Papel claro, tipografía neutra, sin color de acento. La que el dueño aprobó antes de que existiera el logo |
+| `street` | Muro de cemento, naranja aerosol, esquinas rectas, títulos en Anton |
+| `grafity` | Fondo oscuro, verde volt, títulos anchos en mayúscula y sombras duras corridas |
+
+Las tres tienen exactamente el mismo contenido y las mismas funciones: mapa
+real, promo con perillas, comparador antes/después, preguntas frecuentes, las
+ocho localidades y el logo grafiteado.
+
+Se puede forzar un modo por dirección: `index.html?modo=street`.
+
+**Cuando el dueño elija:** poné `data-modo="grafity"` (o el que sea) fijo en la
+etiqueta `<html>` de las cuatro páginas, borrá el bloque `<div class="modo-bar">`
+y el script del selector. La barra desaparece y queda una sola web.
+
+## Las páginas
+
+| Archivo | Qué es |
+|---|---|
+| `index.html` | La home |
+| `pedido.html` | Pedido en 3 pasos: calcula el total, guarda la ficha y arma el mensaje de WhatsApp |
+| `ficha.html` | Seguimiento del par con los 5 pasos del taller. Se abre con `ficha.html?id=42` |
+| `taller.html` | Panel interno: fichas, avanzar pasos, marcar entregada |
+| `tema.css` | Los tres modos y los componentes compartidos. **Los colores se tocan solo acá** |
+| `marca/` | El logo en PNG: redondo, avatar, portada, lockup sobre blanco |
+| `viejo/` | Las versiones anteriores, archivadas |
+
+Antes de tocar el aspecto, leer `DESIGN-SYSTEM.md`.
+
+**Ojo con `taller.html`:** si publicás el sitio, ese panel queda accesible.
+Renombralo a algo difícil de adivinar y no lo enlaces desde la home, o dejalo
+solo en tu máquina.
+
+## Cómo funciona el pedido hoy
+
+Sin backend. El cliente carga el pedido, la ficha se guarda en **su** navegador
+y el botón abre WhatsApp con todo el detalle escrito. Vos trabajás con ese
+mensaje. `taller.html` lee las fichas de **tu** navegador, así que sirve para
+probar el flujo completo, no para que cliente y taller compartan datos. Para
+eso hace falta base de datos: es el siguiente paso.
 
 Se publica sola con cada `git push` a `main`. Tarda un par de minutos en
 reflejar los cambios.
@@ -21,33 +58,35 @@ reflejar los cambios.
 
 Landing informativa de una sola página para el servicio de lavado de zapatillas con retiro y entrega en el Gran San Miguel de Tucumán. Todo el funnel termina en WhatsApp.
 
-**Un solo archivo:** `index.html` (HTML + CSS + JS embebidos, sin build). Cargas externas: Google Fonts (Archivo) y Leaflet + tiles de OpenStreetMap/CARTO para el mapa de cobertura (gratis, sin API key).
+**Un solo archivo:** `index.html` (HTML + CSS + JS embebidos, sin build). Cargas externas: Google Fonts (Archivo, Lobster y Kaushan Script) y Leaflet + tiles oscuros de OpenStreetMap/CARTO para el mapa de cobertura (gratis, sin API key). El logo de la web está hecho con CSS sobre la fuente Lobster, no es imagen; los PNG de `marca/` son para redes.
 
 **Mapa de cobertura:** el límite de la zona de servicio es el array `zona` dentro del script de `index.html` (pares lat/lng). Cuando el dueño defina la cobertura real, se ajustan esas coordenadas.
 
-## Manejar la promo de apertura
+## Manejar las promos de apertura
 
-Todo se controla desde el bloque `APERTURA Y PROMO` al inicio del script de `index.html`. No hace falta tocar el HTML.
+Son dos y van una detrás de la otra. Todo se controla desde el bloque
+`APERTURA Y PROMO` al inicio del script de `index.html`. No hace falta tocar el
+HTML.
+
+| Promo | Qué es | Vence |
+|---|---|---|
+| 1 | Los primeros **10 pares gratis**, el día de apertura, llevando el par al local | 1 de septiembre |
+| 2 | Los siguientes **50 al 50%** por inauguración | 15 de septiembre |
+
+La web muestra la primera que siga vigente. Cuando se le acaban los cupos o
+vence, pasa sola a la segunda. Agotadas las dos, aparece el mensaje permanente
+"Tus zapas listas en el día".
 
 ```js
-var APERTURA=new Date('2026-09-01T09:00:00-03:00');
-var PROMO={
-  activa:true,
-  hasta:new Date('2026-09-15T23:59:00-03:00'),
-  lugares:null
-};
+var PROMOS=[
+  { bloque:'promo-gratis', activa:true, hasta:new Date('2026-09-01T23:59:00-03:00'), lugares:10 },
+  { bloque:'promo-mitad',  activa:true, hasta:new Date('2026-09-15T23:59:00-03:00'), lugares:50 }
+];
 ```
 
-| Campo | Qué hace |
-|---|---|
-| `APERTURA` | Fecha de apertura. El cartel del hero cuenta los días solo y, pasada la fecha, muestra "Abierto · lunes a sábado de 9 a 20 hs". |
-| `PROMO.activa` | `false` saca la promo al instante. Es el corte manual, para cuando se llega a los 50 pares. |
-| `PROMO.hasta` | Fecha en que la promo se saca sola, sin que nadie toque nada. |
-| `PROMO.lugares` | `null` no muestra contador. Con un número muestra "Quedan N lugares" y al llegar a `0` saca la promo sola. Hay que actualizarlo a mano. |
-
-Cuando la promo termina, el bloque final se reemplaza solo por el mensaje permanente "Tus zapas listas en 48 horas", con el botón "Pedir retiro". La página nunca queda con un hueco ni con una promo vencida.
-
-**Importante:** la web es estática, no tiene base de datos ni cuenta pedidos. Nadie descuenta los pares vendidos automáticamente: el corte es por fecha, o manual cambiando `activa` o `lugares`.
+- `activa` en `false` y esa promo desaparece al instante.
+- `lugares` se baja a mano a medida que se usan. Al llegar a 0 la promo se cae sola.
+- Con `lugares: null` no se muestra el contador.
 
 ## Ver en local
 
@@ -86,7 +125,7 @@ Buscar y reemplazar en `index.html`:
 | `@tillaslab` (Instagram, TikTok y Facebook) | Confirmar que el usuario esté libre en las tres. Si el dueño usa uno distinto en cada red, corregir también la frase "En todas somos @tillaslab" |
 | "Primeros 50 pares al 50%" | Promo elegida |
 | Dirección del local | Todavía no la pasaron. Cuando exista, va en el pie y en el bloque de datos estructurados del `<head>` |
-| Logo | En `street.html` el logo es un SVG provisorio (texto con una mancha de spray). Reemplazarlo por el grafiteado real cuando esté |
+| Logo | El lockup está hecho con CSS sobre la fuente Lobster (clase `.lk`). Si el dueño aprueba otro logo, se reemplaza esa clase y los PNG de `marca/` |
 
 ## Publicar la web gratis, sin dominio propio
 
