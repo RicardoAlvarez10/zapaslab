@@ -34,7 +34,7 @@ y la respuesta es que no se hace, la bajada juega en contra.
 |---|---|
 | Nombre | Tillas Lab |
 | Bajada | Sneaker Cleaning & Restoration |
-| Usuario | `tillaslab` (alternativas: `tillaslab.tuc`, `tillaslabtuc`, `tillas.lab`) |
+| Usuario | `tillas.lab` |
 | Rubro | Servicio de limpieza / Lavandería |
 | Zona | San Miguel de Tucumán, Yerba Buena, Tafí Viejo, Las Talitas, Banda del Río Salí, Alderetes, El Manantial y Lomas de Tafí |
 | Horario | Lunes a sábado, de 9 a 20 hs |
@@ -42,9 +42,13 @@ y la respuesta es que no se hace, la bajada juega en contra.
 | WhatsApp | `PENDIENTE` |
 | Web | https://ricardoalvarez10.github.io/zapaslab/ |
 
-Conviene el **mismo usuario en las tres redes**, porque la web dice "En todas
-somos @tillaslab". Si el dueño elige uno distinto en cada una, avisar para
-corregir esa frase.
+El usuario es **`tillas.lab`, con punto**. El `tillaslab` sin punto estaba
+tomado en Instagram por Tilla's Sneaker Lab, un lavadero de Chile. Instagram y
+TikTok ya están dados de alta con el usuario con punto; la Página de Facebook
+todavía no existe y depende del dueño.
+
+La web dice "En todas somos @tillas.lab" y los seis enlaces del pie y del bloque
+de redes ya apuntan al usuario con punto.
 
 ---
 
@@ -97,7 +101,7 @@ facebook.com/pages/create.
 | Campo | Valor |
 |---|---|
 | Nombre de la página | Tillas Lab |
-| Usuario | @tillaslab |
+| Usuario | @tillas.lab |
 | Categoría | Servicio de limpieza |
 | Botón | Enviar mensaje de WhatsApp |
 
@@ -199,10 +203,11 @@ Si el resultado no es el que acordamos, lo lavamos de nuevo sin cargo.
 
 ## Lo que hay que conseguir para arrancar
 
-- Foto de perfil: el logo grafiteado, recortado en cuadrado y legible en
-  tamaño chico. Probarlo a 50 píxeles antes de subirlo, que es como se ve en el
-  celular.
-- Portada de Facebook: 820 por 312 píxeles.
+- Foto de perfil: ya está lista en `marca/avatar.png` (512 px, el sello sobre
+  crema). Probala a 50 píxeles antes de subirla, que es como se ve en el
+  celular: el arco inferior es lo primero que se pierde.
+- Portada de Facebook: ya está lista en `marca/portada.png` (820 × 312).
+- Para WhatsApp Business: `marca/perfil-180.png`.
 - Cuatro a seis pares lavados y fotografiados, con la misma luz, el mismo fondo
   y el mismo ángulo en el antes y en el después. Sin eso no hay contenido.
 - El número de WhatsApp Business, con el catálogo y las respuestas rápidas

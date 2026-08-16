@@ -27,3 +27,7 @@ lanzamiento/
 # funcione. Quedan en el disco de Ricardo, no en el repositorio.
 Design/
 Proyecto aparte/
+
+# Copia de seguridad hecha a mano antes de aplicar la marca. El historial de
+# git ya cumple esa función, así que no hace falta versionarla.
+.backup-pre-marca/

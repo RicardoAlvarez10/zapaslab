@@ -1,0 +1,14 @@
+logo.svg esta DESACTUALIZADO.
+
+Su arco superior sigue siendo Luckiest Guy, la tipografia anterior. Los PNG de
+esta carpeta ya estan con Sigmar One, que es la que eligio el dueno.
+
+Para regenerarlo hace falta:
+  1. Bajar Sigmar One de Google Fonts y dejar el .ttf en
+     Logo/Tillas-Lab-Logo/Fuentes/
+  2. Recuperar la imagen base del sello vacio (el JPG que apunta la variable SRC
+     en Logo/Tillas-Lab-Logo/Fuente-editable/final_luckiest.py)
+  3. Apuntar la linea "top = ArcText(...)" al .ttf de Sigmar One y correr el
+     script. El cuerpo se recalcula solo.
+
+Mientras tanto, para cualquier uso en pantalla va marca/logo.png.

@@ -4,7 +4,7 @@ Documento de traspaso. Sirve para que cualquiera, persona o asistente, se ponga
 al día sin haber estado en las conversaciones anteriores. Si vas a trabajar en
 este proyecto, leé esto primero.
 
-Última actualización: 15 de agosto de 2026.
+Última actualización: 16 de agosto de 2026.
 
 ---
 
@@ -34,9 +34,14 @@ decisiones dependen de datos que el dueño todavía no pasó.
 
 ## 2. Estado actual
 
-La web está hecha y publicada. Desde el 15 de agosto de 2026 es **un solo
-sitio de cuatro páginas con tres pieles intercambiables**, para que el dueño
-elija la estética sin que eso frene el desarrollo.
+La web está hecha y publicada. Es **un solo sitio de cuatro páginas con un
+solo tema**, derivado del sello de marca.
+
+Hasta el 15 de agosto tenía tres pieles intercambiables para que el dueño
+eligiera. Eligió `street`. El 16 de agosto se aplanó todo: se borraron los
+otros dos modos y la barra selectora, y la piel elegida se repintó con los
+valores exactos del sello (crema `#F2ECE1`, tinta `#131417`, naranja
+`#FF5A2D`, tipografías Sigmar One y Archivo Black).
 
 | Archivo | Qué es |
 |---|---|
@@ -44,8 +49,9 @@ elija la estética sin que eso frene el desarrollo.
 | `pedido.html` | Pedido en 3 pasos, arma la ficha y el mensaje de WhatsApp |
 | `ficha.html` | Seguimiento del par, los 5 pasos del taller |
 | `taller.html` | Panel interno de fichas |
-| `tema.css` | Los tres modos. Los colores se tocan solo acá |
-| `marca/` | El logo en PNG |
+| `tema.css` | El tema. Los colores se tocan solo acá |
+| `marca/` | El sello listo para usar: web, favicon, avatar, portada y og |
+| `Logo/Tillas-Lab-Logo/` | La fuente del logo: `MARCA.md`, los .ttf y los scripts que lo regeneran |
 | `viejo/` | Las dos versiones anteriores, archivadas |
 | `Design/`, `Proyecto aparte/` | Lo que devolvió Claude Design, tal cual salió |
 
@@ -55,28 +61,22 @@ Repositorio: `github.com/RicardoAlvarez10/zapaslab` (público). Conserva el
 nombre viejo del proyecto para no romper la dirección publicada. Se publica
 solo con cada `git push` a `main`.
 
-**Las tres propuestas.** Arriba de todo hay una barra con tres botones que
-cambian la piel al instante. El modo se recuerda al navegar entre páginas.
-
-- `comun`: papel claro, tipografía neutra, sin acento. Respeta los dos rechazos
-  registrados del dueño: nada de neones, nada de mayúsculas gritonas.
-- `street`: muro de cemento, naranja aerosol, esquinas rectas, Anton.
-- `grafity`: fondo oscuro, verde volt, mayúsculas anchas y sombras duras.
-
-Las tres tienen el mismo contenido y las mismas funciones. El dueño elige solo
-por gusto.
+**El logo.** Es un sello redondo: anillo crema, disco tinta, la zapatilla,
+"TILLAS LAB" en el arco superior y "LIMPIAS · FRESCAS · IMPECABLES" en el
+inferior. La especificación completa (paleta, tipografía, geometría y cómo
+regenerarlo) está en `Logo/Tillas-Lab-Logo/MARCA.md`. La tipografía del arco
+superior es **Sigmar One**, elegida por el dueño el 16 de agosto sobre
+`Logo/comparativa-tipografias.png`. El logo queda cerrado.
 
 **El flujo de pedido.** Funciona sin backend: la ficha se guarda en el navegador
 del cliente y el botón abre WhatsApp con el detalle escrito. `taller.html` lee
 las fichas del navegador propio. Para que cliente y taller compartan datos hace
 falta base de datos, y es el siguiente paso.
 
-**Decisión pendiente, pero ya no bloquea.** Cuál de las tres queda depende del
-dueño. Mientras tanto el desarrollo sigue, porque las tres corren sobre el mismo
-código. Cuando elija, se fija `data-modo` en el `<html>` y se borra la barra
-selectora: no hay que rehacer nada.
-
----
+**La estética ya no está pendiente.** El dueño eligió, el tema se aplanó y la
+web quedó alineada con el sello. Si más adelante quiere ver otra dirección, las
+versiones anteriores están archivadas en `viejo/` y el commit previo al aplanado
+tiene los tres modos completos.
 
 ## 3. Lo que ya está decidido
 
@@ -90,8 +90,10 @@ selectora: no hay que rehacer nada.
   promo vencida.
 - El mapa de cobertura es real, con OpenStreetMap, y marca la zona con un
   polígono. Las coordenadas son aproximadas y hay que ajustarlas.
-- El usuario de redes es el mismo en las tres: `@tillaslab`. Falta confirmar
-  que esté libre, porque no se puede verificar desde afuera.
+- El usuario de redes es `@tillas.lab`, **con punto**. El `tillaslab` sin punto
+  estaba tomado en Instagram por un lavadero de Chile. Instagram y TikTok ya
+  están creados; la Página de Facebook la tiene que crear el dueño desde su
+  perfil, así que ese enlace del sitio todavía no lleva a ningún lado.
 
 ---
 
@@ -102,6 +104,11 @@ Esto se aprendió a base de rechazos. Conviene respetarlo para no volver atrás:
 **No quiere:** neones, cintas de texto que giran ("muy china"), letras gigantes
 de fondo, mayúsculas gritonas, emojis, guiones largos en los textos, textos
 pegados a los bordes, ni nada que "parezca hecho por una máquina".
+
+Ojo con la contradicción: eligió `street`, que usa títulos en mayúscula. El
+rechazo era a las mayúsculas *gritonas* de la versión grafitera, no a la
+mayúscula como recurso de título. Se mantiene, pero es lo primero a revisar si
+vuelve a quejarse.
 
 **Sí quiere:** limpio y ordenado, con aire; animaciones pausadas que se
 disparen cuando el elemento ya está a la vista, no antes; secciones que se
@@ -127,8 +134,8 @@ Nada de esto se puede inventar:
 - Dirección del local. **Ahora urge:** la promo de los 10 lavados gratis pide
   que el cliente lleve el par al local, y no hay dirección que mostrar.
 - ~~Nombres de los planes~~ **resuelto el 15/08**: Lavado regular y Lavado express.
-- Aprobación del logo grafiteado. Ya existe y está puesto en la web, pero lo
-  hizo Claude Design, no el dueño. Falta que lo apruebe.
+- ~~Aprobación del logo~~ **resuelto el 16/08**: el dueño eligió Sigmar One para
+  el arco superior. El sello está cerrado y aplicado en toda la web.
 - Si suman o no un servicio de restauración de verdad. La bajada dice
   "Restoration" pero los tres planes son solo de limpieza.
 - Fotos reales de pares lavados, con la misma luz, fondo y ángulo en el antes y

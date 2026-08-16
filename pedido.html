@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="es-AR" data-modo="street">
+<html lang="es-AR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pedir retiro · Tillas Lab</title>
 <meta name="description" content="Pedí el retiro de tus zapatillas en tres pasos. Retiro y entrega incluidos en todo el Gran San Miguel de Tucumán.">
+<meta name="theme-color" content="#131417">
+<link rel="icon" type="image/png" sizes="180x180" href="marca/perfil-180.png">
+<link rel="apple-touch-icon" href="marca/perfil-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Anton&family=Lobster&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Archivo+Black&family=Sigmar+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tema.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -15,7 +18,7 @@
 
 <header class="topbar-app">
   <div class="inner">
-    <a href="index.html" class="lk lk-sm" aria-label="Tillas Lab"><span class="t">Tillas</span><span class="l">Lab</span></a>
+    <a class="lk lk-sm" href="index.html" aria-label="Tillas Lab"><img class="marca" src="marca/sello-80.png" alt="" width="38" height="38"><span class="palabra">Tillas Lab</span></a>
     <nav>
       <a href="index.html">Inicio</a>
       <a href="pedido.html" class="on">Pedir retiro</a>
@@ -103,7 +106,7 @@
         <span class="label" id="footLabel">1 par · Lavado regular</span>
         <span class="num" style="font-size:1.25rem;font-weight:800" id="footTotal">$8.000</span>
       </div>
-      <button id="seguir" class="btn-volt">Seguir</button>
+      <button id="seguir" class="btn-acento">Seguir</button>
     </div>
   </div>
 
@@ -111,7 +114,7 @@
   <div id="listo" style="display:none;border-radius:var(--radius-lg);overflow:hidden;background:var(--strong);border:1px solid var(--hairline-2);color:var(--on-strong)">
     <div style="padding:34px 24px 0;display:flex;flex-direction:column;gap:16px;align-items:flex-start">
       <span class="script" style="font-size:1.4rem;color:var(--on-strong);transform:rotate(-2deg);display:inline-block">pedido tomado</span>
-      <div class="lk lk-md"><span class="t">Ficha</span><span class="l num" id="fichaNum">042</span></div>
+      <div class="lk lk-md sobre-tinta"><img class="marca" src="marca/sello-120.png" alt="" width="52" height="52"><span class="palabra num">Ficha <span id="fichaNum">042</span></span></div>
       <p style="font-size:.9rem;line-height:1.6;color:var(--on-strong-soft)">Pasamos a buscarlas <b style="color:var(--on-strong)" id="cuando">mañana entre 9 y 13</b>. Cuando entren al taller vas a ver cada paso desde el link de tu ficha.</p>
     </div>
     <div style="margin:22px 24px 0;padding:18px;border:2px dashed rgba(255,255,255,.28);border-radius:var(--radius);display:flex;flex-direction:column;gap:11px" id="detalle"></div>

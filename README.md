@@ -2,27 +2,20 @@
 
 **En vivo:** https://ricardoalvarez10.github.io/zapaslab/
 
-## Tres propuestas, un solo sitio
+## Cómo se ve
 
-Arriba de todo hay una barra con tres botones: **Común**, **Street** y
-**Grafity**. Cambian la piel al instante, sin recargar, y la elección se
-recuerda al navegar entre páginas. Es para que el dueño compare.
+Un solo tema, derivado del sello de marca: fondo de papel crema `#F2ECE1`,
+tinta `#131417`, naranja `#FF5A2D` como único acento, esquinas rectas y sombras
+duras corridas. Títulos en Archivo Black y logo en Sigmar One.
 
-| Modo | Cómo se ve |
-|---|---|
-| `comun` | Papel claro, tipografía neutra, sin color de acento. La que el dueño aprobó antes de que existiera el logo |
-| `street` | Muro de cemento, naranja aerosol, esquinas rectas, títulos en Anton |
-| `grafity` | Fondo oscuro, verde volt, títulos anchos en mayúscula y sombras duras corridas |
+Hasta el 15 de agosto había tres pieles intercambiables (`comun`, `street` y
+`grafity`) con una barra selectora arriba, para que el dueño eligiera sin frenar
+el desarrollo. **Eligió `street`.** El 16 de agosto se aplanó todo a un solo
+tema: esa piel, repintada con los valores exactos del sello. Ya no hay
+`data-modo` ni barra selectora.
 
-Las tres tienen exactamente el mismo contenido y las mismas funciones: mapa
-real, promo con perillas, comparador antes/después, preguntas frecuentes, las
-ocho localidades y el logo grafiteado.
-
-Se puede forzar un modo por dirección: `index.html?modo=street`.
-
-**Cuando el dueño elija:** poné `data-modo="grafity"` (o el que sea) fijo en la
-etiqueta `<html>` de las cuatro páginas, borrá el bloque `<div class="modo-bar">`
-y el script del selector. La barra desaparece y queda una sola web.
+La paleta y las tipografías salen de `Logo/Tillas-Lab-Logo/MARCA.md` y no se
+inventan en el código. Cómo se aplican está en `DESIGN-SYSTEM.md`.
 
 ## Las páginas
 
@@ -30,10 +23,11 @@ y el script del selector. La barra desaparece y queda una sola web.
 |---|---|
 | `index.html` | La home |
 | `pedido.html` | Pedido en 3 pasos: calcula el total, guarda la ficha y arma el mensaje de WhatsApp |
-| `ficha.html` | Seguimiento del par con los 5 pasos del taller. Se abre con `ficha.html?id=42` |
+| `ficha.html` | Seguimiento del par con los 6 pasos del taller. Se abre con `ficha.html?id=42` |
 | `taller.html` | Panel interno: fichas, avanzar pasos, marcar entregada |
-| `tema.css` | Los tres modos y los componentes compartidos. **Los colores se tocan solo acá** |
-| `marca/` | El logo en PNG: redondo, avatar, portada, lockup sobre blanco |
+| `tema.css` | El tema y los componentes compartidos. **Los colores se tocan solo acá** |
+| `marca/` | El sello listo para usar: web, favicon, avatar, portada y og |
+| `Logo/Tillas-Lab-Logo/` | La fuente del logo: `MARCA.md`, los .ttf y los scripts que lo regeneran |
 | `viejo/` | Las versiones anteriores, archivadas |
 
 Antes de tocar el aspecto, leer `DESIGN-SYSTEM.md`.
@@ -53,12 +47,13 @@ eso hace falta base de datos: es el siguiente paso.
 Se publica sola con cada `git push` a `main`. Tarda un par de minutos en
 reflejar los cambios.
 
-> Ojo: el número de WhatsApp y los precios que se ven son de ejemplo.
-> No difundir el enlace hasta reemplazarlos (ver más abajo).
+> Ojo: el número de WhatsApp es de ejemplo (`5493810000000`, 10 apariciones).
+> No difundir el enlace hasta reemplazarlo (ver más abajo). Los precios ya son
+> los reales: $8.000 el regular y $10.000 el express.
 
 Landing informativa de una sola página para el servicio de lavado de zapatillas con retiro y entrega en el Gran San Miguel de Tucumán. Todo el funnel termina en WhatsApp.
 
-**Un solo archivo:** `index.html` (HTML + CSS + JS embebidos, sin build). Cargas externas: Google Fonts (Archivo, Lobster y Kaushan Script) y Leaflet + tiles oscuros de OpenStreetMap/CARTO para el mapa de cobertura (gratis, sin API key). El logo de la web está hecho con CSS sobre la fuente Lobster, no es imagen; los PNG de `marca/` son para redes.
+**Un solo archivo:** `index.html` (HTML + CSS + JS embebidos, sin build). Cargas externas: Google Fonts (Archivo, Archivo Black y Sigmar One) y Leaflet + tiles claros de OpenStreetMap/CARTO para el mapa de cobertura (gratis, sin API key). El sello va como imagen (`marca/logo.png`) en el hero, el favicon y las redes; en la barra y el pie va un lockup de texto en Sigmar One (clase `.lk`), que escala mejor y pesa menos.
 
 **Mapa de cobertura:** el límite de la zona de servicio es el array `zona` dentro del script de `index.html` (pares lat/lng). Cuando el dueño defina la cobertura real, se ajustan esas coordenadas.
 
@@ -108,7 +103,7 @@ Están en el HTML, comentados, listos para reactivar sacando el comentario:
 
 La web enlaza **Instagram, TikTok y Facebook** en dos lugares: los botones de la sección "Seguinos" y los íconos del pie. WhatsApp aparece además como ícono en el pie y como botón flotante.
 
-El usuario es **el mismo en las tres redes** (`@tillaslab`), y la página lo comunica así: "En todas somos @tillaslab". Si el dueño elige usuarios distintos en cada red, hay que corregir esa frase, porque quedaría diciendo algo falso.
+El usuario es **`@tillas.lab`, con punto**, y la página lo comunica así: "En todas somos @tillas.lab". El `tillaslab` sin punto estaba tomado en Instagram. Instagram y TikTok ya existen; **la Página de Facebook no**, así que ese enlace todavía no lleva a ningún lado.
 
 **Antes de difundir la web**, las tres cuentas tienen que existir y tener al menos tres o cuatro publicaciones. Un perfil vacío enlazado desde la web resta credibilidad.
 
@@ -120,12 +115,10 @@ Buscar y reemplazar en `index.html`:
 |---|---|
 | `5493810000000` (aparece en todos los links `wa.me`) | Número real de WhatsApp Business, formato `549381XXXXXXX` |
 | `+54 9 381 000-0000` (footer) | Número real formateado |
-| Precios `$12.000 / $18.000 / $25.000` | Precios reales |
-| Nombres de los planes (Básico / Completo / Premium) | Los que use el dueño. Aparecen en el título, el botón, el mensaje de WhatsApp, la ficha del hero y en "Todo lo del Completo" del plan Premium |
-| `@tillaslab` (Instagram, TikTok y Facebook) | Confirmar que el usuario esté libre en las tres. Si el dueño usa uno distinto en cada red, corregir también la frase "En todas somos @tillaslab" |
-| "Primeros 50 pares al 50%" | Promo elegida |
-| Dirección del local | Todavía no la pasaron. Cuando exista, va en el pie y en el bloque de datos estructurados del `<head>` |
-| Logo | El lockup está hecho con CSS sobre la fuente Lobster (clase `.lk`). Si el dueño aprueba otro logo, se reemplaza esa clase y los PNG de `marca/` |
+| Enlace a Facebook | Apunta a `facebook.com/tillas.lab`, pero la Página no existe todavía: la tiene que crear el dueño desde su perfil. Hasta entonces el enlace del pie y el del bloque de redes van a dar error |
+| Dirección del local | Todavía no la pasaron. **La promo de los 10 pares gratis es presencial y hoy la anuncia sin decir adónde ir.** Cuando exista, va en el pie, en el bloque de la promo y en los datos estructurados del `<head>` |
+| Lámpara UV | El paso 4 del proceso ya anuncia desinfección con luz ultravioleta. Confirmar que esté comprada y operativa antes de difundir |
+| Gamuza y cuero | El FAQ dice que se trabajan aparte. Al eliminarse el plan Premium se quedaron sin precio ni plazo propio |
 
 ## Publicar la web gratis, sin dominio propio
 

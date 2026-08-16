@@ -1,98 +1,66 @@
 /* =========================================================================
-   Tillas Lab · tema de tres modos
+   Tillas Lab · tema
    -------------------------------------------------------------------------
-   Tres propuestas visuales sobre el mismo contenido. El modo se elige con el
-   atributo data-modo en <html>: "comun", "street" o "grafity".
+   Un solo tema, derivado del sello de marca. La paleta y las tipografias
+   salen de Logo/Tillas-Lab-Logo/MARCA.md y no se inventan aca.
 
-   Lo comparten las cuatro páginas: index, pedido, ficha y taller. Si tocás un
-   color, tocalo acá y cambia en todas.
+     Crema    #F2ECE1   fondo, relleno de las letras del logo
+     Tinta    #131417   texto, contornos, superficies fuertes
+     Naranja  #FF5A2D   unico color de acento
 
-   comun    papel claro, tipografía neutra, sin color de acento. La que aprobó
-            el dueño antes de que existiera el logo.
-   street   muro de cemento, naranja aerosol, esquinas rectas y tipografía de
-            póster.
-   grafity  fondo oscuro, verde volt, títulos anchos en mayúscula y sombras
-            duras corridas. La del logo grafiteado.
+   Lo comparten las cuatro paginas: index, pedido, ficha y taller. Si tocas un
+   color, tocalo aca y cambia en todas.
+
+   Historia: hasta el 16/08/2026 el sitio tenia tres pieles intercambiables
+   (comun, street y grafity) para que el dueno eligiera. Eligio street. Este
+   tema es esa piel, repintada con los valores exactos del sello.
    ========================================================================= */
 
 :root{
+  /* ---------- Tipografia ---------- */
   --font:"Archivo",system-ui,sans-serif;
-  --font-script:"Kaushan Script",cursive;
-  --font-logo:"Lobster",cursive;
+  --font-title:"Archivo Black","Archivo",system-ui,sans-serif;
+  --font-logo:"Sigmar One",cursive;
+
+  /* ---------- Paleta de marca ---------- */
+  --crema:#F2ECE1;
+  --tinta:#131417;
+  --naranja:#FF5A2D;
+
+  /* ---------- Superficies, de la mas honda a la mas alta ---------- */
+  --bg:#F2ECE1;
+  --paper:#FAF7F0;
+  --card:#FFFFFF;
+  --band:#EDE6D9;
+  --strong:#131417;
+
+  /* ---------- Texto ---------- */
+  --ink:#131417;
+  --soft:#5C5648;
+  --faint:#8B8579;
+  --on-strong:#F2ECE1;
+  --on-strong-soft:#C9C4B8;
+
+  /* ---------- Bordes ---------- */
+  --hairline:#E3DCCD;
+  --hairline-2:#CFC7B5;
+
+  /* ---------- Acento ---------- */
+  --accent:#FF5A2D;
+  /* tinta sobre naranja da 5.92 de contraste; el blanco daba 3.11 y no pasa AA */
+  --on-accent:#131417;
+  --accent-soft:rgba(255,90,45,.16);
+  /* el naranja de marca sobre fondo claro da 2.65 y es ilegible como texto.
+     Mismo tono y misma saturacion, bajado de luminosidad hasta pasar AA:
+     4.55 sobre crema y 5.35 sobre blanco. Solo para texto, nunca para relleno. */
+  --accent-ink:#CC2C00;
   --wa:#1da851;
-  --pad-x:44px;
-}
 
-/* ---------- MODO COMÚN ---------- */
-[data-modo="comun"]{
-  --bg:#ededea;
-  --paper:#fafaf8;
-  --card:#ffffff;
-  --band:#f2f2ee;
-  --strong:#14171c;
-
-  --ink:#14171c;
-  --soft:#5c6470;
-  --faint:#9096a0;
-  --on-strong:#ffffff;
-  --on-strong-soft:#b6bcc6;
-
-  --hairline:#e7e7e2;
-  --hairline-2:#d8d8d2;
-
-  --accent:#14171c;
-  --on-accent:#ffffff;
-  --accent-soft:rgba(20,23,28,.10);
-
-  --radius:16px;
-  --radius-lg:32px;
-  --pill:99px;
-
-  --font-title:var(--font);
-  --title-transform:none;
-  --title-settings:normal;
-  --title-spacing:-.02em;
-  --title-height:1.08;
-
-  --btn-bd:1px solid transparent;
-  --btn-sh:none;
-  --btn-sh-hover:none;
-
-  --lk-stroke:#14171c;
-  --lk-halo:#ffffff;
-
-  --tex:none;
-  --shadow-card:0 14px 40px -18px rgba(20,23,28,.12);
-  --shadow-deep:0 24px 60px -30px rgba(20,23,28,.4);
-  --topbar-bg:rgba(237,237,234,.88);
-}
-
-/* ---------- MODO STREET ---------- */
-[data-modo="street"]{
-  --bg:#e8e3d7;
-  --paper:#faf8f3;
-  --card:#ffffff;
-  --band:#f2efe6;
-  --strong:#23272b;
-
-  --ink:#15171a;
-  --soft:#5c5648;
-  --faint:#8b8579;
-  --on-strong:#ffffff;
-  --on-strong-soft:#c9c4b8;
-
-  --hairline:#e4e0d5;
-  --hairline-2:#cfcabd;
-
-  --accent:#ff4d17;
-  --on-accent:#ffffff;
-  --accent-soft:rgba(255,77,23,.16);
-
+  /* ---------- Geometria: esquinas rectas ---------- */
   --radius:0px;
   --radius-lg:0px;
   --pill:0px;
 
-  --font-title:"Anton",Impact,sans-serif;
   --title-transform:uppercase;
   --title-settings:normal;
   --title-spacing:.005em;
@@ -102,58 +70,12 @@
   --btn-sh:3px 3px 0 var(--accent);
   --btn-sh-hover:5px 5px 0 var(--accent);
 
-  --lk-stroke:#15171a;
-  --lk-halo:#ffffff;
-
   --tex:repeating-linear-gradient(0deg,rgba(0,0,0,.26) 0 2px,transparent 2px 6px);
-  --shadow-card:6px 6px 0 rgba(21,23,26,.10);
-  --shadow-deep:10px 10px 0 rgba(21,23,26,.16);
-  --topbar-bg:rgba(232,227,215,.9);
-}
+  --shadow-card:6px 6px 0 rgba(19,20,23,.10);
+  --shadow-deep:10px 10px 0 rgba(19,20,23,.16);
+  --topbar-bg:rgba(242,236,225,.9);
 
-/* ---------- MODO GRAFITY ---------- */
-[data-modo="grafity"]{
-  --bg:#0f1216;
-  --paper:#161a1f;
-  --card:#1d2229;
-  --band:#262b31;
-  --strong:#0b0e11;
-
-  --ink:#f3f5f7;
-  --soft:#a9b2bd;
-  --faint:#7b848f;
-  --on-strong:#f3f5f7;
-  --on-strong-soft:#aab1bd;
-
-  --hairline:#272c33;
-  --hairline-2:#39404a;
-
-  --accent:#b6e534;
-  --on-accent:#14171c;
-  --accent-soft:rgba(182,229,52,.16);
-
-  --radius:16px;
-  --radius-lg:24px;
-  --pill:99px;
-
-  --font-title:var(--font);
-  --title-transform:uppercase;
-  --title-settings:'wdth' 66,'wght' 900;
-  --title-spacing:-.01em;
-  --title-height:.92;
-
-  --btn-bd:2.5px solid #0b0e11;
-  --btn-sh:4px 5px 0 #0b0e11;
-  --btn-sh-hover:5px 6px 0 #0b0e11;
-
-  --lk-stroke:#ffffff;
-  --lk-halo:#14171c;
-
-  --tex:radial-gradient(circle at 30% 42%,rgba(168,217,42,.16),transparent 52%),
-        repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 2px,transparent 2px 6px);
-  --shadow-card:0 14px 40px -18px rgba(0,0,0,.7);
-  --shadow-deep:0 24px 60px -24px rgba(0,0,0,.75);
-  --topbar-bg:rgba(15,18,22,.9);
+  --pad-x:44px;
 }
 
 /* =========================================================================
@@ -188,11 +110,9 @@ h1,h2,h3,h4{
   text-transform:var(--title-transform);
   letter-spacing:var(--title-spacing);
   line-height:var(--title-height);
-  font-weight:700;
+  /* Archivo Black trae un solo peso: pedirle 700 lo deforma donde se simula */
+  font-weight:400;
 }
-/* Anton trae un solo peso: pedirle 700 lo deforma donde se simula */
-[data-modo="street"] h1,[data-modo="street"] h2,
-[data-modo="street"] h3,[data-modo="street"] h4{font-weight:400}
 
 .wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad-x)}
 .narrow{max-width:560px;margin:0 auto}
@@ -200,21 +120,13 @@ h1,h2,h3,h4{
 .col{display:flex;flex-direction:column}
 .num{font-variant-numeric:tabular-nums}
 
-/* rótulo de sección: manuscrito, en minúscula */
+/* rótulo de sección: la volanta chica del afiche */
 .lbl{
-  font-family:var(--font-script);
-  font-size:1.24rem;font-weight:400;
-  letter-spacing:0;text-transform:none;
-  color:var(--accent);
+  font-family:var(--font-title);
+  font-size:.74rem;font-weight:400;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-ink);
   display:inline-block;
-}
-/* en el modo común el acento es la tinta: el manuscrito saldría casi negro y
-   pesado, así que ahí el rótulo vuelve a ser la etiqueta chica de siempre */
-[data-modo="comun"] .lbl{
-  font-family:var(--font);
-  font-size:.7rem;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:var(--faint);
 }
 /* título suelto, para las pantallas del flujo */
 .h{
@@ -223,70 +135,73 @@ h1,h2,h3,h4{
   text-transform:var(--title-transform);
   letter-spacing:var(--title-spacing);
   line-height:var(--title-height);
-  font-weight:700;
+  font-weight:400;
 }
-[data-modo="street"] .h{font-weight:400}
-.script{font-family:var(--font-script);font-weight:400}
+.script{font-family:var(--font-title);font-weight:400;text-transform:uppercase;letter-spacing:.03em}
 .label{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .label-dark{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--on-strong-soft)}
 
 /* =========================================================================
    Logo
    -------------------------------------------------------------------------
-   El mismo lockup en los tres modos. Lo único que cambia es el contorno:
-   blanco sobre fondo oscuro, tinta sobre fondo claro. La línea cyan es parte
-   de la marca y no se toca.
+   Hay una sola marca: el sello. Donde entra completo va como imagen (.sello).
+   Donde no entra —la barra, el pie— va el lockup horizontal: el sello chico
+   más la palabra al lado.
+
+   La palabra NO imita el arco del sello. Va en Sigmar One, tinta plena, recta
+   y sin contornos, para que acompañe al sello en vez de competir con él. Dos
+   versiones parecidas pero no iguales del mismo wordmark se leen como un
+   error, y es exactamente lo que había antes.
    ========================================================================= */
-.lk{display:inline-block;line-height:1}
-.lk span{display:block;font-family:var(--font-logo);line-height:1;paint-order:stroke;text-transform:none;font-weight:400}
-.lk .t{color:#b6e534}
-.lk .l{color:#ffffff}
 
-.lk-xl{padding:0 20px 20px 0}
-.lk-xl .t,.lk-xl .l{
-  -webkit-text-stroke:9px var(--lk-stroke);
-  text-shadow:2px 2px 0 #14171c,4px 4px 0 #14171c,6px 6px 0 #14171c,8px 8px 0 #14171c,
-              10px 10px 0 #14171c,12px 12px 0 #14171c,14px 14px 0 #14171c,
-              16px 16px 0 #14171c,18px 18px 0 #14171c,20px 20px 0 #2ee6d6,22px 22px 0 #2ee6d6;
-  filter:drop-shadow(3px 0 0 var(--lk-halo)) drop-shadow(-3px 0 0 var(--lk-halo))
-         drop-shadow(0 3px 0 var(--lk-halo)) drop-shadow(0 -3px 0 var(--lk-halo));
+/* el sello como imagen */
+.sello{display:block;height:auto}
+.sello-xl{width:clamp(200px,26vw,300px)}
+
+/* lockup horizontal: sello + palabra */
+.lk{
+  display:inline-flex;align-items:center;gap:11px;
+  text-decoration:none;color:inherit;line-height:1;
 }
-.lk-xl .t{font-size:clamp(52px,7.4vw,88px);transform:rotate(-4deg)}
-.lk-xl .l{font-size:clamp(48px,6.8vw,80px);transform:rotate(-3deg);margin:6px 0 0 clamp(48px,7vw,84px)}
-
-.lk-md{padding:0 14px 14px 0}
-.lk-md .t,.lk-md .l{
-  -webkit-text-stroke:6px var(--lk-stroke);
-  text-shadow:1.5px 1.5px 0 #14171c,3px 3px 0 #14171c,4.5px 4.5px 0 #14171c,6px 6px 0 #14171c,
-              7.5px 7.5px 0 #14171c,9px 9px 0 #14171c,10.5px 10.5px 0 #14171c,
-              12px 12px 0 #2ee6d6,13.5px 13.5px 0 #2ee6d6;
-  filter:drop-shadow(2px 0 0 var(--lk-halo)) drop-shadow(-2px 0 0 var(--lk-halo))
-         drop-shadow(0 2px 0 var(--lk-halo)) drop-shadow(0 -2px 0 var(--lk-halo));
+.lk .marca{flex:none;display:block;height:auto}
+.lk .palabra{
+  font-family:var(--font-logo);font-weight:400;line-height:1;
+  text-transform:uppercase;letter-spacing:.02em;
+  color:var(--ink);
+  white-space:nowrap;
 }
-.lk-md .t{font-size:52px;transform:rotate(-4deg)}
-.lk-md .l{font-size:47px;transform:rotate(-3deg);margin:4px 0 0 50px}
+/* sobre superficie tinta la palabra va en crema */
+footer .lk .palabra,
+.proto .lk .palabra,
+.cta-final .lk .palabra,
+.topbar-app .lk .palabra,
+.lk.sobre-tinta .palabra{color:var(--on-strong)}
 
-.lk-sm{padding:0 8px 8px 0;display:flex;align-items:flex-end;gap:9px}
-.lk-sm span{display:inline-block}
-.lk-sm .t,.lk-sm .l{
-  -webkit-text-stroke:4px var(--lk-stroke);
-  text-shadow:1.5px 1.5px 0 #14171c,3px 3px 0 #14171c,4.5px 4.5px 0 #14171c,
-              6px 6px 0 #14171c,7.5px 7.5px 0 #2ee6d6;
-  filter:drop-shadow(1.5px 0 0 var(--lk-halo)) drop-shadow(-1.5px 0 0 var(--lk-halo))
-         drop-shadow(0 1.5px 0 var(--lk-halo)) drop-shadow(0 -1.5px 0 var(--lk-halo));
+.lk-sm{gap:10px}
+.lk-sm .marca{width:38px}
+.lk-sm .palabra{font-size:19px}
+
+.lk-md{gap:13px}
+.lk-md .marca{width:52px}
+.lk-md .palabra{font-size:26px}
+
+@media (max-width:600px){
+  .lk-sm .marca{width:32px}
+  .lk-sm .palabra{font-size:16px}
 }
-.lk-sm .t{font-size:25px;transform:rotate(-4deg)}
-.lk-sm .l{font-size:23px;transform:rotate(-3deg)}
 
+/* la bajada de marca. Son las mismas palabras que el arco inferior del sello,
+   así que van en la misma fuente: Archivo Black, mayúscula */
 .tagline{
-  font-family:var(--font-script);font-size:1.5rem;
-  color:var(--ink);display:inline-block;transform:rotate(-2deg);
+  font-family:var(--font-title);font-size:.86rem;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);display:inline-block;
 }
 
 /* =========================================================================
    Botones
    ========================================================================= */
-.btn,.btn-dark,.btn-volt,.btn-wa,.btn-ghost,.btn-line,.btn-line-dark{
+.btn,.btn-dark,.btn-acento,.btn-wa,.btn-ghost,.btn-line,.btn-line-dark{
   display:inline-flex;align-items:center;justify-content:center;gap:.55em;
   font-family:var(--font);font-weight:700;font-size:.95rem;
   border-radius:var(--pill);padding:.8em 1.6em;
@@ -294,16 +209,16 @@ h1,h2,h3,h4{
   transition:background .15s ease,border-color .15s ease,color .15s ease,
              box-shadow .15s ease,transform .15s ease;
 }
-.btn:active,.btn-dark:active,.btn-volt:active,.btn-wa:active{transform:translate(1px,1px)}
+.btn:active,.btn-dark:active,.btn-acento:active,.btn-wa:active{transform:translate(1px,1px)}
 .btn:active{transform:translate(1px,1px)}
 .btn-sm{padding:.6em 1.2em;font-size:.88rem}
 
-.btn-dark,.btn-volt{
+.btn-dark,.btn-acento{
   background:var(--accent);color:var(--on-accent);font-weight:800;
   box-shadow:var(--btn-sh);
 }
-.btn-dark:hover,.btn-volt:hover{box-shadow:var(--btn-sh-hover)}
-.btn-dark:disabled,.btn-volt:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+.btn-dark:hover,.btn-acento:hover{box-shadow:var(--btn-sh-hover)}
+.btn-dark:disabled,.btn-acento:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
 
 .btn-wa{background:var(--wa);color:#fff;font-weight:800;box-shadow:var(--btn-sh)}
 .btn-wa:hover{background:#22bd5c;box-shadow:var(--btn-sh-hover)}
@@ -312,7 +227,7 @@ h1,h2,h3,h4{
   border:2px solid var(--hairline-2);color:var(--ink);background:transparent;
   box-shadow:none;
 }
-.btn-ghost:hover,.btn-line:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost:hover,.btn-line:hover{border-color:var(--accent);color:var(--accent-ink)}
 
 .btn-line-dark{
   border:2px solid rgba(255,255,255,.35);color:var(--on-strong);
@@ -334,8 +249,7 @@ h1,h2,h3,h4{
   border-radius:var(--radius);padding:18px;color:var(--on-strong);
 }
 .wall{background:var(--strong);background-image:var(--tex)}
-/* fondo de las pantallas del flujo: el del modo, con su textura si la tiene.
-   En común queda liso, en street es cemento y en grafity el muro con halo. */
+/* fondo de las pantallas del flujo: papel crema con la rasante de cemento */
 .pagina{background:var(--bg);background-image:var(--tex)}
 .chip{
   font-size:.85rem;font-weight:600;color:var(--ink);
@@ -343,12 +257,13 @@ h1,h2,h3,h4{
   border-radius:var(--pill);padding:.42em 1em;
 }
 .tag{
-  display:inline-block;font-family:var(--font-script);font-size:1.05rem;
+  display:inline-block;font-family:var(--font-title);font-size:.72rem;
+  letter-spacing:.1em;text-transform:uppercase;
   background:var(--accent);color:var(--on-accent);
-  padding:.2em .75em;border-radius:6px;
-  border:2px solid transparent;transform:rotate(-2deg);
+  padding:.4em .8em;
+  border:2px solid var(--ink);transform:rotate(-2deg);
 }
-[data-modo="grafity"] .tag,[data-modo="street"] .tag{border-color:var(--ink)}
+.tag{border-color:var(--ink)}
 
 /* =========================================================================
    Formulario
@@ -383,7 +298,7 @@ h1,h2,h3,h4{
 }
 .pill.sel{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
 
-.bar{height:5px;flex:1;border-radius:3px;background:var(--hairline)}
+.bar{height:5px;flex:1;background:var(--hairline)}
 .bar.on{background:var(--accent)}
 .footbar{
   padding:20px 22px;border-top:1px solid var(--hairline);
@@ -415,19 +330,18 @@ h1,h2,h3,h4{
   width:18px;height:18px;border-radius:50%;
   border:2px solid var(--hairline-2);flex:none;background:transparent;
 }
-.tstep.done .dot{background:var(--accent);border-color:var(--ink)}
-.tstep.now .dot{background:var(--accent);border-color:var(--ink);outline:4px solid var(--accent-soft)}
+.tstep.done .dot{background:var(--accent);border-color:var(--strong)}
+.tstep.now .dot{background:var(--accent);border-color:var(--strong);outline:4px solid var(--accent-soft)}
 .tstep .line{width:3px;flex:1;min-height:30px;background:var(--hairline-2)}
 .tstep.done .line{background:var(--accent)}
 .tstep .txt{padding-bottom:20px;display:flex;flex-direction:column;gap:3px}
-.tstep .txt b{font-size:.9rem;color:var(--soft);font-weight:600}
-.tstep.done .txt b{color:var(--ink);font-weight:700}
+.tstep .txt b{font-size:.9rem;color:var(--on-strong-soft);font-weight:600}
+.tstep.done .txt b{color:var(--on-strong);font-weight:700}
 .tstep.now .txt b{
-  color:var(--accent);font-family:var(--font-script);
-  font-size:1.2rem;font-weight:400;
+  color:var(--accent);font-family:var(--font-title);font-weight:400;
+  font-size:.86rem;letter-spacing:.09em;text-transform:uppercase;
 }
-[data-modo="comun"] .tstep.now .txt b{font-family:var(--font);font-size:.95rem;font-weight:800}
-.tstep .txt em{font-style:normal;font-size:.75rem;color:var(--faint)}
+.tstep .txt em{font-style:normal;font-size:.75rem;color:var(--on-strong-soft);opacity:.75}
 
 /* =========================================================================
    Tabla de fichas del taller
@@ -445,7 +359,7 @@ table.fichas td{
 table.fichas tr td:first-child{border-radius:var(--radius) 0 0 var(--radius);border-left:1px solid var(--hairline)}
 table.fichas tr td:last-child{border-radius:0 var(--radius) var(--radius) 0;text-align:right;border-right:1px solid var(--hairline)}
 .state{padding:6px 11px;border-radius:var(--pill);font-size:.69rem;font-weight:700;white-space:nowrap}
-.state.taller{background:var(--accent-soft);color:var(--accent)}
+.state.taller{background:var(--accent-soft);color:var(--accent-ink)}
 .state.lista{background:rgba(29,168,81,.18);color:#37bd6a}
 .state.entregada{background:var(--band);color:var(--faint)}
 .empty{padding:40px;text-align:center;color:var(--faint);font-size:.88rem}
@@ -453,7 +367,6 @@ table.fichas tr td:last-child{border-radius:0 var(--radius) var(--radius) 0;text
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   :root{--pad-x:36px}
-  .lk-xl .l{margin-left:52px}
 }
 @media (max-width:640px){
   :root{--pad-x:26px}
