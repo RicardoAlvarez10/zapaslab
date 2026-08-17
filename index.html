@@ -257,12 +257,26 @@ html.js .ba:not(.used) .ba-handle::after{
 /* zona */
 .zona-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center}
 .zona-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
-.zona-chips span{
-  font-size:.88rem;font-weight:500;color:var(--ink);
+.zona-chips button{
+  font-family:inherit;font-size:.88rem;font-weight:500;color:var(--ink);
   border:1px solid var(--hairline-2);border-radius:var(--pill);
-  padding:.45em 1em;background:var(--card);
+  padding:.45em 1em;background:var(--card);cursor:pointer;
+  transition:border-color .18s ease,color .18s ease,background .18s ease;
 }
-.zona-chips span:hover{border-color:var(--accent);color:var(--accent-ink)}
+.zona-chips button:hover{border-color:var(--accent);color:var(--accent-ink)}
+/* la localidad elegida se pinta igual que su punto en el mapa. El texto va en
+   tinta y no en blanco, que sobre el naranja no llega al contraste mínimo */
+.zona-chips button.on{
+  background:var(--accent);border-color:var(--accent);
+  color:var(--tinta);font-weight:700;
+}
+/* la etiqueta del punto elegido, para encontrarlo de un vistazo. El texto va en
+   tinta y no en blanco: a 10 píxeles el blanco sobre naranja se lee peor */
+.zl-tip-on{
+  background:var(--accent) !important;
+  color:var(--tinta) !important;
+  font-weight:700;
+}
 .zona-note{margin-top:24px;color:var(--soft);font-size:.92rem;max-width:34em}
 .map-frame{
   border:1px solid var(--hairline);border-radius:calc(var(--radius) + 4px);
@@ -821,15 +835,18 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
       <div class="reveal">
         <span class="lbl">zona de cobertura</span>
         <h2 style="font-size:clamp(1.7rem,3.2vw,2.4rem);margin-top:14px">Llegamos a todo el Gran San Miguel de Tucumán</h2>
-        <div class="zona-chips">
-          <span>San Miguel de Tucumán</span>
-          <span>Yerba Buena</span>
-          <span>Tafí Viejo</span>
-          <span>Las Talitas</span>
-          <span>Banda del Río Salí</span>
-          <span>Alderetes</span>
-          <span>El Manantial</span>
-          <span>Lomas de Tafí</span>
+        <!-- cada localidad marca su punto en el mapa. El identificador es el que
+             empareja con la lista de puntos del script, porque en el mapa los
+             nombres van abreviados para que las etiquetas no se pisen -->
+        <div class="zona-chips" id="zonaChips">
+          <button type="button" data-loc="smt" aria-pressed="false">San Miguel de Tucumán</button>
+          <button type="button" data-loc="yerba" aria-pressed="false">Yerba Buena</button>
+          <button type="button" data-loc="tafi" aria-pressed="false">Tafí Viejo</button>
+          <button type="button" data-loc="talitas" aria-pressed="false">Las Talitas</button>
+          <button type="button" data-loc="banda" aria-pressed="false">Banda del Río Salí</button>
+          <button type="button" data-loc="alderetes" aria-pressed="false">Alderetes</button>
+          <button type="button" data-loc="manantial" aria-pressed="false">El Manantial</button>
+          <button type="button" data-loc="lomas" aria-pressed="false">Lomas de Tafí</button>
         </div>
         <p class="zona-note">
           El área marcada en el mapa es donde el retiro y la entrega están incluidos en el precio.
@@ -1198,10 +1215,11 @@ var PROMOS=[
 (function(){
   if(typeof L==='undefined')return;
   var inited=false;
+  var map, marcadores, puntos;      // se comparten con los botones de localidad
   function initMapa(){
   if(inited)return;
   inited=true;
-  var map=L.map('mapa',{
+  map=L.map('mapa',{
     center:[-26.816,-65.22],
     zoom:11,
     scrollWheelZoom:false,
@@ -1233,16 +1251,17 @@ var PROMOS=[
     lineJoin:'round'
   }).addTo(map);
 
-  var puntos=[
-    {n:'San Miguel de Tucumán',c:[-26.8083,-65.2176],d:'top'},
-    {n:'Yerba Buena',c:[-26.8166,-65.3167],d:'left'},
-    {n:'Tafí Viejo',c:[-26.732,-65.259],d:'top'},
-    {n:'Las Talitas',c:[-26.771,-65.209],d:'right'},
-    {n:'B. del Río Salí',c:[-26.850,-65.161],d:'bottom'},
-    {n:'Alderetes',c:[-26.816,-65.135],d:'right'},
-    {n:'El Manantial',c:[-26.848,-65.281],d:'left'}
+  puntos=[
+    {id:'smt',       n:'San Miguel de Tucumán',c:[-26.8083,-65.2176],d:'top'},
+    {id:'yerba',     n:'Yerba Buena',          c:[-26.8166,-65.3167],d:'left'},
+    {id:'tafi',      n:'Tafí Viejo',           c:[-26.732,-65.259], d:'top'},
+    {id:'talitas',   n:'Las Talitas',          c:[-26.771,-65.209], d:'right'},
+    {id:'banda',     n:'B. del Río Salí',      c:[-26.850,-65.161], d:'bottom'},
+    {id:'alderetes', n:'Alderetes',            c:[-26.816,-65.135], d:'right'},
+    {id:'manantial', n:'El Manantial',         c:[-26.848,-65.281], d:'left'},
+    {id:'lomas',     n:'Lomas de Tafí',        c:[-26.760,-65.230], d:'left'}
   ];
-  var marcadores=puntos.map(function(p){
+  marcadores=puntos.map(function(p){
     return L.circleMarker(p.c,{
       radius:5,color:'#131417',weight:3,
       fillColor:'#F2ECE1',fillOpacity:1
@@ -1301,6 +1320,53 @@ var PROMOS=[
   }else{
     initMapa();
   }
+
+  // ---- tocar una localidad la marca en el mapa ----
+  var chips=document.getElementById('zonaChips');
+  if(!chips)return;
+
+  var elegida=null;
+  var ESTILO_NORMAL={radius:5,color:'#131417',weight:3,fillColor:'#F2ECE1',fillOpacity:1};
+  var ESTILO_ELEGIDA={radius:9,color:'#131417',weight:3,fillColor:'#FF5A2D',fillOpacity:1};
+
+  function pintar(id){
+    marcadores.forEach(function(m,i){
+      var esta=puntos[i].id===id;
+      m.setStyle(esta?ESTILO_ELEGIDA:ESTILO_NORMAL);
+      var tip=m.getTooltip&&m.getTooltip();
+      var el=tip&&tip.getElement&&tip.getElement();
+      if(el)el.classList.toggle('zl-tip-on',esta);
+      if(esta)m.bringToFront();
+    });
+    chips.querySelectorAll('button').forEach(function(b){
+      var esta=b.dataset.loc===id;
+      b.classList.toggle('on',esta);
+      b.setAttribute('aria-pressed',String(esta));
+    });
+  }
+
+  function mostrar(id){
+    var i=puntos.findIndex(function(p){return p.id===id;});
+    if(i<0)return;
+    pintar(id);
+    map.panTo(puntos[i].c,{animate:true,duration:.5});
+  }
+
+  chips.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-loc]');
+    if(!b)return;
+    var id=b.dataset.loc;
+    // volver a tocar la misma la desmarca
+    if(elegida===id){ elegida=null; pintar(null); return; }
+    elegida=id;
+    initMapa();                     // por si todavía no se había cargado
+    // el mapa recién creado necesita un instante para tener tamaño
+    setTimeout(function(){ mostrar(id); },inited?0:60);
+    // en una sola columna el mapa queda debajo: lo traigo a la vista
+    if(window.matchMedia('(max-width: 900px)').matches){
+      mapaEl.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+  });
 })();
 
 // ---- Menú: resaltar la sección visible ----
