@@ -355,19 +355,27 @@ html.js #mapa.map-in .zl-tip{opacity:1}
   font-size:1.02rem;line-height:1.2;letter-spacing:.01em;
   color:var(--accent);margin-top:14px;
 }
+/* con las dos promos lado a lado, un título de una línea y otro de dos dejaban
+   los párrafos arrancando a distinta altura: se reserva el alto de dos */
+@media (min-width:821px){
+  .promos .promo h3{min-height:2.4em}
+}
 .promo p{color:var(--on-strong-soft);font-size:.9rem;line-height:1.6;margin-top:10px}
 .promo p strong{color:var(--on-strong)}
-.promo .btn{margin-top:auto;width:100%;justify-content:center}
-/* sobre el bloque tinta la sombra naranja del boton verde ensuciaba: va tinta */
-.promo .btn-wa{box-shadow:3px 3px 0 rgba(0,0,0,.55);margin-top:22px}
-.promo .btn-wa:hover{box-shadow:5px 5px 0 rgba(0,0,0,.55)}
+/* Las dos promos nunca tienen el mismo texto, así que el bloque de abajo se
+   ancla al pie de cada tarjeta: el sobrante de altura queda arriba del cupo y
+   los dos botones terminan a la misma altura. Si el cupo está oculto, el botón
+   toma ese papel. */
+.promo .cupos[hidden] ~ .btn{margin-top:auto}
+.promo .btn{width:100%;justify-content:center;margin-top:16px}
 
 .promo .cupos{
   display:inline-flex;align-items:center;gap:.5em;align-self:flex-start;
   font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--on-strong);
   border:1px solid rgba(242,236,225,.3);
-  padding:.42em .9em;margin-top:16px;
+  padding:.42em .9em;
+  margin-top:auto;
 }
 .promo .cupos .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
 .promo.agotandose .cupos{border-color:var(--accent);background:rgba(255,90,45,.14)}
@@ -435,8 +443,8 @@ footer{border-top:1px solid var(--hairline);padding:60px 0 90px;margin-top:92px;
 
 /* aparición: subida y desenfoque, escalonada por --d */
 html.js .reveal{
-  opacity:0;transform:translateY(24px);filter:blur(8px);
-  transition:opacity 1.05s ease,transform 1.05s cubic-bezier(.22,1,.36,1),filter 1.05s ease;
+  opacity:0;transform:translateY(16px);filter:blur(5px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1),filter .55s ease;
   transition-delay:var(--d,0s);
 }
 html.js .reveal.in{opacity:1;transform:none;filter:none}
@@ -1307,13 +1315,13 @@ var PROMOS=[
   var els=document.querySelectorAll('.reveal');
   document.querySelectorAll('.steps,.cards,.proto-grid').forEach(function(group){
     Array.prototype.forEach.call(group.children,function(child,i){
-      if(child.classList.contains('reveal'))child.style.setProperty('--d',(i*150)+'ms');
+      if(child.classList.contains('reveal'))child.style.setProperty('--d',(i*70)+'ms');
     });
   });
-  // en pantallas chicas el disparo es más adentro del viewport, para que la
-  // animación ocurra donde el usuario está mirando
+  // El elemento aparece apenas asoma por el borde de abajo, no cuando ya subió
+  // media pantalla: así no hay que seguir scrolleando para que se muestre.
   var mobile=window.matchMedia('(max-width: 900px)').matches;
-  var lineFactor=mobile?0.70:0.86;
+  var lineFactor=mobile?0.94:0.96;
   var pending=Array.prototype.slice.call(els);
   function reveal(el){
     el.classList.add('in');

@@ -220,8 +220,12 @@ footer .lk .palabra,
 .btn-dark:hover,.btn-acento:hover{box-shadow:var(--btn-sh-hover)}
 .btn-dark:disabled,.btn-acento:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
 
-.btn-wa{background:var(--wa);color:#fff;font-weight:800;box-shadow:var(--btn-sh)}
-.btn-wa:hover{background:#22bd5c;box-shadow:var(--btn-sh-hover)}
+/* El botón de WhatsApp lleva sombra en tinta y no en naranja como el resto.
+   El verde es un color de marca ajeno a la paleta y pegado al naranja vibra;
+   además así los botones de WhatsApp se ven iguales en toda la web, estén
+   sobre el fondo claro o sobre los bloques oscuros. */
+.btn-wa{background:var(--wa);color:#fff;font-weight:800;box-shadow:3px 3px 0 var(--ink)}
+.btn-wa:hover{background:#22bd5c;box-shadow:5px 5px 0 var(--ink)}
 
 .btn-ghost,.btn-line{
   border:2px solid var(--hairline-2);color:var(--ink);background:transparent;
