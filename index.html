@@ -91,10 +91,23 @@ section[id]{scroll-margin-top:84px}
 /* ---------- hero ---------- */
 .hero{margin-top:14px}
 .hero-grid{
+  --sello-w:clamp(165px,19vw,215px);
+  --sello-gap:22px;
   display:grid;grid-template-columns:1.04fr 1fr;gap:56px;
-  align-items:center;padding:74px var(--pad-x) 84px;
+  align-items:start;padding:74px var(--pad-x) 84px;
 }
 .hero-grid > *{min-width:0}
+/* El sello se dibuja con un borde transparente propio, así que apoyado contra
+   el margen queda unos píxeles más adentro que el texto que va abajo. Se corre
+   ese sobrante para que el círculo arranque en la misma línea que el título. */
+.hero .sello-xl{
+  width:var(--sello-w);
+  margin-left:calc(var(--sello-w) * -0.03);
+  margin-bottom:var(--sello-gap);
+}
+/* la ficha baja lo que ocupa el sello, así su borde de arriba coincide con el
+   arranque del texto en lugar de quedar flotando a media altura */
+.hero .ba{margin-top:calc(var(--sello-w) + var(--sello-gap))}
 .hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);margin:16px 0 20px}
 .hero p.lead{font-size:1.08rem;color:var(--soft);max-width:32em;margin-bottom:30px}
 .hero p.lead strong{color:var(--ink);font-weight:600}
@@ -453,6 +466,7 @@ html.js .reveal.in{opacity:1;transform:none;filter:none}
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:44px;padding:52px var(--pad-x) 60px}
+  /* en una columna la ficha va debajo del texto: no hay nada con qué alinearla */
   .hero .ba{max-width:620px;width:100%;margin:0 auto}
   .steps,.cards{grid-template-columns:1fr 1fr}
   .steps .step:last-child{grid-column:1/-1}
