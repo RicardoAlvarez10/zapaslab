@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /ficha.html
+
+Sitemap: https://tillaslab.com.ar/sitemap.xml
