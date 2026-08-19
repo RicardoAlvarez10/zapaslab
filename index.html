@@ -1230,80 +1230,60 @@ var PROMOS=[
     subdomains:'abcd'
   }).addTo(map);
 
-  // límite aproximado de la zona con retiro y entrega incluidos
-  var zona=[
-    [-26.712,-65.250],
-    [-26.728,-65.196],
-    [-26.762,-65.160],
-    [-26.796,-65.118],
-    [-26.845,-65.118],
-    [-26.878,-65.155],
-    [-26.898,-65.205],
-    [-26.888,-65.262],
-    [-26.852,-65.322],
-    [-26.800,-65.330],
-    [-26.752,-65.302],
-    [-26.722,-65.278]
-  ];
-  var poly=L.polygon(zona,{
-    color:'#FF5A2D',weight:3,
-    fillColor:'#FF5A2D',fillOpacity:.16,
-    lineJoin:'round'
-  }).addTo(map);
-
+  // Las ocho localidades que cubrimos, con su punto real tomado de
+  // OpenStreetMap. Antes había un polígono dibujado a mano: prometía una
+  // frontera exacta que no existe, y con vértices inventados. Un círculo por
+  // localidad dice lo mismo sin fingir un límite al metro.
+  // El radio va con el tamaño real de cada una, no fijo, para que una ciudad
+  // no se vea igual que un barrio. Va acotado a propósito: el tamaño completo
+  // que informa OSM incluye zona rural y taparía medio mapa.
   puntos=[
-    {id:'smt',       n:'San Miguel de Tucumán',c:[-26.8083,-65.2176],d:'top'},
-    {id:'yerba',     n:'Yerba Buena',          c:[-26.8166,-65.3167],d:'left'},
-    {id:'tafi',      n:'Tafí Viejo',           c:[-26.732,-65.259], d:'top'},
-    {id:'talitas',   n:'Las Talitas',          c:[-26.771,-65.209], d:'right'},
-    {id:'banda',     n:'B. del Río Salí',      c:[-26.850,-65.161], d:'bottom'},
-    {id:'alderetes', n:'Alderetes',            c:[-26.816,-65.135], d:'right'},
-    {id:'manantial', n:'El Manantial',         c:[-26.848,-65.281], d:'left'},
-    {id:'lomas',     n:'Lomas de Tafí',        c:[-26.760,-65.230], d:'left'}
+    {id:'tafi',      n:'Tafí Viejo',           c:[-26.73431,-65.25922], r:2400, d:'top'},
+    {id:'smt',       n:'San Miguel de Tucumán',c:[-26.83037,-65.20381], r:2250, d:'top'},
+    {id:'yerba',     n:'Yerba Buena',          c:[-26.81216,-65.29817], r:1950, d:'left'},
+    {id:'manantial', n:'El Manantial',         c:[-26.84646,-65.28415], r:1950, d:'bottom'},
+    {id:'alderetes', n:'Alderetes',            c:[-26.81321,-65.14114], r:1900, d:'right'},
+    {id:'banda',     n:'B. del Río Salí',      c:[-26.83996,-65.16179], r:1600, d:'bottom'},
+    {id:'talitas',   n:'Las Talitas',          c:[-26.77691,-65.20369], r:1500, d:'right'},
+    {id:'lomas',     n:'Lomas de Tafí',        c:[-26.77932,-65.23676], r:1200, d:'left'}
   ];
   marcadores=puntos.map(function(p){
-    return L.circleMarker(p.c,{
-      radius:5,color:'#131417',weight:3,
-      fillColor:'#F2ECE1',fillOpacity:1
+    return L.circle(p.c,{
+      radius:p.r,
+      color:'#FF5A2D',weight:2,
+      fillColor:'#FF5A2D',fillOpacity:.18
     }).addTo(map).bindTooltip(p.n,{
       permanent:true,direction:p.d,className:'zl-tip'
     });
   });
-  map.fitBounds(L.latLngBounds(zona).pad(0.08));
+  // el encuadre entra por los círculos enteros, no por sus centros, así ninguno
+  // queda cortado contra el borde del mapa
+  var limites=marcadores[0].getBounds();
+  marcadores.forEach(function(m){ limites.extend(m.getBounds()); });
+  map.fitBounds(limites.pad(0.06));
 
-  // animación de entrada: el límite se dibuja y los puntos aparecen escalonados
+  // animación de entrada: los círculos aparecen escalonados, de la localidad
+  // más grande a la más chica
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var cont=document.getElementById('mapa');
   if(reduced||!('IntersectionObserver' in window)){
     cont.classList.add('map-in');
   }else{
-    var pel=poly.getElement();
-    if(pel&&pel.getTotalLength){
-      var len=pel.getTotalLength();
-      pel.style.strokeDasharray=len;
-      pel.style.strokeDashoffset=len;
-      pel.style.fillOpacity=0;
-    }
     marcadores.forEach(function(m){
       var el=m.getElement();
-      if(el){el.style.opacity=0;el.style.transition='opacity .4s ease';}
+      if(el){el.style.opacity=0;el.style.transition='opacity .55s ease';}
     });
     document.querySelectorAll('#mapa .zl-tip').forEach(function(t,i){
-      t.style.transitionDelay=(1.6+i*.15)+'s';
+      t.style.transitionDelay=(.5+i*.12)+'s';
     });
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){
         if(!e.isIntersecting)return;
         io.disconnect();
         cont.classList.add('map-in');
-        if(pel){
-          pel.style.transition='stroke-dashoffset 2.2s ease, fill-opacity 1.2s ease 1.6s';
-          pel.style.strokeDashoffset=0;
-          pel.style.fillOpacity=.16;
-        }
         marcadores.forEach(function(m,i){
           var el=m.getElement();
-          if(el)setTimeout(function(){el.style.opacity=1;},1300+i*160);
+          if(el)setTimeout(function(){el.style.opacity=1;},i*120);
         });
       });
     },{threshold:.35});
@@ -1326,8 +1306,10 @@ var PROMOS=[
   if(!chips)return;
 
   var elegida=null;
-  var ESTILO_NORMAL={radius:5,color:'#131417',weight:3,fillColor:'#F2ECE1',fillOpacity:1};
-  var ESTILO_ELEGIDA={radius:9,color:'#131417',weight:3,fillColor:'#FF5A2D',fillOpacity:1};
+  // al elegir una localidad su círculo se llena más y toma contorno tinta, para
+  // que se distinga sin cambiar de tamaño ni tapar a las vecinas
+  var ESTILO_NORMAL={color:'#FF5A2D',weight:2,fillColor:'#FF5A2D',fillOpacity:.18};
+  var ESTILO_ELEGIDA={color:'#131417',weight:3,fillColor:'#FF5A2D',fillOpacity:.5};
 
   function pintar(id){
     marcadores.forEach(function(m,i){
